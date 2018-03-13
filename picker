@@ -1,6 +1,0 @@
-<Picker
-  selectedValue={this.state.language}
-  onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
-  <Picker.Item label="Elevator" value="elevator" />
-  <Picker.Item label="stairs" value="stairs" />
-</Picker>
