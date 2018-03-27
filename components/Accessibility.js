@@ -4,17 +4,18 @@ import { StyleSheet, Text, View, Picker, Button } from 'react-native';
 export default class Accessibility extends Component {
   constructor(){
     super();
-    this.state={
-      PickerValue:"",
-      clickme:()=>{
-        var data = this.state.PickerValue;
-        if(data ==""){
-          alert("Please pick an option");
-        } else {
-          alert(data)
-        }
-      }
-    }
+	this.state={
+		PickerValue: '',
+		clickme: () => {
+			var data = this.state.PickerValue;
+			if(data ==""){
+			  alert("Please pick an option");
+			} else {
+			  alert(data)
+			}
+		}
+	}
+	console.log('Accessibility constructor');
   }
 
   render() {
@@ -22,9 +23,9 @@ export default class Accessibility extends Component {
       <View style = {{flex : 1}}>
         <View style = {styles.container}>
           <Text>Stairs or Elevator?</Text>
-          <Picker 
+          <Picker
           style = {styles.picker}
-          selectedValue = {this.state.PickerValue} 
+          selectedValue = {this.state.PickerValue}
           onValueChange = {(itemValue, itemIndex) => this.setState({PickerValue:itemValue})}>
           <Picker.Item label = "Select" value = "" />
           <Picker.Item label = "Elevator" value ="elevator" />
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   picker: {
-    width: '30%', 
+    width: '30%',
   },
   fullWidthButton: {
     width: '100%',

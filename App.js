@@ -6,18 +6,15 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Accessibility from "./components/Accessibility";
-import Header from "./components/Header";
-import RoomSearch from "./components/RoomSearch";
+import LocationPreferences from './components/LocationPreferences';
 
 export default class App extends React.Component {
 
-  render() {
-    return(
-      <View style = {{flex : 1}}>
-        <Header />
-        <Accessibility />
-      </View>
-    );
-  }
+	render() {
+		return(
+			<View>
+				<LocationPreferences />
+			</View>
+		);
+	}
 }

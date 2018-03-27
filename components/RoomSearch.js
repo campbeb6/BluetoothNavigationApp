@@ -11,6 +11,7 @@ export default class RoomSearch extends React.Component {
     // contructor, contains state variables
     constructor() {
         super();
+		console.log('RoomSearch constructor');
         this.state = {
             entry: '', // text that user enters into box
             matches: [], // array of rooms that match entry
