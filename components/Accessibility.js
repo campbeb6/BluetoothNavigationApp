@@ -5,15 +5,7 @@ export default class Accessibility extends Component {
   constructor(){
     super();
 	this.state={
-		pickerValue: '',
-		clickme: () => {
-			var data = this.state.pickerValue;
-			if(data ==""){
-			  alert("Please pick an option");
-			} else {
-			  alert(data)
-			}
-		}
+		pickerValue: 'stairs'
 	}
 	console.log('Accessibility constructor');
   }
@@ -26,10 +18,14 @@ export default class Accessibility extends Component {
           <Picker
 	          style = {styles.picker}
 	          selectedValue = {this.state.pickerValue}
-	          onValueChange = {(itemValue, itemIndex) => this.setState({pickerValue:itemValue})}>
-	          <Picker.Item label = "Select" value = "" />
-	          <Picker.Item label = "Elevator" value ="elevator" />
-	          <Picker.Item label = "Stairs" value = "stairs" />
+	          onValueChange = {
+				  (itemValue, itemIndex) => {
+					  this.props.getStairsOrElevator(itemValue);
+					  this.setState({pickerValue:itemValue});
+				  }
+			  }>
+			  <Picker.Item label="Stairs" value="stairs" />
+	          <Picker.Item label="Elevator" value="elevator" />
           </Picker>
         </View>
       </View>
@@ -47,8 +43,4 @@ const styles = StyleSheet.create({
   picker: {
     // width: '30%',
   },
-  fullWidthButton: {
-    width: '100%',
-    height: '12%',
-  }
 })

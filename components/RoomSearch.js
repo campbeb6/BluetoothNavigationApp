@@ -35,8 +35,20 @@ export default class RoomSearch extends React.Component {
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({room:room})
-                });
-                // if successful, either set state.matches or return array
+                })
+				.then(res=>res.json())
+				.then(resj=>{
+					this.setState({
+						matches: resj // response json
+					},()=>{
+						console.log('got matching rooms');
+					});
+					return resj;
+				})
+				.catch(err=>
+					console.log('RoomSearch: error getting matching rooms '+err)
+				);
+
 
             },
             // dummy version of getMatches(), always returns 3 rooms for testing
@@ -51,7 +63,6 @@ export default class RoomSearch extends React.Component {
             }
         };
     }
-
     /* mandatory render() for displaying, return statement defines what will
      * show up when a <RoomSearch /> tag is used */
     render() {
@@ -78,15 +89,12 @@ export default class RoomSearch extends React.Component {
                           /* call state method to get room matches from server,
                            * for now the dummy method is called */
                           matches:this.state.dummyGetMatches(text)
-                      },()=>{
-						  // DEBUG show the entry's value and choice
-						  console.log('Entered:  '+this.state.entry);
-		                  console.log('Choice:  '+this.state.choice);
-					  });
+                      },()=>{  });
                   }}
 				/>
 				{/* this picker is supposed to be dropdown options, doesn't
-				  * look great on Android though */}
+				  * look great on Android though, instead maybe we can use:
+				  * https://www.npmjs.com/package/react-native-autocomplete-input */}
                 <Picker
                     style={styles.matchList}
                     selectedValue={this.state.choice}

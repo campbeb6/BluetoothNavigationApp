@@ -8,7 +8,8 @@ import {
     StyleSheet,
     Text,
     View,
-	Button
+	Button,
+	Alert
 } from 'react-native';
 
 import Accessibility from './Accessibility';
@@ -18,7 +19,8 @@ export default class LocationPreferences extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			roomChoice: ''
+			roomChoice: '',
+			stairsElevator: 'stairs'
 		};
 	}
     render() {
@@ -31,21 +33,34 @@ export default class LocationPreferences extends React.Component {
 				<RoomSearch
 					getChoice={this.getRoomChoice}
 				/>
-
-				<Accessibility />
-				<View style = {styles.fullWidthButton}>
-				<Button
-					title = "Go"
-					color = "#C3142D"
-					containerViewStyle={{width: '100%', marginLeft: 0}}
-					onPress = {this.go}
+				<Accessibility
+					getStairsOrElevator={this.getStairsOrElevator}
 				/>
+				<View style = {styles.fullWidthButton}>
+					<Button
+						title = "Go"
+						color = "#C3142D"
+						containerViewStyle={{width: '100%', marginLeft: 0}}
+						onPress = {this.go}
+					/>
 	            </View>
 			</View>
         );
     }
 	go = () => {
+		///STUB start navigation
 		console.log('got user destination and stairs/elevator prefs');
+		// for now, give an alert of destination and stairs/elevator
+		Alert.alert(
+			'BEGIN NAVIGATION',
+			'Destination: '+this.state.roomChoice+'\n'+
+			'Using: '+this.state.stairsElevator,
+			[],
+			{
+				cancelable:true,
+				onDismiss: ()=>{}
+			}
+		);
 	}
 	getRoomChoice = (room) => {
 		this.setState({
@@ -53,6 +68,13 @@ export default class LocationPreferences extends React.Component {
 		},()=>{
 			console.log('got room '+room+' from RoomSearch');
 		});
+	}
+	getStairsOrElevator = (choice) => {
+		this.setState({
+			stairsElevator: choice
+		},()=>{
+			console.log('got accessibility choice: '+choice);
+		})
 	}
 }
 
@@ -66,5 +88,8 @@ const styles = StyleSheet.create({
 	fullWidthButton: {
 		width: '100%',
 		height: '12%',
+		// align button at bottom of screen
+		position: 'absolute',
+		bottom: 0
 	}
 });
