@@ -11,6 +11,7 @@ export default class RoomSearch extends React.Component {
     // contructor, contains state variables
     constructor() {
         super();
+		console.log('RoomSearch constructor');
         this.state = {
             entry: '', // text that user enters into box
             matches: [], // array of rooms that match entry
@@ -34,8 +35,20 @@ export default class RoomSearch extends React.Component {
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({room:room})
-                });
-                // if successful, either set state.matches or return array
+                })
+				.then(res=>res.json())
+				.then(resj=>{
+					this.setState({
+						matches: resj // response json
+					},()=>{
+						console.log('got matching rooms');
+					});
+					return resj;
+				})
+				.catch(err=>
+					console.log('RoomSearch: error getting matching rooms '+err)
+				);
+
 
             },
             // dummy version of getMatches(), always returns 3 rooms for testing
@@ -50,7 +63,6 @@ export default class RoomSearch extends React.Component {
             }
         };
     }
-
     /* mandatory render() for displaying, return statement defines what will
      * show up when a <RoomSearch /> tag is used */
     render() {
@@ -58,28 +70,10 @@ export default class RoomSearch extends React.Component {
         let roomChoices = this.state.matches.map((match,i)=>{
             return (<Picker.Item key={i} label={match} value={match} />);
         });
-        // navigation button only shows up when a choice has been made
-        let btnNavigate = null;
-        if(this.state.choice!=='' && this.state.entry!==''){
-            btnNavigate = <Button
-              title={'Navigate to '+this.state.choice}
-              onPress={()=> { // use => to avoid .bind(this)
-                  ///STUB pass choice and load navigation screen
-                  /* may want to pass room choice back up to App.js instead
-                   * of getting navigation screens here */
-                  let choice = this.state.choice;
-                  Alert.alert(
-                      'begin navigation',
-                      'stub, pass along beacon data and room choice ('
-                        + choice + ') to start navigating',
-                      {cancelable:true}
-                  );
-              }} />;
-        }
         // return JSX that defines appearance
         // JavaScript expressions must be inside curly braces { }
         return (
-            <View style={styles.container}>
+            <View>
                 <Text>Search room</Text>
                 <TextInput
                   style={styles.input}
@@ -95,21 +89,24 @@ export default class RoomSearch extends React.Component {
                           /* call state method to get room matches from server,
                            * for now the dummy method is called */
                           matches:this.state.dummyGetMatches(text)
-                      });
+                      },()=>{  });
                   }}
-                  />
-                {/*DEBUG show the entry's value and choice*/}
-                <Text>(For testing, show user input and choice)</Text>
-                <Text>{'Entered:  '+this.state.entry}</Text>
-                <Text>{'Choice:  '+this.state.choice}</Text>
-                {/* btnNavigate will be null until user makes a choice, then it
-                  * will become a button that begins navigation*/
-                  btnNavigate}
+				/>
+				{/* this picker is supposed to be dropdown options, doesn't
+				  * look great on Android though, instead maybe we can use:
+				  * https://www.npmjs.com/package/react-native-autocomplete-input */}
                 <Picker
                     style={styles.matchList}
                     selectedValue={this.state.choice}
                     onValueChange={(val)=>{
-                        this.setState({choice:val});
+                        this.setState({
+							choice:val
+						},()=>{
+							// pass choice back to LocationPreferences.js
+							if(this.state.choice!=='') {
+								this.props.getChoice(this.state.choice);
+							}
+						});
                     }}
                     >
                     {/*start the list with a blank option*/}
@@ -124,19 +121,13 @@ export default class RoomSearch extends React.Component {
 
 // styles go outside of the class body, call with {styles.styleName}
 const styles = StyleSheet.create({
-    container: { // container copied from generated App.js
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     input:{ // style for room number search box
-        height: 40,
-        width: 200,
-        borderColor: 'gray',
-        borderWidth: 1,
+        // height: 40,
+        // width: 200,
+        // borderColor: 'gray',
+        // borderWidth: 1,
     },
     matchList:{
-        width: 100 // will not display without width property
+        //width: 100 // will not display without width property
     },
 });
