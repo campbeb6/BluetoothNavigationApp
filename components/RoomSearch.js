@@ -17,40 +17,6 @@ export default class RoomSearch extends React.Component {
             matches: [], // array of rooms that match entry
             choice: '', // the room for which the user wants directions
 
-            /* Defines a function called getMatches() but does not call it yet.
-             * It will pass a room number to the api and return an array of
-             * rooms that match the user's input. E.g. if '205' is passed it
-             * will return all rooms in FSB that start with '205' (2050, 2052,
-             * 2052A, etc.). Backend would have a SQL statement along the lines
-             * of SELECT roomNumber FROM rooms WHERE roomNumber LIKE '100%'; */
-            getMatches: (room) => {
-                // this endpoint does not actually exist yet
-                let url = 'http://10.36.0.144:3000/rooms';
-                /* documentation for fetch(), very similar to $.ajax:
-                 * https://facebook.github.io/react-native/docs/network.html */
-                fetch(url,{
-                    method:'POST',
-                    headers:{
-                        Accept:'application/json',
-                        'Content-Type':'application/json'
-                    },
-                    body: JSON.stringify({room:room})
-                })
-				.then(res=>res.json())
-				.then(resj=>{
-					this.setState({
-						matches: resj // response json
-					},()=>{
-						console.log('got matching rooms');
-					});
-					return resj;
-				})
-				.catch(err=>
-					console.log('RoomSearch: error getting matching rooms '+err)
-				);
-
-
-            },
             // dummy version of getMatches(), always returns 3 rooms for testing
             dummyGetMatches: (room) => {
                 // wait for them to type at least one character
@@ -117,6 +83,33 @@ export default class RoomSearch extends React.Component {
             </View>
         );
     }
+
+	// get room numbers matching the user's input
+	getMatches = function(room) {
+		let url = 'http://10.36.0.144:3000/rooms';
+		let request = new Request(url,{
+			method: 'GET',
+			headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json',
+			}
+		});
+		return fetch(request)
+		.then(res => {
+			console.log(res);
+			return res.json();
+		})
+		.then(resj => {
+			this.setState({
+				matches: resj
+			},function(){
+				console.log('set state.matches to:');
+				console.log(resj);
+			});
+			return resj;
+		})
+		.catch(err => console.log('error:  '+err));
+	}
 }
 
 // styles go outside of the class body, call with {styles.styleName}
