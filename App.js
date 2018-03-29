@@ -29,7 +29,10 @@ export default class App extends React.Component {
 		console.log('App: starting nav to:');
 		console.log(prefs);
 		this.setState({
-			activePage: <NavigationDemo />
+			activePage: <NavigationDemo
+				destination = {prefs.destination}
+				stairs = {prefs.stairs}
+			/>
 		});
 	}
 }
