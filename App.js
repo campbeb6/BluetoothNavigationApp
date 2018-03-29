@@ -7,14 +7,29 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import LocationPreferences from './components/LocationPreferences';
+import NavigationDemo from './components/NavigationDemo';
 
 export default class App extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			activePage: <LocationPreferences startNavigation={this.startNavigation} />
+		}
+	}
 
 	render() {
 		return(
 			<View style={{flex:1}} >
-				<LocationPreferences />
+				{this.state.activePage}
 			</View>
 		);
+	}
+
+	startNavigation = (prefs) => {
+		console.log('App: starting nav to:');
+		console.log(prefs);
+		this.setState({
+			activePage: <NavigationDemo />
+		});
 	}
 }
