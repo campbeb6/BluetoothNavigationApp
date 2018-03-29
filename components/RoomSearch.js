@@ -15,18 +15,7 @@ export default class RoomSearch extends React.Component {
         this.state = {
             entry: '', // text that user enters into box
             matches: [], // array of rooms that match entry
-            choice: '', // the room for which the user wants directions
-
-            // dummy version of getMatches(), always returns 3 rooms for testing
-            dummyGetMatches: (room) => {
-                // wait for them to type at least one character
-                if(room==='') return [];
-
-                /* actual method will probably return an array of objects like
-                 * [{roomNum:2050,roomID:1}, {roomNum:2051,roomID:2}], depends
-                 * on how the backend team chooses to implement */
-                return [''+room+'0',''+room+'1',''+room+'2'];
-            }
+            choice: '' // the room for which the user wants directions
         };
     }
     /* mandatory render() for displaying, return statement defines what will
@@ -34,7 +23,7 @@ export default class RoomSearch extends React.Component {
     render() {
         // return a Picker item for each room match from server
         let roomChoices = this.state.matches.map((match,i)=>{
-            return (<Picker.Item key={i} label={match} value={match} />);
+            return (<Picker.Item key={i} label={match.roomNum} value={match.roomNum} />);
         });
         // return JSX that defines appearance
         // JavaScript expressions must be inside curly braces { }
@@ -42,22 +31,13 @@ export default class RoomSearch extends React.Component {
             <View>
                 <Text>Search room</Text>
                 <TextInput
-                  style={styles.input}
-                  editable={true}
-                  numberOfLines={1}
-                  maxLength={100}
-                  onChangeText={(text)=>{
-                      // each time the user types, update the state variables
-                      this.setState({
-                          entry:text,
-                          // reset choice to '' iff the user clears the box
-                          choice:text===''?'':this.state.choice,
-                          /* call state method to get room matches from server,
-                           * for now the dummy method is called */
-                          matches:this.state.dummyGetMatches(text)
-                      },()=>{  });
-                  }}
+                  	style={styles.input}
+                  	editable={true}
+                  	numberOfLines={1}
+                  	maxLength={100}
+					onChangeText = {this.getMatches}
 				/>
+
 				{/* this picker is supposed to be dropdown options, doesn't
 				  * look great on Android though, instead maybe we can use:
 				  * https://www.npmjs.com/package/react-native-autocomplete-input */}
@@ -85,30 +65,36 @@ export default class RoomSearch extends React.Component {
     }
 
 	// get room numbers matching the user's input
-	getMatches = function(room) {
-		let url = 'http://10.36.0.144:3000/rooms';
-		let request = new Request(url,{
-			method: 'GET',
-			headers: {
-			  'Accept': 'application/json',
-			  'Content-Type': 'application/json',
-			}
-		});
-		return fetch(request)
-		.then(res => {
-			console.log(res);
-			return res.json();
-		})
-		.then(resj => {
-			this.setState({
-				matches: resj
-			},function(){
-				console.log('set state.matches to:');
-				console.log(resj);
+	getMatches = (text) => {
+		console.log('entered: '+text);
+		this.setState({
+			entry: text
+		},()=>{
+			console.log('getting matches for '+this.state.entry);
+			let url = 'http://10.36.0.144:3000/rooms';
+			let request = new Request(url,{
+				method: 'GET',
+				headers: {
+				  'Accept': 'application/json',
+				  'Content-Type': 'application/json',
+				}
 			});
-			return resj;
-		})
-		.catch(err => console.log('error:  '+err));
+			fetch(request)
+			.then(res => {
+				console.log(res);
+				return res.json();
+			})
+			.then(resj => {
+				this.setState({
+					matches: resj
+				},function(){
+					console.log('set state.matches to:');
+					console.log(resj);
+				});
+				return resj;
+			})
+			.catch(err => console.log('error:  '+err));
+		});
 	}
 }
 
