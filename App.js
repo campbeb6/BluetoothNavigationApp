@@ -13,8 +13,14 @@ export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			activePage: <LocationPreferences startNavigation={this.startNavigation} />
+			defaultLocationPreferences: <LocationPreferences startNavigation={this.startNavigation} />,
+			activePage: null
 		}
+	}
+	componentDidMount() {
+		this.setState({
+			activePage: this.state.defaultLocationPreferences
+		});
 	}
 
 	render() {
@@ -32,6 +38,11 @@ export default class App extends React.Component {
 			activePage: <NavigationDemo
 				destination = {prefs.destination}
 				stairs = {prefs.stairs}
+				goBack = {()=>{
+					this.setState({
+						activePage: this.state.defaultLocationPreferences
+					});
+				}}
 			/>
 		});
 	}
