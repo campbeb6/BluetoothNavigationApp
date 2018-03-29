@@ -32,8 +32,6 @@ export default class App extends React.Component {
 	}
 
 	startNavigation = (prefs) => {
-		console.log('App: starting nav to:');
-		console.log(prefs);
 		this.setState({
 			activePage: <NavigationDemo
 				destination = {prefs.destination}

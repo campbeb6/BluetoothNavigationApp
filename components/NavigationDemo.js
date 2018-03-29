@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
 
 export default class NavigationDemo extends React.Component {
 	render() {
@@ -10,11 +10,22 @@ export default class NavigationDemo extends React.Component {
 					color="#D3D3D3"
 					onPress={this.props.goBack}
 				/>
-				<Text>navigation demo</Text>
 				<Text>{'Destination: '+this.props.destination}</Text>
 				<Text>{'Stairs or elevator: '}{this.props.stairs?'stairs':'elevator'}</Text>
-				<Text></Text>
+				<Image
+					style = {styles.img}
+					source = {require('../img/fsb_example.jpg')}
+				/>
 			</View>
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+	img: {
+		justifyContent:'center',
+		alignItems:'center',
+		height: 360,
+		width: 360
+	}
+});
