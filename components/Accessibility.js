@@ -1,34 +1,36 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Picker, Button } from 'react-native';
+import RadioForm, {SegmentedControls} from 'react-native-radio-buttons';
+
 
 export default class Accessibility extends Component {
   constructor(){
     super();
 	this.state={
-		pickerValue: 'stairs'
+		selectedOption: 'Stairs'
 	}
 	console.log('Accessibility constructor');
   }
 
   render() {
+    const options = ["Stairs", "Elevator"]
+    function setSelectedOption(selectedOption){
+      this.setState({
+        selectedOption
+      });
+    }
+
     return(
-      <View style = {styles.container}>
-        <View>
-          <Text>Stairs or Elevator?</Text>
-          <Picker
-	          style = {styles.picker}
-	          selectedValue = {this.state.pickerValue}
-	          onValueChange = {
-				  (itemValue, itemIndex) => {
-					  this.props.getStairsOrElevator(itemValue);
-					  this.setState({pickerValue:itemValue});
-				  }
-			  }>
-			  <Picker.Item label="Stairs" value="stairs" />
-	          <Picker.Item label="Elevator" value="elevator" />
-          </Picker>
-        </View>
-      </View>
+      <SegmentedControls
+        options={ options }
+        tint = {"#C3142D"}
+        onSelection={ (itemValue) => { 
+          this.props.getStairsOrElevator(itemValue);
+          this.setState({selectedOption:itemValue}); 
+        } 
+      }
+        selectedOption={ this.state.selectedOption }
+      />
     )
   }
 }
