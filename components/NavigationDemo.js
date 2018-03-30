@@ -23,7 +23,7 @@ export default class NavigationDemo extends React.Component {
 								width: viewWidth
 							}
 						]}
-						source = {require('../img/2053_1000_elevator_floor1.png')}
+						source = {imgs['2053'+'_'+'1000'+'_'+'elevator'+'_'+'floor1']}
 					/>
 					<Image
 						style = {[
@@ -32,7 +32,7 @@ export default class NavigationDemo extends React.Component {
 								width: viewWidth
 							}
 						]}
-						source = {require('../img/2053_1000_elevator_floor2.png')}
+						source = {imgs['2053'+'_'+'1000'+'_'+'elevator'+'_'+'floor1']}
 					/>
 				</View>
 			</View>
@@ -46,3 +46,8 @@ const styles = StyleSheet.create({
 		alignItems:'center'
 	}
 });
+
+const imgs = {
+	'2053_1000_elevator_floor1': require('../img/2053_1000_elevator_floor1.png'),
+	'2053_1000_elevator_floor2': require('../img/2053_1000_elevator_floor2.png')
+};
