@@ -32,7 +32,7 @@ export default class NavigationDemo extends React.Component {
 								width: viewWidth
 							}
 						]}
-						source = {imgs['2053'+'_'+'1000'+'_'+'elevator'+'_'+'floor1']}
+						source = {imgs['2053'+'_'+'1000'+'_'+'elevator'+'_'+'floor2']}
 					/>
 				</View>
 			</View>
