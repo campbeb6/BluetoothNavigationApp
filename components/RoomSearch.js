@@ -68,7 +68,8 @@ export default class RoomSearch extends React.Component {
 	getMatches = (text) => {
 		// add in some dummy data for new routes
 		let dummyRooms = [
-			{roomNum:'2037',popular:'false'}
+			{roomNum:'2037',popular:'false'},
+			{roomNum:'2053',popular:'true'}
 		];
 		console.log('entered: '+text);
 		this.setState({
