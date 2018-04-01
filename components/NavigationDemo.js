@@ -9,6 +9,8 @@ export default class NavigationDemo extends React.Component {
 			this.props.startingLocation + '_' +
 			this.props.destination + '_' +
 			(this.props.stairs?'stairs':'elevator');
+		// show blank map if user chooses a room with no route yet
+		if(!imgs[imgSrc]) imgSrc = 'blank_map';
 		console.log('imgSrc: '+imgSrc);
 		console.log('dims: '+viewHeight+'x'+viewWidth);
 		return (
@@ -58,7 +60,8 @@ const imgs = {
 	'1036_2053_stairs'		: require('../img/1036_2053_stairs.png'),
 	'1036_2053_elevator'	: require('../img/1036_2053_elevator.png'),
 	'1036_1026_stairs'		: require('../img/1036_1026_stairs.png'),
-	'1036_1026_elevator'	: require('../img/1036_1026_elevator.png')
+	'1036_1026_elevator'	: require('../img/1036_1026_elevator.png'),
+	'blank_map'				: require('../img/blank_map.png')
 };
 //
 // <Image
