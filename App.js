@@ -34,6 +34,7 @@ export default class App extends React.Component {
 	startNavigation = (prefs) => {
 		this.setState({
 			activePage: <NavigationDemo
+				startingLocation = {'1036'}
 				destination = {prefs.destination}
 				stairs = {prefs.stairs}
 				goBack = {()=>{

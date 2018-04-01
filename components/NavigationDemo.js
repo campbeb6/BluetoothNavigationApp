@@ -5,34 +5,26 @@ export default class NavigationDemo extends React.Component {
 	render() {
 		const viewHeight = Dimensions.get('window').height;
 		const viewWidth = Dimensions.get('window').width;
+		let imgSrc =
+			this.props.startingLocation + '_' +
+			this.props.destination + '_' +
+			(this.props.stairs?'stairs':'elevator');
+		console.log('imgSrc: '+imgSrc);
 		console.log('dims: '+viewHeight+'x'+viewWidth);
 		return (
-			<View>
-				<View>
+			<View style={styles.containerView}>
+				<View style={styles.btnView}>
 					<Button
 						title="Go back"
 						color="#D3D3D3"
 						onPress={this.props.goBack}
 					/>
 				</View>
-				<View>
+				<View style={styles.imgView}>
 					<Image
-						style = {[
-							styles.img,{
-								height:viewHeight/2.5,
-								width: viewWidth
-							}
-						]}
-						source = {imgs['2053'+'_'+'1000'+'_'+'elevator'+'_'+'floor1']}
-					/>
-					<Image
-						style = {[
-							styles.img,{
-								height:viewHeight/2.5,
-								width: viewWidth
-							}
-						]}
-						source = {imgs['2053'+'_'+'1000'+'_'+'elevator'+'_'+'floor2']}
+						resizeMode = "contain"
+						source = {imgs[imgSrc]}
+						style = {styles.img}
 					/>
 				</View>
 			</View>
@@ -41,13 +33,40 @@ export default class NavigationDemo extends React.Component {
 }
 
 const styles = StyleSheet.create({
+	containerView: {
+		flex: 1
+	},
+	btnView: {
+		flex: 0.07,
+		backgroundColor: 'white'
+	},
+	imgView: {
+		flex: 0.93,
+		backgroundColor: 'white',
+		alignItems: 'center'
+	},
 	img: {
-		justifyContent:'center',
-		alignItems:'center'
+		flex:1
 	}
 });
 
 const imgs = {
-	'2053_1000_elevator_floor1': require('../img/2053_1000_elevator_floor1.png'),
-	'2053_1000_elevator_floor2': require('../img/2053_1000_elevator_floor2.png')
+	'1036_1000_stairs': require('../img/1036_1000_stairs.png')
 };
+//
+// <Image
+// 	resizeMode = "contain"
+// 	source = {imgs[imgSrc]}
+// 	style = {{
+// 		width: viewWidth,
+// 		height: viewHeight*.93
+// 	}}
+// />
+
+// <View>
+// 	<Button
+// 		title="Go back"
+// 		color="#D3D3D3"
+// 		onPress={this.props.goBack}
+// 	/>
+// </View>
