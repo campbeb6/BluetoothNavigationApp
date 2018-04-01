@@ -56,7 +56,9 @@ const imgs = {
 	'1036_2037_stairs'		: require('../img/1036_2037_stairs.png'),
 	'1036_2037_elevator'	: require('../img/1036_2037_elevator.png'),
 	'1036_2053_stairs'		: require('../img/1036_2053_stairs.png'),
-	'1036_2053_elevator'	: require('../img/1036_2053_elevator.png')
+	'1036_2053_elevator'	: require('../img/1036_2053_elevator.png'),
+	'1036_1026_stairs'		: require('../img/1036_1026_stairs.png'),
+	'1036_1026_elevator'	: require('../img/1036_1026_elevator.png')
 };
 //
 // <Image
