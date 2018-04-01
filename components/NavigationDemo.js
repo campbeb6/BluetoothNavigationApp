@@ -51,7 +51,10 @@ const styles = StyleSheet.create({
 });
 
 const imgs = {
-	'1036_1000_stairs': require('../img/1036_1000_stairs.png')
+	'1036_1000_stairs'	: require('../img/1036_1000_stairs.png'),
+	'1036_1000_elevator': require('../img/1036_1000_elevator.png'),
+	'1036_2037_stairs'	: require('../img/1036_2037_stairs.png'),
+	'1036_2037_elevator': require('../img/1036_2037_elevator.png')
 };
 //
 // <Image

@@ -66,6 +66,10 @@ export default class RoomSearch extends React.Component {
 
 	// get room numbers matching the user's input
 	getMatches = (text) => {
+		// add in some dummy data for new routes
+		let dummyRooms = [
+			{roomNum:'2037',popular:'false'}
+		];
 		console.log('entered: '+text);
 		this.setState({
 			entry: text
@@ -86,10 +90,10 @@ export default class RoomSearch extends React.Component {
 			})
 			.then(resj => {
 				this.setState({
-					matches: resj
+					matches: resj.concat(dummyRooms).filter(match => match.roomNum.startsWith(this.state.entry))
 				},function(){
 					console.log('set state.matches to:');
-					console.log(resj);
+					console.log(this.state.matches);
 				});
 				return resj;
 			})
