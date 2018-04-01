@@ -20,7 +20,7 @@ export default class LocationPreferences extends React.Component {
 		super();
 		this.state = {
 			roomChoice: '',
-			stairsElevator: 'stairs'
+			stairsElevator: 'Stairs'
 		};
 	}
     render() {
@@ -50,17 +50,21 @@ export default class LocationPreferences extends React.Component {
 	go = () => {
 		///STUB start navigation
 		console.log('got user destination and stairs/elevator prefs');
+		this.props.startNavigation({
+			destination: this.state.roomChoice,
+			stairs: this.state.stairsElevator==='Stairs'
+		});
 		// for now, give an alert of destination and stairs/elevator
-		Alert.alert(
-			'BEGIN NAVIGATION',
-			'Destination: '+this.state.roomChoice+'\n'+
-			'Using: '+this.state.stairsElevator,
-			[],
-			{
-				cancelable:true,
-				onDismiss: ()=>{}
-			}
-		);
+		// Alert.alert(
+		// 	'BEGIN NAVIGATION',
+		// 	'Destination: '+this.state.roomChoice+'\n'+
+		// 	'Using: '+this.state.stairsElevator,
+		// 	[],
+		// 	{
+		// 		cancelable:true,
+		// 		onDismiss: ()=>{}
+		// 	}
+		// );
 	}
 	getRoomChoice = (room) => {
 		this.setState({
