@@ -27,10 +27,6 @@ export default class LocationPreferences extends React.Component {
     render() {
         return (
 			<View style={styles.container} >
-				{/*
-					don't include toom search yet, get Accessibility working first
-				<RoomSearch />
-				*/}
 				<RoomSearch
 					getChoice={this.getRoomChoice}
 				/>

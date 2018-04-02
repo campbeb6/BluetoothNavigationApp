@@ -61,6 +61,8 @@ const imgs = {
 	'1036_2053_elevator'	: require('../img/1036_2053_elevator.png'),
 	'1036_1026_stairs'		: require('../img/1036_1026_stairs.png'),
 	'1036_1026_elevator'	: require('../img/1036_1026_elevator.png'),
+	'1036_1022_stairs'		: require('../img/1036_1022_stairs.png'),
+	'1036_1022_elevator'	: require('../img/1036_1022_elevator.png'),
 	'blank_map'				: require('../img/blank_map.png')
 };
 //

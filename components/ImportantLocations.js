@@ -7,17 +7,13 @@ export default class ImportantLocations extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			choice: '1000'
+			choice: ''
 		}
 	}
 
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text style={styles.paragraph}>
-					Select a popular location!
-				</Text>
-
 				<Picker
 					style={{width: '100%'}}
 					selectedValue = {this.state.choice}
@@ -28,6 +24,7 @@ export default class ImportantLocations extends React.Component {
 							this.props.getChoice(choice)
 						});
 					}}>
+						<Picker.Item label="" value="" />
 						<Picker.Item label="Taylor Auditorium" value="1000" />
 						<Picker.Item label="Advising Offices" value="1022" />
 						<Picker.Item label="Dividends" value="1026" />
