@@ -14,6 +14,7 @@ export default class ImportantLocations extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
+				<Text>OR choose a popular location</Text>
 				<Picker
 					style={{width: '100%'}}
 					selectedValue = {this.state.choice}

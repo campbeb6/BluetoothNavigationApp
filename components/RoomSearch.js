@@ -28,7 +28,7 @@ export default class RoomSearch extends React.Component {
         // return JSX that defines appearance
         // JavaScript expressions must be inside curly braces { }
         return (
-            <View>
+            <View style={{backgroundColor: '#ffffff'}}>
                 <Text>Search room</Text>
                 <TextInput
                   	style={styles.input}

@@ -27,15 +27,21 @@ export default class LocationPreferences extends React.Component {
     render() {
         return (
 			<View style={styles.container} >
-				<RoomSearch
-					getChoice={this.getRoomChoice}
-				/>
-				<ImportantLocations
-					getChoice={this.getRoomChoice}
-				/>
-				<Accessibility
-					getStairsOrElevator={this.getStairsOrElevator}
-				/>
+				<View style={{flex:.4}}>
+					<RoomSearch
+						getChoice={this.getRoomChoice}
+					/>
+				</View>
+				<View style={{flex:.4}}>
+					<ImportantLocations
+						getChoice={this.getRoomChoice}
+					/>
+				</View>
+				<View style={{flex:.07}}>
+					<Accessibility
+						getStairsOrElevator={this.getStairsOrElevator}
+					/>
+				</View>
 				<View style = {styles.fullWidthButton}>
 					<Button
 						title = "Go"
@@ -74,14 +80,15 @@ export default class LocationPreferences extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex : 1,
-		// backgroundColor: '#F5FCFF',
+		backgroundColor: '#FFFFFF',
 		// alignItems: 'flex-end',
 		// justifyContent: 'flex-end',
 	},
 	fullWidthButton: {
 		width: '100%',
-		height: '12%',
-		// align button at bottom of screen
+		flex: .03,
+		// height: '12%',
+		// // align button at bottom of screen
 		position: 'absolute',
 		bottom: 0
 	}
