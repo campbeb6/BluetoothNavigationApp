@@ -14,6 +14,7 @@ import {
 
 import Accessibility from './Accessibility';
 import RoomSearch from './RoomSearch';
+import ImportantLocations from './ImportantLocations';
 
 export default class LocationPreferences extends React.Component {
 	constructor() {
@@ -31,6 +32,9 @@ export default class LocationPreferences extends React.Component {
 				<RoomSearch />
 				*/}
 				<RoomSearch
+					getChoice={this.getRoomChoice}
+				/>
+				<ImportantLocations
 					getChoice={this.getRoomChoice}
 				/>
 				<Accessibility
@@ -54,23 +58,12 @@ export default class LocationPreferences extends React.Component {
 			destination: this.state.roomChoice,
 			stairs: this.state.stairsElevator==='Stairs'
 		});
-		// for now, give an alert of destination and stairs/elevator
-		// Alert.alert(
-		// 	'BEGIN NAVIGATION',
-		// 	'Destination: '+this.state.roomChoice+'\n'+
-		// 	'Using: '+this.state.stairsElevator,
-		// 	[],
-		// 	{
-		// 		cancelable:true,
-		// 		onDismiss: ()=>{}
-		// 	}
-		// );
 	}
 	getRoomChoice = (room) => {
 		this.setState({
 			roomChoice: room
 		},()=>{
-			console.log('got room '+room+' from RoomSearch');
+			console.log('got room '+room+' from RoomSearch/ImportantLocations');
 		});
 	}
 	getStairsOrElevator = (choice) => {
