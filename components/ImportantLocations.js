@@ -7,19 +7,8 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      state: 'fun'
+      PickerValue:''
     }
-  }
-  
-  function getRooms() {
-  return fetch('http://10.36.0.144:3000/rooms')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      return responseJson.rooms;
-    })
-    .catch((error) => {
-      console.error("Data could not be retrieved");
-    });
   }
   
   render() {
@@ -30,18 +19,18 @@ export default class App extends Component {
         </Text>
         
 		<Picker
-          style={{width: 100}}
-          selectedValue={this.state.language}
-          onValueChange={(lang) => this.setState({language: lang})}>
-          <Picker.Item label="Taylor Auditorium" value="fsb1001" />
-          <Picker.Item label="Advising Offices" value="fsb1001" />
-		  <Picker.Item label="Bathrooms" value="fsb1002" />
-          <Picker.Item label="Dividends" value="fsb1003" />
+          style={{width: '80%'}}
+          selectedValue={this.state.PickerValue}
+          onValueChange={(itemValue, itemIndex) => this.setState({PickerValue:itemValue})}>
+          <Picker.Item label="Taylor Auditorium" value="[Xcoord, YCoord]" />
+          <Picker.Item label="Advising Offices" value="[Xcoord, YCoord]" />
+		  <Picker.Item label="Bathrooms" value="[Xcoord, YCoord]" />
+          <Picker.Item label="Dividends" value="[Xcoord, YCoord]" />
         </Picker>
 		
 		<Button	
 		onPress={() => {
-			Alert.alert(this.lang);
+			Alert.alert(this.state.PickerValue);
 		}}
 		title="Navigate"
 		color="#FF0000"/>
