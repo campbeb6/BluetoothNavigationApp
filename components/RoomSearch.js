@@ -28,7 +28,12 @@ export default class RoomSearch extends React.Component {
         // return JSX that defines appearance
         // JavaScript expressions must be inside curly braces { }
         return (
-            <View style={{backgroundColor: '#ffffff'}}>
+            <View style={{
+				backgroundColor: '#ffffff',
+				alignItems: 'center',
+				//justifyContent: 'center',
+				width: '100%'
+			}}>
                 <Text>Search room</Text>
                 <TextInput
                   	style={styles.input}
@@ -108,11 +113,11 @@ export default class RoomSearch extends React.Component {
 const styles = StyleSheet.create({
     input:{ // style for room number search box
         // height: 40,
-        // width: 200,
+        width: '100%'
         // borderColor: 'gray',
         // borderWidth: 1,
     },
     matchList:{
-        //width: 100 // will not display without width property
+        width: '100%'
     },
 });

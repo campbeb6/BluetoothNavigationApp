@@ -27,7 +27,7 @@ export default class LocationPreferences extends React.Component {
     render() {
         return (
 			<View style={styles.container} >
-				<View style={{flex:.4}}>
+				<View style={{flex:.3}}>
 					<RoomSearch
 						getChoice={this.getRoomChoice}
 					/>
