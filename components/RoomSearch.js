@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput,
-	Picker, Button, Alert, TouchableOpacity, FlatList } from 'react-native';
+	Picker, Button, Alert, TouchableOpacity, ScrollView } from 'react-native';
 
 /* Purpose of the RoomSearch class is to allow the user to search a room number
  * within FSB as free-form text. When they begin typing, matching rooms will
@@ -21,10 +21,23 @@ export default class RoomSearch extends React.Component {
      * show up when a <RoomSearch /> tag is used */
     render() {
         // return a Picker item for each room match from server
-        let roomChoices = [];
-		for(let i=0;i<this.state.matches.length;i++) {
-			roomChoices.push(String(this.state.matches.roomNum));
-		}
+		let roomChoices = this.state.matches.map((match,i)=>{
+            return (
+				<View>
+					<TouchableOpacity
+						onPress={()=>{
+							this.setState({
+								choice: match.roomNum
+							},()=>{
+								console.log('set choice to '+match.roomNum);
+							});
+						}}
+					>
+						<Text>{match.roomNum}</Text>
+					</TouchableOpacity>
+				</View>
+			);
+        });
         return (
             <View style={{flex:1}}>
 				<View>
@@ -40,20 +53,9 @@ export default class RoomSearch extends React.Component {
 						}}
 					/>
 				</View>
-				<View>
-					<FlatList
-						style={{flex:1}}
-						data={[
-							{roomNum: '1000'},
-							{roomNum: '1001'},
-							{roomNum: '1002'}
-						]}
-						renderItem={({item,index}) => {
-							console.log('rendering item '+JSON.stringify(item));
-							<Text>{item.roomNum}</Text>
-						}}
-					/>
-				</View>
+				<ScrollView>
+					{roomChoices}
+				</ScrollView>
             </View>
         );
     }
