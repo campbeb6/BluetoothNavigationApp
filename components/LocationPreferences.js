@@ -27,17 +27,18 @@ export default class LocationPreferences extends React.Component {
     render() {
         return (
 			<View style={styles.container} >
-				<View style={{flex:.3}}>
+				<View style={{flex:.25, flexDirection:'column'}}>
 					<RoomSearch
 						getChoice={this.getRoomChoice}
 					/>
 				</View>
-				<View style={{flex:.4}}>
+				<View style={{flex: .25, flexDirection:'column'}}>
 					<ImportantLocations
 						getChoice={this.getRoomChoice}
 					/>
 				</View>
-				<View style={{flex:.07}}>
+				<View style={{position: 'absolute', bottom: 50, width: '100%', flexDirection: 'column'}}>
+					<Text style = {{color: '#000000'}}>Elevator or Stairs?</Text>
 					<Accessibility
 						getStairsOrElevator={this.getStairsOrElevator}
 					/>

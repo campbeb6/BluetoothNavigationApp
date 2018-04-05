@@ -14,22 +14,26 @@ export default class ImportantLocations extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text>OR choose a popular location</Text>
-				<Picker
-					style={{width: '100%'}}
-					selectedValue = {this.state.choice}
-					onValueChange={(choice) => {
-						this.setState({
-							choice: choice
-						},()=>{
-							this.props.getChoice(choice)
-						});
-					}}>
-						<Picker.Item label="" value="" />
-						<Picker.Item label="Taylor Auditorium" value="1000" />
-						<Picker.Item label="Advising Offices" value="1022" />
-						<Picker.Item label="Dividends" value="1026" />
-				</Picker>
+				<View style={{flex: .8}}>
+					<Text style = {{color: '#000000'}}>OR choose a popular location</Text>
+				</View>
+				<View style={{flex: 1, alignItems: 'flex-end'}}>
+					<Picker
+						style={{width: '100%'}}
+						selectedValue = {this.state.choice}
+						onValueChange={(choice) => {
+							this.setState({
+								choice: choice
+							},()=>{
+								this.props.getChoice(choice)
+							});
+						}}>
+							<Picker.Item label="" value="" />
+							<Picker.Item label="Taylor Auditorium" value="1000" />
+							<Picker.Item label="Advising Offices" value="1022" />
+							<Picker.Item label="Dividends" value="1026" />
+					</Picker>
+				</View>
 			</View>
 		);
 	}
@@ -37,9 +41,9 @@ export default class ImportantLocations extends React.Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
+		flex: .4,
 		alignItems: 'center',
-		justifyContent: 'center',
+		flexDirection: 'row',
 		// paddingTop: Constants.statusBarHeight,
 		backgroundColor: '#ffffff'
 	},

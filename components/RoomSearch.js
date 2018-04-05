@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput,
-    Picker, Button, Alert } from 'react-native';
+	Picker, Button, Alert, TouchableOpacity } from 'react-native';
+import Autocomplete, { AutoComplete } from 'react-native-autocomplete-input';
 
 /* Purpose of the RoomSearch class is to allow the user to search a room number
  * within FSB as free-form text. When they begin typing, matching rooms will
@@ -24,47 +25,54 @@ export default class RoomSearch extends React.Component {
         // return a Picker item for each room match from server
         let roomChoices = this.state.matches.map((match,i)=>{
             return (<Picker.Item key={i} label={match.roomNum} value={match.roomNum} />);
-        });
+		});
+		const { quesry } = this.state.matches;
+		const data = this.getMatches
         // return JSX that defines appearance
         // JavaScript expressions must be inside curly braces { }
         return (
             <View style={{
 				backgroundColor: '#ffffff',
 				alignItems: 'center',
+				flexDirection: 'row',
 				//justifyContent: 'center',
 				width: '100%'
 			}}>
-                <Text>Search room</Text>
-                <TextInput
-                  	style={styles.input}
-                  	editable={true}
-                  	numberOfLines={1}
-                  	maxLength={100}
-					onChangeText = {this.getMatches}
-				/>
-
+				<Text style = {{color: '#000000'}}>Search room:</Text>
+				<View style = {{flex: .5}}>
+					{<TextInput
+						style={styles.input}
+						editable={true}
+						numberOfLines={1}
+						maxLength={100}
+						onChangeText = {this.getMatches}
+					/>}
+				</View>
 				{/* this picker is supposed to be dropdown options, doesn't
 				  * look great on Android though, instead maybe we can use:
 				  * https://www.npmjs.com/package/react-native-autocomplete-input */}
-                <Picker
-                    style={styles.matchList}
-                    selectedValue={this.state.choice}
-                    onValueChange={(val)=>{
-                        this.setState({
-							choice:val
-						},()=>{
-							// pass choice back to LocationPreferences.js
-							if(this.state.choice!=='') {
-								this.props.getChoice(this.state.choice);
-							}
-						});
-                    }}
-                    >
-                    {/*start the list with a blank option*/}
-                    <Picker.Item key={-1} label={''} value={''} />
-                    {/* then, dynamically get room matches and fill Picker */
-                        roomChoices
-                }</Picker>
+				<View style = {{flex: 1, alignItems: 'flex-end'}}>
+					<Picker
+						style={styles.matchList}
+						selectedValue={this.state.choice}
+						onValueChange={(val)=>{
+							this.setState({
+								choice:val
+							},()=>{
+								// pass choice back to LocationPreferences.js
+								if(this.state.choice!=='') {
+									this.props.getChoice(this.state.choice);
+								}
+							});
+						}}
+						>
+						{/*start the list with a blank option*/}
+						<Picker.Item key={-1} label={''} value={''} />
+						{/* then, dynamically get room matches and fill Picker */
+							roomChoices
+						}
+					</Picker>
+				</View>
             </View>
         );
     }
@@ -119,5 +127,5 @@ const styles = StyleSheet.create({
     },
     matchList:{
         width: '100%'
-    },
+	}
 });
