@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput,
-	Picker, Button, Alert, TouchableOpacity } from 'react-native';
-import AutoSuggest from 'react-native-autosuggest';
+	Picker, Button, Alert, TouchableOpacity, FlatList } from 'react-native';
 
 /* Purpose of the RoomSearch class is to allow the user to search a room number
  * within FSB as free-form text. When they begin typing, matching rooms will
@@ -14,7 +13,6 @@ export default class RoomSearch extends React.Component {
         super();
 		console.log('RoomSearch constructor');
         this.state = {
-            entry: '', // text that user enters into box
             matches: [], // array of rooms that match entry
             choice: '' // the room for which the user wants directions
         };
@@ -28,19 +26,32 @@ export default class RoomSearch extends React.Component {
 			roomChoices.push(String(this.state.matches.roomNum));
 		}
         return (
-            <View style={{
-				// backgroundColor: '#ffffff',
-				// alignItems: 'center',
-				// flexDirection: 'row',
-				// flex: 1,
-				// //justifyContent: 'center',
-				// width: '100%'
-			}}>
+            <View style={{flex:1}}>
 				<View>
-					<AutoSuggest
-						onChangeText={(text)=>this.setState({entry:text},this.getMatches(text))}
-						terms={roomChoices}
-						placeholder={'Search here'}
+					<TextInput
+						value={this.state.choice}
+						onChangeText={(text)=>{
+							this.setState({
+								choice: text
+							},() => {
+								console.log('set choice to '+this.state.choice);
+								this.getMatches(this.state.choice)
+							});
+						}}
+					/>
+				</View>
+				<View>
+					<FlatList
+						style={{flex:1}}
+						data={[
+							{roomNum: '1000'},
+							{roomNum: '1001'},
+							{roomNum: '1002'}
+						]}
+						renderItem={({item,index}) => {
+							console.log('rendering item '+JSON.stringify(item));
+							<Text>{item.roomNum}</Text>
+						}}
 					/>
 				</View>
             </View>
