@@ -26,52 +26,37 @@ export default class RoomSearch extends React.Component {
         let roomChoices = this.state.matches.map((match,i)=>{
             return (<Picker.Item key={i} label={match.roomNum} value={match.roomNum} />);
 		});
-		const { quesry } = this.state.matches;
-		const data = this.getMatches
-        // return JSX that defines appearance
-        // JavaScript expressions must be inside curly braces { }
         return (
             <View style={{
 				backgroundColor: '#ffffff',
 				alignItems: 'center',
 				flexDirection: 'row',
+				flex: 1,
 				//justifyContent: 'center',
 				width: '100%'
 			}}>
-				<Text style = {{color: '#000000'}}>Search room:</Text>
-				<View style = {{flex: .5}}>
-					{<TextInput
-						style={styles.input}
-						editable={true}
-						numberOfLines={1}
-						maxLength={100}
-						onChangeText = {this.getMatches}
-					/>}
-				</View>
 				{/* this picker is supposed to be dropdown options, doesn't
 				  * look great on Android though, instead maybe we can use:
 				  * https://www.npmjs.com/package/react-native-autocomplete-input */}
-				<View style = {{flex: 1, alignItems: 'flex-end'}}>
-					<Picker
-						style={styles.matchList}
-						selectedValue={this.state.choice}
-						onValueChange={(val)=>{
-							this.setState({
-								choice:val
+				<View style = {{flex: 1, alignItems: 'flex-start'}}>
+					<Autocomplete
+						placeHolder = {this.state.entry}
+						defaultValue = {this.state.entry}
+						onChangeText = {text=>this.setState({entry:text},()=>{this.getMatches(text)})}
+						containerStyle = {styles.autocompleteContainer}
+						hideResults = {false}
+						data = {this.state.entry===''?[]:this.state.matches}
+						renderItem = {(item)=>(
+							<TouchableOpacity onPress={() => this.setState({
+								entry: item.roomNum,
+								choice: item.roomNum
 							},()=>{
-								// pass choice back to LocationPreferences.js
-								if(this.state.choice!=='') {
-									this.props.getChoice(this.state.choice);
-								}
-							});
-						}}
-						>
-						{/*start the list with a blank option*/}
-						<Picker.Item key={-1} label={''} value={''} />
-						{/* then, dynamically get room matches and fill Picker */
-							roomChoices
-						}
-					</Picker>
+								this.props.getChoice(this.state.choice)
+							})} >
+								<Text>{item.roomNum}</Text>
+							</TouchableOpacity>
+						)}
+					/>
 				</View>
             </View>
         );
@@ -79,6 +64,20 @@ export default class RoomSearch extends React.Component {
 
 	// get room numbers matching the user's input
 	getMatches = (text) => {
+		// USE DUMMY DATA FOR NOW
+		if(1===1) {
+			this.setState({
+				matches: [
+					{roomNum: text+'1'},
+					{roomNum: text+'2'},
+					{roomNum: text+'3'}
+				]
+			},()=>{
+				console.log('set dummy matches to '+JSON.stringify(this.state.matches))
+			});
+			return;
+		}
+
 		// add in some dummy data for new routes
 		let dummyRooms = [
 			{roomNum:'2037',popular:'false'},
@@ -119,13 +118,12 @@ export default class RoomSearch extends React.Component {
 
 // styles go outside of the class body, call with {styles.styleName}
 const styles = StyleSheet.create({
-    input:{ // style for room number search box
-        // height: 40,
-        width: '100%'
-        // borderColor: 'gray',
-        // borderWidth: 1,
-    },
-    matchList:{
-        width: '100%'
+	autocompleteContainer: {
+		flex: 1,
+		left: 0,
+		position: 'absolute',
+		right: 0,
+		top: 0,
+		zIndex: 1
 	}
 });
