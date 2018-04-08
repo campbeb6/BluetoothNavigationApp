@@ -2,12 +2,19 @@ import React, {Component} from 'react';
 import { Platform, StyleSheet, Text, View, FlatList } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 
+// Beacons IDs
 const beacon1_id = '8D367CB8-2A4F-B555-556F-05F8F17043F8';
 const beacon2_id = '62A0007D-4252-BA82-EE95-A98A12A47A5D';
 
+// Number of beacons being used/considered
+const NUMBER_OF_BEACONS = 2;
+
+// The interval between getting RSSI values
+const INTERVAL_LENGTH = 1000;
+
 /*
- * This class connects to two bluetooth beacons, obtains their
- * initial RSSI values, and displays them
+ * This class reads the RSSI values of specified estimote
+ * beacons and updates and displays them
  */
 export default class EstablishBluetoothConnection extends Component {
 
@@ -31,12 +38,8 @@ export default class EstablishBluetoothConnection extends Component {
       if (name) {
         if (name.startsWith("estimote")) {
           beacon_count++;
-          const transactionId = 'Monitor rssi';
-          device.connect();
-          this.rssiTimer = setInterval (() =>
-            this.updateAndReadRSSI(device, transactionId), 2000
-          );
-          if (beacon_count >= 2) {
+          this.updateAndReadRSSI(device);
+          if (beacon_count >= NUMBER_OF_BEACONS) {
             this.manager.stopDeviceScan();
           }
         }
@@ -47,23 +50,19 @@ export default class EstablishBluetoothConnection extends Component {
   /*
    * Reads the RSSI value of the given device
    * @param device: the device being measured
-   * @param transActionID: transactionID of transaction
    */
-  updateAndReadRSSI(device, transactionId) {
-    device.readRSSI(transactionId)
-    .then((device) => {
-      if (device.id === beacon1_id) {
-        this.setState({
-          beacon1_rssi: device.rssi
-        });
-      } else {
-        this.setState({
-          beacon2_rssi: device.rssi
-        });
-      }
-    }, () => {
-      // Do nothing
-    });
+  updateAndReadRSSI(device) {
+
+    if (device.id === beacon1_id) {
+      this.setState({
+        beacon1_rssi: device.rssi
+      });
+    } else if (device.id === beacon2_id) {
+      this.setState({
+        beacon2_rssi: device.rssi
+      });
+    }
+
   }
 
   render() {
@@ -83,17 +82,27 @@ export default class EstablishBluetoothConnection extends Component {
    if (Platform.OS === 'ios') {
      this.manager.onStateChange((state) => {
        if (state === 'PoweredOn') {
-         this.scan();
+         this.rssiTimer = setInterval (() =>
+          this.scan(), INTERVAL_LENGTH
+        );
        }
      });
      this.manager.state().then((state) => {
        if (state === 'PoweredOn') {
-         this.scan();
+         this.rssiTimer = setInterval (() =>
+          this.scan(), INTERVAL_LENGTH
+        );
        }
      });
    } else {
-     this.scan()
+     this.rssiTimer = setInterval (() =>
+      this.scan(), INTERVAL_LENGTH
+    );
    }
+ }
+
+ componentWillUnmount() {
+   clearInterval(this.rssiTimer);
  }
 } // End class
 
