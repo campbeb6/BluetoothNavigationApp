@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,Image,Dimensions } from 'react-native';
+import ImageZoom from 'react-native-image-pan-zoom';
 
 export default class Navigation extends React.Component {
 	constructor() {
@@ -21,12 +22,19 @@ export default class Navigation extends React.Component {
 					<Text>{'Use stairs:  '+this.props.stairs}</Text>
 				</View>
 				<View style={{flex:0.8}}>
-					<Image
-						resizeMode = "contain"
-						source={floorplans.floor2}
-						style={{flex:1}}
-						width={Dimensions.get('window').width}
-					/>
+					<ImageZoom
+						cropWidth={Dimensions.get('window').width}
+						cropHeight={Dimensions.get('window').height}
+						imageWidth={Dimensions.get('window').width}
+						imageHeight={Dimensions.get('window').height}
+					><Image
+							resizeMode = "contain"
+							source={floorplans.floor2}
+							style={{flex:1}}
+							width={Dimensions.get('window').width}
+							height={Dimensions.get('window').height}
+						/>
+					</ImageZoom>
 				</View>
 				<View style={{flex:0.1}}>
 					<TouchableOpacity onPress={this.props.goBack}>
