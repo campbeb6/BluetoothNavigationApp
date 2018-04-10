@@ -9,9 +9,14 @@ export default class Navigation extends React.Component {
 		}
 	}
 	render() {
+		// startingLocation
+		// destination
+		// stairs
 		return(
 			<View style={{flex:1}} >
-			
+				<Text>{'Starting location:  '+this.props.startingLocation}</Text>
+				<Text>{'Destination:  '+this.props.destination}</Text>
+				<Text>{'Use stairs:  '+this.props.stairs}</Text>
 			</View>
 		);
 	}

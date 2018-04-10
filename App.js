@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import LocationPreferences from './components/LocationPreferences';
-import NavigationDemo from './components/NavigationDemo';
+import Navigation from './components/Navigation';
 
 export default class App extends React.Component {
 	constructor() {
@@ -33,7 +33,7 @@ export default class App extends React.Component {
 
 	startNavigation = (prefs) => {
 		this.setState({
-			activePage: <NavigationDemo
+			activePage: <Navigation
 				startingLocation = {'1036'}
 				destination = {prefs.destination}
 				stairs = {prefs.stairs}
