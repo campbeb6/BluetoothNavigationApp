@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import ImageView from 'react-native-image-view';
+import PhotoView from 'react-native-photo-view';
 
 export default class Navigation extends React.Component {
 	constructor() {
@@ -22,11 +22,13 @@ export default class Navigation extends React.Component {
 					<Text>{'Use stairs:  '+this.props.stairs}</Text>
 				</View>
 				<View>
-					<ImageView style={{flex:0.1}}
-						images={floorplans}
-						imageIndex={0}
-						isVisible={true}
-					/>
+				<PhotoView
+					source={require('../img/fsb_floor1.png')}
+					minimumZoomScale={0.5}
+					maximumZoomScale={3}
+					onLoad={() => console.log("Image loaded!")}
+					style={{width: 300, height: 300}}
+				/>
 				</View>
 				<View style={{flex:0.1}}>
 					<TouchableOpacity onPress={this.props.goBack}>
