@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,Image,Dimensions } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
+import Svg from 'react-native-svg';
 
 export default class Navigation extends React.Component {
 	constructor() {

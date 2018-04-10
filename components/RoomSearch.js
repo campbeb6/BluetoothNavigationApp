@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput,
 	Picker, Button, Alert, TouchableOpacity } from 'react-native';
-import Autocomplete, { AutoComplete } from 'react-native-autocomplete-input';
 
 /* Purpose of the RoomSearch class is to allow the user to search a room number
  * within FSB as free-form text. When they begin typing, matching rooms will
