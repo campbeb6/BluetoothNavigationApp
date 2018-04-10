@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,Image,Dimensions } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
-import Svg from 'react-native-svg';
+import Svg, {Rect} from 'react-native-svg';
 
 export default class Navigation extends React.Component {
 	constructor() {
@@ -22,7 +22,7 @@ export default class Navigation extends React.Component {
 					<Text>{'Destination:  '+this.props.destination}</Text>
 					<Text>{'Use stairs:  '+this.props.stairs}</Text>
 				</View>
-				<View style={{flex:0.8}}>
+				<View style={{flex:0.4}}>
 					<ImageZoom
 						cropWidth={Dimensions.get('window').width}
 						cropHeight={Dimensions.get('window').height}
@@ -37,6 +37,20 @@ export default class Navigation extends React.Component {
 						/>
 					</ImageZoom>
 				</View>
+				<Svg
+                	height="100"
+                	width="100"
+            	>
+					<Rect
+						x="15"
+						y="15"
+						width="70"
+						height="70"
+						stroke="red"
+						strokeWidth="2"
+						fill="yellow"
+					/>
+				</Svg>
 				<View style={{flex:0.1}}>
 					<TouchableOpacity onPress={this.props.goBack}>
 						<Text>{'BACK'}</Text>
