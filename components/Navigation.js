@@ -31,7 +31,7 @@ export default class Navigation extends React.Component {
 		// convert grid x to floorplan pixel x
 		let xpx = Math.floor(scaleFactor*(cellWidth*x + cellMiddle - xOffset)); //subtract 1 for line width
 		console.log('x: '+x+', xpx: '+xpx);
-		return String(xpx+2);
+		return String(xpx+1);
 	}
 	ycoord = (y,scaleFactor) => {
 		// adjust for 21px width of cell, 3px y-offset, and 10.5 for center
@@ -93,7 +93,7 @@ export default class Navigation extends React.Component {
 					y1={this.ycoord(pair.y,scale)}
 					x2={this.xcoord(this.state.route[i+1].x,scale)}
 					y2={this.ycoord(this.state.route[i+1].y,scale)}
-					strokeWidth="2"
+					strokeWidth="1.5"
 					stroke="blue"
 				/>
 			)
