@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,Image,Dimensions } from 'react-native';
 import PinchZoomView from 'react-native-pinch-zoom-view';
-import Svg, {Rect,Line} from 'react-native-svg';
+import Svg, {Rect,Line,Circle} from 'react-native-svg';
 
 export default class Navigation extends React.Component {
 	constructor() {
@@ -85,6 +85,18 @@ export default class Navigation extends React.Component {
 							stroke="blue"
 							strokeWidth="2"
 						/>
+						<Circle
+							cx={route[0].x}
+							cy={route[0].y}
+							r="3"
+							fill="blue"
+						/>
+						<Circle
+							cx={route[0].x}
+							cy={route[0].y}
+							r="2"
+							fill="lightblue"
+						/>
 						<Line
 							x1={route[1].x}
 							y1={route[1].y}
@@ -116,6 +128,18 @@ export default class Navigation extends React.Component {
 							y2={route[5].y}
 							stroke="blue"
 							strokeWidth="2"
+						/>
+						<Circle
+							cx={route[5].x}
+							cy={route[5].y}
+							r="5"
+							fill="red"
+						/>
+						<Circle
+							cx={route[5].x}
+							cy={route[5].y}
+							r="2"
+							fill="#000000"
 						/>
 					</Svg>
 				</PinchZoomView>
