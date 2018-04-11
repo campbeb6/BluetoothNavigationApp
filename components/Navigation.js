@@ -29,23 +29,23 @@ export default class Navigation extends React.Component {
 
 		// example route
 		const route = [{
-				x: String(Math.floor(50/FLOORPLAN_WIDTH*IMG_WIDTH)),
+				x: String(Math.floor(52/FLOORPLAN_WIDTH*IMG_WIDTH)),
 				y: String(Math.floor(260/FLOORPLAN_HEIGHT*IMG_HEIGHT))
 			},{
-				x: String(Math.floor(50/FLOORPLAN_WIDTH*IMG_WIDTH)),
+				x: String(Math.floor(52/FLOORPLAN_WIDTH*IMG_WIDTH)),
 				y: String(Math.floor(285/FLOORPLAN_HEIGHT*IMG_HEIGHT))
 			},{
-				x: String(Math.floor(78/FLOORPLAN_WIDTH*IMG_WIDTH)),
+				x: String(Math.floor(80/FLOORPLAN_WIDTH*IMG_WIDTH)),
 				y: String(Math.floor(285/FLOORPLAN_HEIGHT*IMG_HEIGHT))
 			},{
-				x: String(Math.floor(78/FLOORPLAN_WIDTH*IMG_WIDTH)),
+				x: String(Math.floor(80/FLOORPLAN_WIDTH*IMG_WIDTH)),
 				y: String(Math.floor(142/FLOORPLAN_HEIGHT*IMG_HEIGHT))
 			},{
-				x: String(Math.floor(120/FLOORPLAN_WIDTH*IMG_WIDTH)),
+				x: String(Math.floor(122/FLOORPLAN_WIDTH*IMG_WIDTH)),
 				y: String(Math.floor(142/FLOORPLAN_HEIGHT*IMG_HEIGHT))
 			},
 			{
-				x: String(Math.floor(120/FLOORPLAN_WIDTH*IMG_WIDTH)),
+				x: String(Math.floor(122/FLOORPLAN_WIDTH*IMG_WIDTH)),
 				y: String(Math.floor(105/FLOORPLAN_HEIGHT*IMG_HEIGHT))
 			}
 		];
@@ -73,7 +73,7 @@ export default class Navigation extends React.Component {
 							y="0"
 							width={Dimensions.get('window').width}
 							height={Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH)}
-							stroke="red"
+							stroke="blue"
 							strokeWidth="2"
 							fill="none"
 						/>
@@ -82,7 +82,7 @@ export default class Navigation extends React.Component {
 							y1={route[0].y}
 							x2={route[1].x}
 							y2={route[1].y}
-							stroke="red"
+							stroke="blue"
 							strokeWidth="2"
 						/>
 						<Line
@@ -90,7 +90,7 @@ export default class Navigation extends React.Component {
 							y1={route[1].y}
 							x2={route[2].x}
 							y2={route[2].y}
-							stroke="red"
+							stroke="blue"
 							strokeWidth="2"
 						/>
 						<Line
@@ -98,7 +98,7 @@ export default class Navigation extends React.Component {
 							y1={route[2].y}
 							x2={route[3].x}
 							y2={route[3].y}
-							stroke="red"
+							stroke="blue"
 							strokeWidth="2"
 						/>
 						<Line
@@ -106,7 +106,7 @@ export default class Navigation extends React.Component {
 							y1={route[3].y}
 							x2={route[4].x}
 							y2={route[4].y}
-							stroke="red"
+							stroke="blue"
 							strokeWidth="2"
 						/>
 						<Line
@@ -114,7 +114,7 @@ export default class Navigation extends React.Component {
 							y1={route[4].y}
 							x2={route[5].x}
 							y2={route[5].y}
-							stroke="red"
+							stroke="blue"
 							strokeWidth="2"
 						/>
 					</Svg>
