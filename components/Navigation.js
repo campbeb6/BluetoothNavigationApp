@@ -51,7 +51,9 @@ export default class Navigation extends React.Component {
 		];
 		return(
 			<View style={{flex:1}} >
-				<View style={{flex:0.1}}>
+				<View style={{
+					flex:0.1
+				}}>
 					<Text>{'Starting location:  '+this.props.startingLocation}</Text>
 					<Text>{'Destination:  '+this.props.destination}</Text>
 					<Text>{'Use stairs:  '+this.props.stairs}</Text>
@@ -73,7 +75,7 @@ export default class Navigation extends React.Component {
 							y="0"
 							width={Dimensions.get('window').width}
 							height={Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH)}
-							stroke="blue"
+							stroke="red"
 							strokeWidth="2"
 							fill="none"
 						/>
