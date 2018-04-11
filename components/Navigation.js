@@ -20,14 +20,19 @@ export default class Navigation extends React.Component {
 		this.setState({
 			imgWidth: Dimensions.get('window').width,
 			imgHeight: Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH)
-		})
+		});
 	}
 
-	xcoord = (x) => {
-		return String(Math.floor(x/FLOORPLAN_WIDTH*this.state.imgWidth));
+	xcoord = (x,w) => {
+		return String(Math.floor(x/FLOORPLAN_WIDTH*w));
+	}
+	ycoord = (y,h) => {
+		return String(Math.floor(y/FLOORPLAN_HEIGHT*h))
 	}
 
 	render() {
+		let IMG_HEIGHT = Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH);
+		let IMG_WIDTH = Dimensions.get('window').width;
 		// PROPS:
 		// startingLocation
 		// destination
@@ -38,31 +43,27 @@ export default class Navigation extends React.Component {
 			left: 0
 		};
 
-		const IMG_WIDTH = Dimensions.get('window').width;
-		const IMG_HEIGHT = Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH);
-
-		// example route
-		const route = [{
-				x: this.xcoord(52),
-				y: String(Math.floor(260/FLOORPLAN_HEIGHT*IMG_HEIGHT))
-			},{
-				x: String(Math.floor(52/FLOORPLAN_WIDTH*IMG_WIDTH)),
-				y: String(Math.floor(285/FLOORPLAN_HEIGHT*IMG_HEIGHT))
-			},{
-				x: String(Math.floor(80/FLOORPLAN_WIDTH*IMG_WIDTH)),
-				y: String(Math.floor(285/FLOORPLAN_HEIGHT*IMG_HEIGHT))
-			},{
-				x: String(Math.floor(80/FLOORPLAN_WIDTH*IMG_WIDTH)),
-				y: String(Math.floor(142/FLOORPLAN_HEIGHT*IMG_HEIGHT))
-			},{
-				x: String(Math.floor(122/FLOORPLAN_WIDTH*IMG_WIDTH)),
-				y: String(Math.floor(142/FLOORPLAN_HEIGHT*IMG_HEIGHT))
-			},
-			{
-				x: String(Math.floor(122/FLOORPLAN_WIDTH*IMG_WIDTH)),
-				y: String(Math.floor(105/FLOORPLAN_HEIGHT*IMG_HEIGHT))
-			}
+		let sampleRoute = [
+			{x:52,y:260},
+			{x:52,y:285},
+			{x:80,y:285},
+			{x:80,y:142},
+			{x:122,y:142},
+			{x:122,y:105}
 		];
+
+		let loadRoute = sampleRoute.map((pair,i)=>{
+			if(i<sampleRoute.length-1) return (
+				<Line
+					x1={this.xcoord(pair.x,IMG_WIDTH)}
+					y1={this.ycoord(pair.y,IMG_HEIGHT)}
+					x2={this.xcoord(sampleRoute[i+1].x,IMG_WIDTH)}
+					y2={this.ycoord(sampleRoute[i+1].y,IMG_HEIGHT)}
+					strokeWidth="2"
+					stroke="blue"
+				/>
+			)
+		});
 
 		return(
 			<View style={{flex:1}} >
@@ -94,67 +95,28 @@ export default class Navigation extends React.Component {
 							strokeWidth="2"
 							fill="none"
 						/>
-						<Line
-							x1={route[0].x}
-							y1={route[0].y}
-							x2={route[1].x}
-							y2={route[1].y}
-							stroke="blue"
-							strokeWidth="2"
-						/>
 						<Circle
-							cx={route[0].x}
-							cy={route[0].y}
+							cx={this.xcoord(sampleRoute[0].x,IMG_WIDTH)}
+							cy={this.ycoord(sampleRoute[0].y,IMG_HEIGHT)}
 							r="3"
 							fill="blue"
 						/>
 						<Circle
-							cx={route[0].x}
-							cy={route[0].y}
+							cx={this.xcoord(sampleRoute[0].x,IMG_WIDTH)}
+							cy={this.ycoord(sampleRoute[0].y,IMG_HEIGHT)}
 							r="2"
 							fill="lightblue"
 						/>
-						<Line
-							x1={route[1].x}
-							y1={route[1].y}
-							x2={route[2].x}
-							y2={route[2].y}
-							stroke="blue"
-							strokeWidth="2"
-						/>
-						<Line
-							x1={route[2].x}
-							y1={route[2].y}
-							x2={route[3].x}
-							y2={route[3].y}
-							stroke="blue"
-							strokeWidth="2"
-						/>
-						<Line
-							x1={route[3].x}
-							y1={route[3].y}
-							x2={route[4].x}
-							y2={route[4].y}
-							stroke="blue"
-							strokeWidth="2"
-						/>
-						<Line
-							x1={route[4].x}
-							y1={route[4].y}
-							x2={route[5].x}
-							y2={route[5].y}
-							stroke="blue"
-							strokeWidth="2"
-						/>
+						{loadRoute}
 						<Circle
-							cx={route[5].x}
-							cy={route[5].y}
+							cx={this.xcoord(sampleRoute[5].x,IMG_WIDTH)}
+							cy={this.ycoord(sampleRoute[5].y,IMG_HEIGHT)}
 							r="5"
 							fill="red"
 						/>
 						<Circle
-							cx={route[5].x}
-							cy={route[5].y}
+							cx={this.xcoord(sampleRoute[5].x,IMG_WIDTH)}
+							cy={this.ycoord(sampleRoute[5].y,IMG_HEIGHT)}
 							r="2"
 							fill="#000000"
 						/>
