@@ -15,8 +15,10 @@ export default class Navigation extends React.Component {
 		// startingLocation
 		// destination
 		// stairs
-		let overlappingViews = {
-			flex: 0.8
+		let overlap = {
+			position: 'absolute',
+			top: 0,
+			left: 0
 		};
 		return(
 			<View style={{flex:1}} >
@@ -25,17 +27,18 @@ export default class Navigation extends React.Component {
 					<Text>{'Destination:  '+this.props.destination}</Text>
 					<Text>{'Use stairs:  '+this.props.stairs}</Text>
 				</View>
-				<PinchZoomView>
+				<PinchZoomView style={{flex:0.8}}>
 					<Image
 						resizeMode = "contain"
 						source={floorplans.floor1}
-						style={{flex:1}}
+						style={overlap}
 						width={Dimensions.get('window').width}
 						height={Dimensions.get('window').height}
 					/>
 					<Svg
 	                	height="100"
 	                	width="100"
+						style={overlap}
 	            	>
 						<Rect
 							x="0"
@@ -48,7 +51,7 @@ export default class Navigation extends React.Component {
 						/>
 					</Svg>
 				</PinchZoomView>
-				<View>
+				<View style={{flex:0.1}}>
 					<TouchableOpacity onPress={this.props.goBack}>
 						<Text>{'BACK'}</Text>
 					</TouchableOpacity>
