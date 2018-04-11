@@ -11,16 +11,15 @@ export default class Navigation extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			route: [],
-			imgWidth: Number,
-			imgHeight: Number
+			route: []
 		}
 	}
 	componentDidMount() {
-		this.setState({
-			imgWidth: Dimensions.get('window').width,
-			imgHeight: Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH)
-		});
+		if(routes[String(this.props.destination)]) {
+			this.setState({
+				route: routes[String(this.props.destination)]
+			});
+		}
 	}
 
 	xcoord = (x,scaleFactor) => {
@@ -32,7 +31,7 @@ export default class Navigation extends React.Component {
 		// convert grid x to floorplan pixel x
 		let xpx = Math.floor(scaleFactor*(cellWidth*x + cellMiddle - xOffset)); //subtract 1 for line width
 		console.log('x: '+x+', xpx: '+xpx);
-		return String(xpx);
+		return String(xpx+2);
 	}
 	ycoord = (y,scaleFactor) => {
 		// adjust for 21px width of cell, 3px y-offset, and 10.5 for center
@@ -59,46 +58,41 @@ export default class Navigation extends React.Component {
 			top: 0,
 			left: 0
 		};
-
-		let sampleRoute = [
-			{x:4,y:26},
-			{x:7,y:26}
-		];
-		let startOuterBubble = sampleRoute.length<1?null:
+		let startOuterBubble = this.state.route.length<1?null:
 			<Circle
-				cx={this.xcoord(sampleRoute[0].x,scale)}
-				cy={this.ycoord(sampleRoute[0].y,scale)}
+				cx={this.xcoord(this.state.route[0].x,scale)}
+				cy={this.ycoord(this.state.route[0].y,scale)}
 				r="3"
 				fill="blue"
 			/>;
-		let startInnerBubble = sampleRoute.length<1?null:
+		let startInnerBubble = this.state.route.length<1?null:
 			<Circle
-				cx={this.xcoord(sampleRoute[0].x,scale)}
-				cy={this.ycoord(sampleRoute[0].y,scale)}
+				cx={this.xcoord(this.state.route[0].x,scale)}
+				cy={this.ycoord(this.state.route[0].y,scale)}
 				r="2"
 				fill="lightblue"
 			/>;
-		let endOuterBubble = sampleRoute.length<1?null:
+		let endOuterBubble = this.state.route.length<1?null:
 			<Circle
-				cx={this.xcoord(sampleRoute[sampleRoute.length-1].x,scale)}
-				cy={this.ycoord(sampleRoute[sampleRoute.length-1].y,scale)}
+				cx={this.xcoord(this.state.route[this.state.route.length-1].x,scale)}
+				cy={this.ycoord(this.state.route[this.state.route.length-1].y,scale)}
 				r="5"
 				fill="red"
 			/>;
-		let endInnerBubble = sampleRoute.length<1?null:
+		let endInnerBubble = this.state.route.length<1?null:
 			<Circle
-				cx={this.xcoord(sampleRoute[sampleRoute.length-1].x,scale)}
-				cy={this.ycoord(sampleRoute[sampleRoute.length-1].y,scale)}
+				cx={this.xcoord(this.state.route[this.state.route.length-1].x,scale)}
+				cy={this.ycoord(this.state.route[this.state.route.length-1].y,scale)}
 				r="2"
 				fill="#000000"
 			/>;
-		let loadRoute = sampleRoute.map((pair,i)=>{
-			if(i<sampleRoute.length-1) return (
+		let loadRoute = this.state.route.map((pair,i)=>{
+			if(i<this.state.route.length-1) return (
 				<Line
 					x1={this.xcoord(pair.x,scale)}
 					y1={this.ycoord(pair.y,scale)}
-					x2={this.xcoord(sampleRoute[i+1].x,scale)}
-					y2={this.ycoord(sampleRoute[i+1].y,scale)}
+					x2={this.xcoord(this.state.route[i+1].x,scale)}
+					y2={this.ycoord(this.state.route[i+1].y,scale)}
 					strokeWidth="2"
 					stroke="blue"
 				/>
@@ -162,4 +156,18 @@ export default class Navigation extends React.Component {
 const floorplans = {
 	floor1: require('../img/fsb_floor1.png'),
 	floor2: require('../img/fsb_floor2.png')
+}
+
+const routes = {
+	'1026': [
+		{x:4,y:26},
+		{x:7,y:26},
+		{x:7,y:20},
+		{x:7,y:16},
+		{x:7,y:13},
+		{x:11,y:13}
+	],
+	// '1000': [
+	// 	{x:,y:}
+	// ]
 }
