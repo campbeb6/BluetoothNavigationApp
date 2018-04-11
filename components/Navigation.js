@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,Image,Dimensions } from 'react-native';
-import ImageZoom from 'react-native-image-pan-zoom';
+import PinchZoomView from 'react-native-pinch-zoom-view';
 import Svg, {Rect} from 'react-native-svg';
 
 export default class Navigation extends React.Component {
@@ -25,23 +25,14 @@ export default class Navigation extends React.Component {
 					<Text>{'Destination:  '+this.props.destination}</Text>
 					<Text>{'Use stairs:  '+this.props.stairs}</Text>
 				</View>
-				<View style={overlappingViews}>
-					<ImageZoom
-						cropWidth={Dimensions.get('window').width}
-						cropHeight={Dimensions.get('window').height}
-						imageWidth={Dimensions.get('window').width}
-						imageHeight={Dimensions.get('window').height}
-					>
-						<Image
-							resizeMode = "contain"
-							source={floorplans.floor1}
-							style={{flex:1}}
-							width={Dimensions.get('window').width}
-							height={Dimensions.get('window').height}
-						/>
-					</ImageZoom>
-				</View>
-				<View style={overlappingViews}>
+				<PinchZoomView>
+					<Image
+						resizeMode = "contain"
+						source={floorplans.floor1}
+						style={{flex:1}}
+						width={Dimensions.get('window').width}
+						height={Dimensions.get('window').height}
+					/>
 					<Svg
 	                	height="100"
 	                	width="100"
@@ -56,7 +47,7 @@ export default class Navigation extends React.Component {
 							fill="yellow"
 						/>
 					</Svg>
-				</View>
+				</PinchZoomView>
 				<View>
 					<TouchableOpacity onPress={this.props.goBack}>
 						<Text>{'BACK'}</Text>
