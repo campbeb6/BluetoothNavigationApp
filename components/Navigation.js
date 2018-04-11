@@ -3,13 +3,30 @@ import { StyleSheet, Text, View, TouchableOpacity,Image,Dimensions } from 'react
 import PinchZoomView from 'react-native-pinch-zoom-view';
 import Svg, {Rect,Line,Circle} from 'react-native-svg';
 
+// png dimensions (floor 1)
+const FLOORPLAN_WIDTH = 609;
+const FLOORPLAN_HEIGHT = 539;
+
 export default class Navigation extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-
+			route: [],
+			imgWidth: Number,
+			imgHeight: Number
 		}
 	}
+	componentDidMount() {
+		this.setState({
+			imgWidth: Dimensions.get('window').width,
+			imgHeight: Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH)
+		})
+	}
+
+	xcoord = (x) => {
+		return String(Math.floor(x/FLOORPLAN_WIDTH*this.state.imgWidth));
+	}
+
 	render() {
 		// PROPS:
 		// startingLocation
@@ -21,15 +38,12 @@ export default class Navigation extends React.Component {
 			left: 0
 		};
 
-		// image dimensions (floor 1)
-		const FLOORPLAN_WIDTH = 609;
-		const FLOORPLAN_HEIGHT = 539;
 		const IMG_WIDTH = Dimensions.get('window').width;
 		const IMG_HEIGHT = Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH);
 
 		// example route
 		const route = [{
-				x: String(Math.floor(52/FLOORPLAN_WIDTH*IMG_WIDTH)),
+				x: this.xcoord(52),
 				y: String(Math.floor(260/FLOORPLAN_HEIGHT*IMG_HEIGHT))
 			},{
 				x: String(Math.floor(52/FLOORPLAN_WIDTH*IMG_WIDTH)),
@@ -49,6 +63,7 @@ export default class Navigation extends React.Component {
 				y: String(Math.floor(105/FLOORPLAN_HEIGHT*IMG_HEIGHT))
 			}
 		];
+
 		return(
 			<View style={{flex:1}} >
 				<View style={{
