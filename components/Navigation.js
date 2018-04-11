@@ -23,16 +23,33 @@ export default class Navigation extends React.Component {
 		});
 	}
 
-	xcoord = (x,w) => {
-		return String(Math.floor(x/FLOORPLAN_WIDTH*w));
+	xcoord = (x,scaleFactor) => {
+		let xConversion = 0.51262626;
+		let cellWidth = 21 * xConversion;
+		let cellMiddle = cellWidth/2.0;
+		let xOffset = 10.0 * xConversion;
+
+		// convert grid x to floorplan pixel x
+		let xpx = Math.floor(scaleFactor*(cellWidth*x + cellMiddle - xOffset)); //subtract 1 for line width
+		console.log('x: '+x+', xpx: '+xpx);
+		return String(xpx);
 	}
-	ycoord = (y,h) => {
-		return String(Math.floor(y/FLOORPLAN_HEIGHT*h))
+	ycoord = (y,scaleFactor) => {
+		// adjust for 21px width of cell, 3px y-offset, and 10.5 for center
+		let yConversion = 0.50849057;
+		let cellHeight = 21 * yConversion;
+		let cellMiddle = cellHeight/2.0;
+		let yOffset = 3.0 * yConversion;
+
+		let ypx = Math.floor(scaleFactor*(cellHeight*y +cellMiddle - yOffset));
+		console.log('y: '+y+', ypx: '+ypx);
+		return String(ypx);
 	}
 
 	render() {
 		let IMG_HEIGHT = Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH);
 		let IMG_WIDTH = Dimensions.get('window').width;
+		let scale = IMG_HEIGHT / (FLOORPLAN_HEIGHT*1.0);
 		// PROPS:
 		// startingLocation
 		// destination
@@ -44,48 +61,44 @@ export default class Navigation extends React.Component {
 		};
 
 		let sampleRoute = [
-			{x:52,y:260},
-			{x:52,y:285},
-			{x:80,y:285},
-			{x:80,y:142},
-			{x:122,y:142},
-			{x:122,y:105}
+			{x:4,y:26},
+			{x:7,y:26}
 		];
 		let startOuterBubble = sampleRoute.length<1?null:
 			<Circle
-				cx={this.xcoord(sampleRoute[0].x,IMG_WIDTH)}
-				cy={this.ycoord(sampleRoute[0].y,IMG_HEIGHT)}
+				cx={this.xcoord(sampleRoute[0].x,scale)}
+				cy={this.ycoord(sampleRoute[0].y,scale)}
 				r="3"
 				fill="blue"
-			/>
+			/>;
 		let startInnerBubble = sampleRoute.length<1?null:
 			<Circle
-				cx={this.xcoord(sampleRoute[0].x,IMG_WIDTH)}
-				cy={this.ycoord(sampleRoute[0].y,IMG_HEIGHT)}
+				cx={this.xcoord(sampleRoute[0].x,scale)}
+				cy={this.ycoord(sampleRoute[0].y,scale)}
 				r="2"
 				fill="lightblue"
-			/>
+			/>;
 		let endOuterBubble = sampleRoute.length<1?null:
 			<Circle
-				cx={this.xcoord(sampleRoute[sampleRoute.length-1].x,IMG_WIDTH)}
-				cy={this.ycoord(sampleRoute[sampleRoute.length-1].y,IMG_HEIGHT)}
+				cx={this.xcoord(sampleRoute[sampleRoute.length-1].x,scale)}
+				cy={this.ycoord(sampleRoute[sampleRoute.length-1].y,scale)}
 				r="5"
 				fill="red"
-			/>
+			/>;
 		let endInnerBubble = sampleRoute.length<1?null:
 			<Circle
-				cx={this.xcoord(sampleRoute[sampleRoute.length-1].x,IMG_WIDTH)}
-				cy={this.ycoord(sampleRoute[sampleRoute.length-1].y,IMG_HEIGHT)}
+				cx={this.xcoord(sampleRoute[sampleRoute.length-1].x,scale)}
+				cy={this.ycoord(sampleRoute[sampleRoute.length-1].y,scale)}
 				r="2"
 				fill="#000000"
-			/>
+			/>;
 		let loadRoute = sampleRoute.map((pair,i)=>{
 			if(i<sampleRoute.length-1) return (
 				<Line
-					x1={this.xcoord(pair.x,IMG_WIDTH)}
-					y1={this.ycoord(pair.y,IMG_HEIGHT)}
-					x2={this.xcoord(sampleRoute[i+1].x,IMG_WIDTH)}
-					y2={this.ycoord(sampleRoute[i+1].y,IMG_HEIGHT)}
+					x1={this.xcoord(pair.x,scale)}
+					y1={this.ycoord(pair.y,scale)}
+					x2={this.xcoord(sampleRoute[i+1].x,scale)}
+					y2={this.ycoord(sampleRoute[i+1].y,scale)}
 					strokeWidth="2"
 					stroke="blue"
 				/>
