@@ -51,7 +51,34 @@ export default class Navigation extends React.Component {
 			{x:122,y:142},
 			{x:122,y:105}
 		];
-
+		let startOuterBubble = sampleRoute.length<1?null:
+			<Circle
+				cx={this.xcoord(sampleRoute[0].x,IMG_WIDTH)}
+				cy={this.ycoord(sampleRoute[0].y,IMG_HEIGHT)}
+				r="3"
+				fill="blue"
+			/>
+		let startInnerBubble = sampleRoute.length<1?null:
+			<Circle
+				cx={this.xcoord(sampleRoute[0].x,IMG_WIDTH)}
+				cy={this.ycoord(sampleRoute[0].y,IMG_HEIGHT)}
+				r="2"
+				fill="lightblue"
+			/>
+		let endOuterBubble = sampleRoute.length<1?null:
+			<Circle
+				cx={this.xcoord(sampleRoute[sampleRoute.length-1].x,IMG_WIDTH)}
+				cy={this.ycoord(sampleRoute[sampleRoute.length-1].y,IMG_HEIGHT)}
+				r="5"
+				fill="red"
+			/>
+		let endInnerBubble = sampleRoute.length<1?null:
+			<Circle
+				cx={this.xcoord(sampleRoute[sampleRoute.length-1].x,IMG_WIDTH)}
+				cy={this.ycoord(sampleRoute[sampleRoute.length-1].y,IMG_HEIGHT)}
+				r="2"
+				fill="#000000"
+			/>
 		let loadRoute = sampleRoute.map((pair,i)=>{
 			if(i<sampleRoute.length-1) return (
 				<Line
@@ -95,31 +122,11 @@ export default class Navigation extends React.Component {
 							strokeWidth="2"
 							fill="none"
 						/>
-						<Circle
-							cx={this.xcoord(sampleRoute[0].x,IMG_WIDTH)}
-							cy={this.ycoord(sampleRoute[0].y,IMG_HEIGHT)}
-							r="3"
-							fill="blue"
-						/>
-						<Circle
-							cx={this.xcoord(sampleRoute[0].x,IMG_WIDTH)}
-							cy={this.ycoord(sampleRoute[0].y,IMG_HEIGHT)}
-							r="2"
-							fill="lightblue"
-						/>
 						{loadRoute}
-						<Circle
-							cx={this.xcoord(sampleRoute[5].x,IMG_WIDTH)}
-							cy={this.ycoord(sampleRoute[5].y,IMG_HEIGHT)}
-							r="5"
-							fill="red"
-						/>
-						<Circle
-							cx={this.xcoord(sampleRoute[5].x,IMG_WIDTH)}
-							cy={this.ycoord(sampleRoute[5].y,IMG_HEIGHT)}
-							r="2"
-							fill="#000000"
-						/>
+						{startOuterBubble}
+						{startInnerBubble}
+						{endOuterBubble}
+						{endInnerBubble}
 					</Svg>
 				</PinchZoomView>
 				<View style={{
