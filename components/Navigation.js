@@ -16,7 +16,9 @@ export default class Navigation extends React.Component {
 		// destination
 		// stairs
 		let overlappingViews = {
-			flex: 0.8
+			position: 'absolute',
+			top: Dimensions.get('window').height*0.2,
+			bottom: Dimensions.get('window').height*0.8
 		};
 		return(
 			<View style={{flex:1}} >
@@ -31,13 +33,21 @@ export default class Navigation extends React.Component {
 						cropHeight={Dimensions.get('window').height}
 						imageWidth={Dimensions.get('window').width}
 						imageHeight={Dimensions.get('window').height}
+						style={{
+							position: 'absolute',
+							top: 0,
+						}}
 					>
 						<Image
 							resizeMode = "contain"
+							resizeMethod = "scale"
 							source={floorplans.floor1}
-							style={{flex:1}}
+							style={{
+								position: 'absolute',
+								top: 0,
+							}}
 							width={Dimensions.get('window').width}
-							height={Dimensions.get('window').height}
+							height={Dimensions.get('window').height*0.8}
 						/>
 					</ImageZoom>
 				</View>
