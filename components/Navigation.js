@@ -20,6 +20,10 @@ export default class Navigation extends React.Component {
 			top: 0,
 			left: 0
 		};
+
+		// image width: 609, height: 539
+		const FLOORPLAN_WIDTH = 609;
+		const FLOORPLAN_HEIGHT = 539;
 		return(
 			<View style={{flex:1}} >
 				<View style={{flex:0.1}}>
@@ -29,15 +33,14 @@ export default class Navigation extends React.Component {
 				</View>
 				<PinchZoomView style={{flex:0.8}}>
 					<Image
-						resizeMode = "contain"
 						source={floorplans.floor1}
 						style={overlap}
 						width={Dimensions.get('window').width}
-						height={Dimensions.get('window').height}
+						height={Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH)}
 					/>
 					<Svg
-	                	height="100"
-	                	width="100"
+						width={Dimensions.get('window').width}
+	                	height={Dimensions.get('window').height*0.8}
 						style={overlap}
 	            	>
 						<Rect
@@ -47,7 +50,7 @@ export default class Navigation extends React.Component {
 							height="70"
 							stroke="red"
 							strokeWidth="2"
-							fill="yellow"
+							fill="none"
 						/>
 					</Svg>
 				</PinchZoomView>
