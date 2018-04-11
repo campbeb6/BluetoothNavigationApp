@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,Image,Dimensions } from 'react-native';
-import ImageZoom from 'react-native-image-pan-zoom';
+import PinchZoomView from 'react-native-pinch-zoom-view';
 import Svg, {Rect} from 'react-native-svg';
 
 export default class Navigation extends React.Component {
@@ -15,10 +15,10 @@ export default class Navigation extends React.Component {
 		// startingLocation
 		// destination
 		// stairs
-		let overlappingViews = {
+		let overlap = {
 			position: 'absolute',
-			top: Dimensions.get('window').height*0.2,
-			bottom: Dimensions.get('window').height*0.8
+			top: 0,
+			left: 0
 		};
 		return(
 			<View style={{flex:1}} >
@@ -27,34 +27,18 @@ export default class Navigation extends React.Component {
 					<Text>{'Destination:  '+this.props.destination}</Text>
 					<Text>{'Use stairs:  '+this.props.stairs}</Text>
 				</View>
-				<View style={overlappingViews}>
-					<ImageZoom
-						cropWidth={Dimensions.get('window').width}
-						cropHeight={Dimensions.get('window').height}
-						imageWidth={Dimensions.get('window').width}
-						imageHeight={Dimensions.get('window').height}
-						style={{
-							position: 'absolute',
-							top: 0,
-						}}
-					>
-						<Image
-							resizeMode = "contain"
-							resizeMethod = "scale"
-							source={floorplans.floor1}
-							style={{
-								position: 'absolute',
-								top: 0,
-							}}
-							width={Dimensions.get('window').width}
-							height={Dimensions.get('window').height*0.8}
-						/>
-					</ImageZoom>
-				</View>
-				<View style={overlappingViews}>
+				<PinchZoomView style={{flex:0.8}}>
+					<Image
+						resizeMode = "contain"
+						source={floorplans.floor1}
+						style={overlap}
+						width={Dimensions.get('window').width}
+						height={Dimensions.get('window').height}
+					/>
 					<Svg
 	                	height="100"
 	                	width="100"
+						style={overlap}
 	            	>
 						<Rect
 							x="0"
@@ -66,8 +50,8 @@ export default class Navigation extends React.Component {
 							fill="yellow"
 						/>
 					</Svg>
-				</View>
-				<View>
+				</PinchZoomView>
+				<View style={{flex:0.1}}>
 					<TouchableOpacity onPress={this.props.goBack}>
 						<Text>{'BACK'}</Text>
 					</TouchableOpacity>
