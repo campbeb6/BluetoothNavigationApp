@@ -94,7 +94,7 @@ export default class Navigation extends React.Component {
 					x2={this.xcoord(this.state.route[i+1].x,scale)}
 					y2={this.ycoord(this.state.route[i+1].y,scale)}
 					strokeWidth="1.5"
-					stroke="blue"
+					stroke={this.props.stairs?'blue':'green'}
 				/>
 			)
 		});
