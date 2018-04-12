@@ -38,39 +38,19 @@ export default class RoomSearch extends React.Component {
 				width: '100%'
 			}}>
 				<Text style = {{color: '#000000'}}>Search room:</Text>
-				<View style = {{flex: .5}}>
-					{<TextInput
+				<View style = {{flex: 1}}>
+					<TextInput
 						style={styles.input}
 						editable={true}
 						numberOfLines={1}
 						maxLength={100}
-						onChangeText = {this.getMatches}
-					/>}
-				</View>
-				{/* this picker is supposed to be dropdown options, doesn't
-				  * look great on Android though, instead maybe we can use:
-				  * https://www.npmjs.com/package/react-native-autocomplete-input */}
-				<View style = {{flex: 1, alignItems: 'flex-end'}}>
-					<Picker
-						style={styles.matchList}
-						selectedValue={this.state.choice}
-						onValueChange={(val)=>{
-							this.setState({
-								choice:val
-							},()=>{
-								// pass choice back to LocationPreferences.js
-								if(this.state.choice!=='') {
-									this.props.getChoice(this.state.choice);
-								}
-							});
-						}}
-						>
-						{/*start the list with a blank option*/}
-						<Picker.Item key={-1} label={''} value={''} />
-						{/* then, dynamically get room matches and fill Picker */
-							roomChoices
-						}
-					</Picker>
+						onChangeText = {(text)=>this.setState({
+							choice: text
+						},()=>{
+							console.log('rs: set choice to '+this.state.choice);
+							this.props.getChoice(this.state.choice);
+						})}
+					/>
 				</View>
             </View>
         );
