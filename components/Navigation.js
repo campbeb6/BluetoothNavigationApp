@@ -11,7 +11,8 @@ export default class Navigation extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			route: []
+			route: [],
+			floor: 'floor1'
 		}
 	}
 	componentDidMount() {
@@ -108,9 +109,9 @@ export default class Navigation extends React.Component {
 					<Text>{'Destination:  '+this.props.destination}</Text>
 					<Text>{'Use stairs:  '+this.props.stairs}</Text>
 				</View>
-				<PinchZoomView style={{flex:0.8}}>
+				<PinchZoomView style={{flex:0.7}}>
 					<Image
-						source={floorplans.floor1}
+						source={floorplans[this.state.floor]}
 						style={overlap}
 						width={Dimensions.get('window').width}
 						height={Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH)}
@@ -138,6 +139,19 @@ export default class Navigation extends React.Component {
 				</PinchZoomView>
 				<View style={{
 					flex:0.1,
+					backgroundColor: '#ff0000',
+					alignItems: 'center'
+				}}>
+					<TouchableOpacity onPress={this.toggleFloor}>
+						<Text style={{
+							color:'#FFFFFF',
+							fontSize: 20,
+							fontWeight: 'bold'
+						}}>{'CHANGE FLOOR'}</Text>
+					</TouchableOpacity>
+				</View>
+				<View style={{
+					flex:0.1,
 					backgroundColor: '#000000',
 					alignItems: 'center'
 				}}>
@@ -151,6 +165,13 @@ export default class Navigation extends React.Component {
 				</View>
 			</View>
 		);
+	}
+	toggleFloor = () => {
+		this.setState({
+			floor: this.state.floor==='floor1'?'floor2':'floor1'
+		},()=>{
+			console.log('changed to floor '+this.state.floor);
+		})
 	}
 }
 const floorplans = {
