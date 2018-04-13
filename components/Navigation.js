@@ -59,6 +59,11 @@ export default class Navigation extends React.Component {
 			top: 0,
 			left: 0
 		};
+		let halfWidthButton = {
+			width: Dimensions.get('window').width/2,
+			alignItems: 'center',
+			backgroundColor: '#C3142D'
+		};
 		let startOuterBubble = this.state.route.length<1?null:
 			<Circle
 				cx={this.xcoord(this.state.route[0].x,scale)}
@@ -99,6 +104,15 @@ export default class Navigation extends React.Component {
 				/>
 			)
 		});
+		let svgOutline = <Rect
+			x="0"
+			y="0"
+			width={Dimensions.get('window').width}
+			height={Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH)}
+			stroke="red"
+			strokeWidth="2"
+			fill="none"
+		/>;
 
 		return(
 			<View style={{flex:1}} >
@@ -121,15 +135,7 @@ export default class Navigation extends React.Component {
 	                	height={Dimensions.get('window').height*0.8}
 						style={overlap}
 	            	>
-						<Rect
-							x="0"
-							y="0"
-							width={Dimensions.get('window').width}
-							height={Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH)}
-							stroke="red"
-							strokeWidth="2"
-							fill="none"
-						/>
+						{svgOutline}
 						{loadRoute}
 						{startOuterBubble}
 						{startInnerBubble}
@@ -139,15 +145,23 @@ export default class Navigation extends React.Component {
 				</PinchZoomView>
 				<View style={{
 					flex:0.1,
-					backgroundColor: '#ff0000',
-					alignItems: 'center'
+					backgroundColor: '#C3142D',
+					alignItems: 'center',
+					flexDirection: 'row'
 				}}>
-					<TouchableOpacity onPress={this.toggleFloor}>
+					<TouchableOpacity style={halfWidthButton}
+						onPress={()=>this.setState({floor:'floor1'})}>
 						<Text style={{
-							color:'#FFFFFF',
-							fontSize: 20,
-							fontWeight: 'bold'
-						}}>{'CHANGE FLOOR'}</Text>
+							color:'#ffffff',
+							fontSize: 19
+						}}>{'Floor 1'}</Text>
+					</TouchableOpacity>
+					<TouchableOpacity style={halfWidthButton}
+						onPress={()=>this.setState({floor:'floor2'})}>
+						<Text style={{
+							color:'#ffffff',
+							fontSize: 19
+						}}>{'Floor 2'}</Text>
 					</TouchableOpacity>
 				</View>
 				<View style={{
@@ -176,7 +190,7 @@ export default class Navigation extends React.Component {
 }
 const floorplans = {
 	floor1: require('../img/fsb_floor1.png'),
-	floor2: require('../img/fsb_floor2.png')
+	floor2: require('../img/fsb_floor2_trimmed.png')
 }
 
 const routes = {
