@@ -134,11 +134,13 @@ export default class Navigation extends React.Component {
 		return(
 			<View style={{flex:1}} >
 				<View style={{
-					flex:0.1
+					flex:0.1,
+					alignItems:'center'
 				}}>
-					<Text>{'Starting location:  '+this.props.startingLocation}</Text>
-					<Text>{'Destination:  '+this.props.destination}</Text>
-					<Text>{'Use stairs:  '+this.props.stairs}</Text>
+					<Text style={{
+						fontSize: 18,
+						fontWeight: 'bold'
+					}}>{'Navigating to room '+this.props.destination+'...'}</Text>
 				</View>
 				<PinchZoomView style={{flex:0.7}}>
 					<Image
