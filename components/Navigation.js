@@ -109,6 +109,9 @@ export default class Navigation extends React.Component {
 				fill="#000000"
 			/>:null;
 		// only load for floor1 for demo, don't forget to adjust this after the demo!
+		// for routes that go to second floor, check if the current floor matches the
+		// coordinates' floor -- only load if it matches (otherwise first and second
+		// floor portions of route will show on top of each other)
 		let loadRoute = this.state.floor==='floor1'?this.state.route.map((pair,i)=>{
 			if(i<this.state.route.length-1) return (
 				<Line
@@ -214,37 +217,38 @@ const floorplans = {
 
 const routes = {
 	'1026': [
-		{x:4,y:26},
-		{x:7,y:26},
-		{x:7,y:20},
-		{x:7,y:16},
-		{x:7,y:13},
-		{x:11,y:13}
+		{floor:1,x:4,y:26},
+		{floor:1,x:7,y:26},
+		{floor:1,x:7,y:20},
+		{floor:1,x:7,y:16},
+		{floor:1,x:7,y:13},
+		{floor:1,x:11,y:13},
+		{floor:2,x:14,y:13}
 	],
 	'1000': [
-		{x:4,y:26},
-		{x:7,y:26},
-		{x:7,y:20},
-		{x:7,y:16},
-		{x:7,y:13},
-		{x:11,y:13},
-		{x:21,y:13},
-		{x:21,y:15},
-		{x:30,y:15},
-		{x:30,y:13},
-		{x:44,y:13},
-		{x:44,y:41}
+		{floor:1,x:4,y:26},
+		{floor:1,x:7,y:26},
+		{floor:1,x:7,y:20},
+		{floor:1,x:7,y:16},
+		{floor:1,x:7,y:13},
+		{floor:1,x:11,y:13},
+		{floor:1,x:21,y:13},
+		{floor:1,x:21,y:15},
+		{floor:1,x:30,y:15},
+		{floor:1,x:30,y:13},
+		{floor:1,x:44,y:13},
+		{floor:1,x:44,y:41}
 	],
 	'1022': [
-		{x:4,y:26},
-		{x:7,y:26},
-		{x:7,y:20},
-		{x:7,y:16},
-		{x:7,y:13},
-		{x:11,y:13},
-		{x:21,y:13},
-		{x:21,y:11},
-		{x:25,y:11},
-		{x:25,y:10},
+		{floor:1,x:4,y:26},
+		{floor:1,x:7,y:26},
+		{floor:1,x:7,y:20},
+		{floor:1,x:7,y:16},
+		{floor:1,x:7,y:13},
+		{floor:1,x:11,y:13},
+		{floor:1,x:21,y:13},
+		{floor:1,x:21,y:11},
+		{floor:1,x:25,y:11},
+		{floor:1,x:25,y:10}
 	]
 }
