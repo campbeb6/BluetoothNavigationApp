@@ -21,15 +21,6 @@ export default class Navigation extends React.Component {
 				route: routes[String(this.props.destination)]
 			});
 		}
-		if(String(this.props.destination)==='2043') {
-			console.log('setting static floor1 and floor2 for demo');
-			floorplans.floor1 = this.props.stairs ?
-				require('../img/fsb_floor1_2043_stairs.png') :
-				require('../img/fsb_floor1_2043_elevator.png')
-			floorplans.floor2 = this.props.stairs ?
-				require('../img/fsb_floor2_2043_stairs.png') :
-				require('../img/fsb_floor2_2043_elevator.png')
-		}
 	}
 
 	xcoord = (x,scaleFactor) => {
@@ -56,6 +47,17 @@ export default class Navigation extends React.Component {
 	}
 
 	render() {
+		// static routes here
+		if(String(this.props.destination)==='2043') {
+			console.log('setting static floor1 and floor2 for demo');
+			floorplans.floor1 = this.props.stairs ?
+				require('../img/fsb_floor1_2043_stairs.png') :
+				require('../img/fsb_floor1_2043_elevator.png')
+			floorplans.floor2 = this.props.stairs ?
+				require('../img/fsb_floor2_2043_stairs.png') :
+				require('../img/fsb_floor2_2043_elevator.png')
+		}
+
 		let IMG_HEIGHT = Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH);
 		let IMG_WIDTH = Dimensions.get('window').width;
 		let scale = IMG_HEIGHT / (FLOORPLAN_HEIGHT*1.0);
