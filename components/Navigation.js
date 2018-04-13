@@ -4,8 +4,10 @@ import PinchZoomView from 'react-native-pinch-zoom-view';
 import Svg, {Rect,Line,Circle} from 'react-native-svg';
 
 // png dimensions (floor 1)
-const FLOORPLAN_WIDTH = 609;
-const FLOORPLAN_HEIGHT = 539;
+const FLOOR_1_WIDTH = 609;
+const FLOOR_1_HEIGHT = 539;
+const FLOOR_2_WIDTH = 0;
+const FLOOR_2_HEIGHT = 0;
 
 export default class Navigation extends React.Component {
 	constructor() {
@@ -47,20 +49,18 @@ export default class Navigation extends React.Component {
 	}
 
 	render() {
-		// static routes here
-		if(String(this.props.destination)==='2043') {
-			console.log('setting static floor1 and floor2 for demo');
-			floorplans.floor1 = this.props.stairs ?
-				require('../img/fsb_floor1_2043_stairs.png') :
-				require('../img/fsb_floor1_2043_elevator.png')
-			floorplans.floor2 = this.props.stairs ?
-				require('../img/fsb_floor2_2043_stairs.png') :
-				require('../img/fsb_floor2_2043_elevator.png')
+		let floorplan = {};
+		if(this.state.floor==='floor1') {
+			floorplan.height = FLOOR_1_HEIGHT,
+			floorplan.width = FLOOR_1_WIDTH
 		}
-
-		let IMG_HEIGHT = Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH);
+		else if(this.state.floor==='floor2') {
+			floorplan.height = FLOOR_2_HEIGHT,
+			floorplan.width = FLOOR_2_WIDTH
+		}
+		let IMG_HEIGHT = Dimensions.get('window').width*(floorplan.height/floorplan.width);
 		let IMG_WIDTH = Dimensions.get('window').width;
-		let scale = IMG_HEIGHT / (FLOORPLAN_HEIGHT*1.0);
+		let scale = IMG_HEIGHT / (floorplan.height*1.0);
 		// PROPS:
 		// startingLocation
 		// destination
@@ -125,7 +125,7 @@ export default class Navigation extends React.Component {
 			x="0"
 			y="0"
 			width={Dimensions.get('window').width}
-			height={Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH)}
+			height={Dimensions.get('window').width*(FLOOR_1_HEIGHT/FLOOR_1_WIDTH)}
 			stroke="red"
 			strokeWidth="2"
 			fill="none"
@@ -147,7 +147,7 @@ export default class Navigation extends React.Component {
 						source={floorplans[this.state.floor]}
 						style={overlap}
 						width={Dimensions.get('window').width}
-						height={Dimensions.get('window').width*(FLOORPLAN_HEIGHT/FLOORPLAN_WIDTH)}
+						height={Dimensions.get('window').width*(FLOOR_1_HEIGHT/FLOOR_1_WIDTH)}
 					/>
 					<Svg
 						width={Dimensions.get('window').width}
