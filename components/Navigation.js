@@ -75,35 +75,41 @@ export default class Navigation extends React.Component {
 			alignItems: 'center',
 			backgroundColor: '#C3142D'
 		};
-		let startOuterBubble = this.state.route.length<1?null:
+
+		// only load for floor1 for demo, don't forget to adjust this after the demo!
+		let startOuterBubble = this.state.floor==='floor1'?this.state.route.length<1?null:
 			<Circle
 				cx={this.xcoord(this.state.route[0].x,scale)}
 				cy={this.ycoord(this.state.route[0].y,scale)}
 				r="3"
 				fill="blue"
-			/>;
-		let startInnerBubble = this.state.route.length<1?null:
+			/>:null;
+		// only load for floor1 for demo, don't forget to adjust this after the demo!
+		let startInnerBubble = this.state.floor==='floor1'?this.state.route.length<1?null:
 			<Circle
 				cx={this.xcoord(this.state.route[0].x,scale)}
 				cy={this.ycoord(this.state.route[0].y,scale)}
 				r="2"
 				fill="lightblue"
-			/>;
-		let endOuterBubble = this.state.route.length<1?null:
+			/>:null;
+		// only load for floor1 for demo, don't forget to adjust this after the demo!
+		let endOuterBubble = this.state.floor==='floor1'?this.state.route.length<1?null:
 			<Circle
 				cx={this.xcoord(this.state.route[this.state.route.length-1].x,scale)}
 				cy={this.ycoord(this.state.route[this.state.route.length-1].y,scale)}
 				r="5"
 				fill="red"
-			/>;
-		let endInnerBubble = this.state.route.length<1?null:
+			/>:null;
+		// only load for floor1 for demo, don't forget to adjust this after the demo!
+		let endInnerBubble = this.state.floor==='floor1'?this.state.route.length<1?null:
 			<Circle
 				cx={this.xcoord(this.state.route[this.state.route.length-1].x,scale)}
 				cy={this.ycoord(this.state.route[this.state.route.length-1].y,scale)}
 				r="2"
 				fill="#000000"
-			/>;
-		let loadRoute = this.state.route.map((pair,i)=>{
+			/>:null;
+		// only load for floor1 for demo, don't forget to adjust this after the demo!
+		let loadRoute = this.state.floor==='floor1'?this.state.route.map((pair,i)=>{
 			if(i<this.state.route.length-1) return (
 				<Line
 					x1={this.xcoord(pair.x,scale)}
@@ -114,7 +120,7 @@ export default class Navigation extends React.Component {
 					stroke={this.props.stairs?'blue':'green'}
 				/>
 			)
-		});
+		}):null;
 		let svgOutline = <Rect
 			x="0"
 			y="0"
