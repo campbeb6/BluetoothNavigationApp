@@ -76,7 +76,7 @@ export default class Navigation extends React.Component {
 		let endOuterBubble=null, endInnerBubble=null;
 
 		// dark blue outer circle marking starting location
-		if(this.state.route.length>0) {
+		if(this.state.route.length>0 && this.state.route[0].floor===this.state.floor)  {
 			startOuterBubble = <Circle
 				cx={this.xcoord(this.state.route[0].x,scale)}
 				cy={this.ycoord(this.state.route[0].y,scale)}
@@ -85,7 +85,7 @@ export default class Navigation extends React.Component {
 			/>;
 		}
 		// light blue inner circle marking starting location
-		if(this.state.route.length>0) {
+		if(this.state.route.length>0 && this.state.route[0].floor===this.state.floor) {
 			startInnerBubble = <Circle
 				cx={this.xcoord(this.state.route[0].x,scale)}
 				cy={this.ycoord(this.state.route[0].y,scale)}
@@ -94,7 +94,10 @@ export default class Navigation extends React.Component {
 			/>;
 		}
 		// red circle with black circle inside that marks end of route
-		if(this.state.route.length>0) {
+		if(
+			this.state.route.length>0 &&
+			this.state.route[this.state.route.length-1].floor===this.state.floor
+		) {
 			endOuterBubble = <Circle
 				cx={this.xcoord(this.state.route[this.state.route.length-1].x,scale)}
 				cy={this.ycoord(this.state.route[this.state.route.length-1].y,scale)}
@@ -103,7 +106,10 @@ export default class Navigation extends React.Component {
 			/>;
 		}
 		// black circle inside of red circle marking end of route
-		if(this.state.route.length>0) {
+		if(
+			this.state.route.length>0 &&
+			this.state.route[this.state.route.length-1].floor===this.state.floor
+		) {
 			endInnerBubble = <Circle
 				cx={this.xcoord(this.state.route[this.state.route.length-1].x,scale)}
 				cy={this.ycoord(this.state.route[this.state.route.length-1].y,scale)}
@@ -213,7 +219,7 @@ const floorplans = {
 
 const routes = {
 	'1026': [
-		{floor:1,x:4,y:26},
+		{floor:2,x:4,y:26},
 		{floor:1,x:7,y:26},
 		{floor:1,x:7,y:20},
 		{floor:1,x:7,y:16},
