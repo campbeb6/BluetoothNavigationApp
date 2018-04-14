@@ -130,7 +130,7 @@ export default class Navigation extends React.Component {
 					x2={this.xcoord(this.state.route[i+1].x,floorplan.width,scale)}
 					y2={this.ycoord(this.state.route[i+1].y,floorplan.height,scale)}
 					strokeWidth="1.5"
-					stroke={this.props.stairs?'blue':'green'}
+					stroke={this.props.stairs?'blue':'blue'}
 				/>
 			)
 		});
@@ -155,7 +155,9 @@ export default class Navigation extends React.Component {
 						fontWeight: 'bold'
 					}}>{'Navigating to room '+this.props.destination+'...'}</Text>
 				</View>
-				<PinchZoomView style={{flex:0.7}}>
+				<PinchZoomView style={{
+					flex:0.7
+				}}>
 					<Image
 						source={floorplans['floor'+String(this.state.floor)]}
 						style={overlap}
@@ -264,7 +266,7 @@ const routes = {
 		{floor:2,x:6,y:11},
 		{floor:2,x:21,y:11},
 		{floor:2,x:21,y:9},
-		{floor:2,x:25,y:9},
+		{floor:2,x:25,y:9}
 	],
 	'2043_elevator': [
 		{floor:1,x:5,y:26},
