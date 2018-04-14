@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput,
-	Picker, Button, Alert, TouchableOpacity } from 'react-native';
+	Picker, Button, Alert, TouchableOpacity, ScrollView } from 'react-native';
 
 /* Purpose of the RoomSearch class is to allow the user to search a room number
  * within FSB as free-form text. When they begin typing, matching rooms will
@@ -13,7 +13,6 @@ export default class RoomSearch extends React.Component {
         super();
 		console.log('RoomSearch constructor');
         this.state = {
-            entry: '', // text that user enters into box
             matches: [], // array of rooms that match entry
             choice: '' // the room for which the user wants directions
         };
@@ -22,36 +21,53 @@ export default class RoomSearch extends React.Component {
      * show up when a <RoomSearch /> tag is used */
     render() {
         // return a Picker item for each room match from server
-        let roomChoices = this.state.matches.map((match,i)=>{
-            return (<Picker.Item key={i} label={match.roomNum} value={match.roomNum} />);
-		});
-		const { quesry } = this.state.matches;
-		const data = this.getMatches
-        // return JSX that defines appearance
-        // JavaScript expressions must be inside curly braces { }
+		let roomChoices = this.state.matches.map((match,i)=>{
+            return (
+				<View>
+					<TouchableOpacity
+						onPress={()=>{
+							this.setState({
+								choice: match.roomNum,
+								matches: [] // make list disappear
+							},()=>{
+								console.log('set choice to '+match.roomNum);
+							});
+						}}
+						style={{
+							flex:1,
+							width:'100%'
+						}}
+					>
+						<Text style={{
+							fontSize: 20,
+							marginBottom: 5,
+							marginLeft: 4
+						}}>{match.roomNum}</Text>
+					</TouchableOpacity>
+				</View>
+			);
+        });
         return (
-            <View style={{
-				backgroundColor: '#ffffff',
-				alignItems: 'center',
-				flexDirection: 'row',
-				//justifyContent: 'center',
-				width: '100%'
-			}}>
-				<Text style = {{color: '#000000'}}>Search room:</Text>
-				<View style = {{flex: 1}}>
+            <View style={{flex:1}}>
+				<View>
 					<TextInput
-						style={styles.input}
-						editable={true}
-						numberOfLines={1}
-						maxLength={100}
-						onChangeText = {(text)=>this.setState({
-							choice: text
-						},()=>{
-							console.log('rs: set choice to '+this.state.choice);
-							this.props.getChoice(this.state.choice);
-						})}
+						style={{
+							fontSize: 20
+						}}
+						value={this.state.choice}
+						onChangeText={(text)=>{
+							this.setState({
+								choice: text
+							},() => {
+								console.log('set choice to '+this.state.choice);
+								this.getMatches(this.state.choice)
+							});
+						}}
 					/>
 				</View>
+				<ScrollView>
+					{roomChoices}
+				</ScrollView>
             </View>
         );
     }
@@ -62,7 +78,8 @@ export default class RoomSearch extends React.Component {
 		let dummyRooms = [
 			{roomNum:'2037',popular:'false'},
 			{roomNum:'2053',popular:'true'},
-			{roomNum:'1026',popular:'true'}
+			{roomNum:'1026',popular:'true'},
+			{roomNum:'1026B',popular:'true'}
 		];
 		console.log('entered: '+text);
 		this.setState({
@@ -98,13 +115,5 @@ export default class RoomSearch extends React.Component {
 
 // styles go outside of the class body, call with {styles.styleName}
 const styles = StyleSheet.create({
-    input:{ // style for room number search box
-        // height: 40,
-        width: '100%'
-        // borderColor: 'gray',
-        // borderWidth: 1,
-    },
-    matchList:{
-        width: '100%'
-	}
+
 });
