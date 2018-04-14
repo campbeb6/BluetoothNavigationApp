@@ -14,13 +14,17 @@ export default class Navigation extends React.Component {
 		super();
 		this.state = {
 			route: [],
-			floor: 'floor1'
+			floor: 1
 		}
+
 	}
 	componentDidMount() {
+		console.log('dest: '+String(this.props.destination));
 		if(routes[String(this.props.destination)]) {
 			this.setState({
 				route: routes[String(this.props.destination)]
+			},()=>{
+				console.log('nav: set route for '+this.props.destination);
 			});
 		}
 	}
@@ -41,11 +45,11 @@ export default class Navigation extends React.Component {
 
 	render() {
 		let floorplan = {};
-		if(this.state.floor==='floor1') {
+		if(this.state.floor===1) {
 			floorplan.height = FLOOR_1_HEIGHT,
 			floorplan.width = FLOOR_1_WIDTH
 		}
-		else if(this.state.floor==='floor2') {
+		else if(this.state.floor===2) {
 			floorplan.height = FLOOR_2_HEIGHT,
 			floorplan.width = FLOOR_2_WIDTH
 		}
@@ -67,43 +71,51 @@ export default class Navigation extends React.Component {
 			backgroundColor: '#C3142D'
 		};
 
-		// only load for floor1 for demo, don't forget to adjust this after the demo!
-		let startOuterBubble = this.state.floor==='floor1'?this.state.route.length<1?null:
-			<Circle
+		// start and end point conditionally loaded if the floor matches
+		let startOuterBubble=null, startInnerBubble=null;
+		let endOuterBubble=null, endInnerBubble=null;
+
+		// dark blue outer circle marking starting location
+		if(this.state.route.length>0) {
+			startOuterBubble = <Circle
 				cx={this.xcoord(this.state.route[0].x,scale)}
 				cy={this.ycoord(this.state.route[0].y,scale)}
 				r="3"
 				fill="blue"
-			/>:null;
-		// only load for floor1 for demo, don't forget to adjust this after the demo!
-		let startInnerBubble = this.state.floor==='floor1'?this.state.route.length<1?null:
-			<Circle
+			/>;
+		}
+		// light blue inner circle marking starting location
+		if(this.state.route.length>0) {
+			startInnerBubble = <Circle
 				cx={this.xcoord(this.state.route[0].x,scale)}
 				cy={this.ycoord(this.state.route[0].y,scale)}
 				r="2"
 				fill="lightblue"
-			/>:null;
-		// only load for floor1 for demo, don't forget to adjust this after the demo!
-		let endOuterBubble = this.state.floor==='floor1'?this.state.route.length<1?null:
-			<Circle
+			/>;
+		}
+		// red circle with black circle inside that marks end of route
+		if(this.state.route.length>0) {
+			endOuterBubble = <Circle
 				cx={this.xcoord(this.state.route[this.state.route.length-1].x,scale)}
 				cy={this.ycoord(this.state.route[this.state.route.length-1].y,scale)}
 				r="5"
 				fill="red"
-			/>:null;
-		// only load for floor1 for demo, don't forget to adjust this after the demo!
-		let endInnerBubble = this.state.floor==='floor1'?this.state.route.length<1?null:
-			<Circle
+			/>;
+		}
+		// black circle inside of red circle marking end of route
+		if(this.state.route.length>0) {
+			endInnerBubble = <Circle
 				cx={this.xcoord(this.state.route[this.state.route.length-1].x,scale)}
 				cy={this.ycoord(this.state.route[this.state.route.length-1].y,scale)}
 				r="2"
 				fill="#000000"
-			/>:null;
+			/>;
+		}
 		// only load for floor1 for demo, don't forget to adjust this after the demo!
 		// for routes that go to second floor, check if the current floor matches the
 		// coordinates' floor -- only load if it matches (otherwise first and second
 		// floor portions of route will show on top of each other)
-		let loadRoute = this.state.floor==='floor1'?this.state.route.map((pair,i)=>{
+		let loadRoute = this.state.route.map((pair,i)=>{
 			if(i<this.state.route.length-1) return (
 				<Line
 					x1={this.xcoord(pair.x,scale)}
@@ -114,7 +126,7 @@ export default class Navigation extends React.Component {
 					stroke={this.props.stairs?'blue':'green'}
 				/>
 			)
-		}):null;
+		});
 		let svgOutline = <Rect
 			x="0"
 			y="0"
@@ -138,7 +150,7 @@ export default class Navigation extends React.Component {
 				</View>
 				<PinchZoomView style={{flex:0.7}}>
 					<Image
-						source={floorplans[this.state.floor]}
+						source={floorplans['floor'+String(this.state.floor)]}
 						style={overlap}
 						width={Dimensions.get('window').width}
 						height={Dimensions.get('window').width*(FLOOR_1_HEIGHT/FLOOR_1_WIDTH)}
@@ -163,14 +175,14 @@ export default class Navigation extends React.Component {
 					flexDirection: 'row'
 				}}>
 					<TouchableOpacity style={halfWidthButton}
-						onPress={()=>this.setState({floor:'floor1'})}>
+						onPress={()=>this.setState({floor:1})}>
 						<Text style={{
 							color:'#ffffff',
 							fontSize: 19
 						}}>{'Floor 1'}</Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={halfWidthButton}
-						onPress={()=>this.setState({floor:'floor2'})}>
+						onPress={()=>this.setState({floor:2})}>
 						<Text style={{
 							color:'#ffffff',
 							fontSize: 19
@@ -193,17 +205,10 @@ export default class Navigation extends React.Component {
 			</View>
 		);
 	}
-	toggleFloor = () => {
-		this.setState({
-			floor: this.state.floor==='floor1'?'floor2':'floor1'
-		},()=>{
-			console.log('changed to floor '+this.state.floor);
-		})
-	}
 }
 const floorplans = {
-	floor1: require('../img/fsb_floor1_trimmed.png'),
-	floor2: require('../img/fsb_floor2_trimmed.png')
+	'floor1': require('../img/fsb_floor1_trimmed.png'),
+	'floor2': require('../img/fsb_floor2_trimmed.png')
 }
 
 const routes = {
