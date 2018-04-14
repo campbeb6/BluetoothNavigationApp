@@ -50,6 +50,9 @@ export default class RoomSearch extends React.Component {
             <View style={{flex:1}}>
 				<View>
 					<TextInput
+						style={{
+							fontSize: 20
+						}}
 						value={this.state.choice}
 						onChangeText={(text)=>{
 							this.setState({
