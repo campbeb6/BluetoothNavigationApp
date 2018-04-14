@@ -6,8 +6,8 @@ import Svg, {Rect,Line,Circle} from 'react-native-svg';
 // png dimensions (floor 1)
 const FLOOR_1_WIDTH = 613;
 const FLOOR_1_HEIGHT = 541;
-const FLOOR_2_WIDTH = 0;
-const FLOOR_2_HEIGHT = 0;
+const FLOOR_2_WIDTH = 617;
+const FLOOR_2_HEIGHT = 528;
 
 export default class Navigation extends React.Component {
 	constructor() {
@@ -32,15 +32,17 @@ export default class Navigation extends React.Component {
 	/* x: the x coordinate of a cell returned by /route call
 	 * scaleFactor: the amount by which the floorplan image was resized to fit phone screen
 	 */
-	xcoord = (x,scaleFactor) => {
+	xcoord = (x,width,scaleFactor) => {
 		// add 0.5 to x to get the center of the cell (cell indices start at 0)
 		// multiply by 1/57 because the grid is 57 cells wide
-		return String(Math.round(scaleFactor*(x+0.5)*(1/57)*FLOOR_1_WIDTH));
+		// both floorplan grids are 57x51, so it is safe to use this for both floors
+		return String(Math.round(scaleFactor*(x+0.5)*(1/57)*width));
 	}
-	ycoord = (y,scaleFactor) => {
+	ycoord = (y,height,scaleFactor) => {
 		// add 0.5 to y to get the center of the cell (cell indices start at 0)
 		// multiply by 1/51 because the grid is 57 cells wide
-		return String(Math.round(scaleFactor*(y+0.5)*(1/51)*FLOOR_1_HEIGHT));
+		// both floorplan grids are 57x51, so it is safe to use this for both floors
+		return String(Math.round(scaleFactor*(y+0.5)*(1/51)*height));
 	}
 
 	render() {
@@ -56,10 +58,7 @@ export default class Navigation extends React.Component {
 		let IMG_HEIGHT = Dimensions.get('window').width*(floorplan.height/floorplan.width);
 		let IMG_WIDTH = Dimensions.get('window').width;
 		let scale = IMG_HEIGHT / (floorplan.height*1.0);
-		// PROPS:
-		// startingLocation
-		// destination
-		// stairs
+
 		let overlap = {
 			position: 'absolute',
 			top: 0,
@@ -78,8 +77,8 @@ export default class Navigation extends React.Component {
 		// dark blue outer circle marking starting location
 		if(this.state.route.length>0 && this.state.route[0].floor===this.state.floor)  {
 			startOuterBubble = <Circle
-				cx={this.xcoord(this.state.route[0].x,scale)}
-				cy={this.ycoord(this.state.route[0].y,scale)}
+				cx={this.xcoord(this.state.route[0].x,floorplan.width,scale)}
+				cy={this.ycoord(this.state.route[0].y,floorplan.height,scale)}
 				r="3"
 				fill="blue"
 			/>;
@@ -87,8 +86,8 @@ export default class Navigation extends React.Component {
 		// light blue inner circle marking starting location
 		if(this.state.route.length>0 && this.state.route[0].floor===this.state.floor) {
 			startInnerBubble = <Circle
-				cx={this.xcoord(this.state.route[0].x,scale)}
-				cy={this.ycoord(this.state.route[0].y,scale)}
+				cx={this.xcoord(this.state.route[0].x,floorplan.width,scale)}
+				cy={this.ycoord(this.state.route[0].y,floorplan.height,scale)}
 				r="2"
 				fill="lightblue"
 			/>;
@@ -99,8 +98,8 @@ export default class Navigation extends React.Component {
 			this.state.route[this.state.route.length-1].floor===this.state.floor
 		) {
 			endOuterBubble = <Circle
-				cx={this.xcoord(this.state.route[this.state.route.length-1].x,scale)}
-				cy={this.ycoord(this.state.route[this.state.route.length-1].y,scale)}
+				cx={this.xcoord(this.state.route[this.state.route.length-1].x,floorplan.width,scale)}
+				cy={this.ycoord(this.state.route[this.state.route.length-1].y,floorplan.height,scale)}
 				r="5"
 				fill="red"
 			/>;
@@ -111,8 +110,8 @@ export default class Navigation extends React.Component {
 			this.state.route[this.state.route.length-1].floor===this.state.floor
 		) {
 			endInnerBubble = <Circle
-				cx={this.xcoord(this.state.route[this.state.route.length-1].x,scale)}
-				cy={this.ycoord(this.state.route[this.state.route.length-1].y,scale)}
+				cx={this.xcoord(this.state.route[this.state.route.length-1].x,floorplan.width,scale)}
+				cy={this.ycoord(this.state.route[this.state.route.length-1].y,floorplan.height,scale)}
 				r="2"
 				fill="#000000"
 			/>;
@@ -122,12 +121,16 @@ export default class Navigation extends React.Component {
 		// coordinates' floor -- only load if it matches (otherwise first and second
 		// floor portions of route will show on top of each other)
 		let loadRoute = this.state.route.map((pair,i)=>{
-			if(i<this.state.route.length-1) return (
+			if(
+				i<this.state.route.length-1 &&
+				this.state.floor===pair.floor &&
+				pair.floor===this.state.route[i+1].floor // don't connect between floors
+			) return (
 				<Line
-					x1={this.xcoord(pair.x,scale)}
-					y1={this.ycoord(pair.y,scale)}
-					x2={this.xcoord(this.state.route[i+1].x,scale)}
-					y2={this.ycoord(this.state.route[i+1].y,scale)}
+					x1={this.xcoord(pair.x,floorplan.width,scale)}
+					y1={this.ycoord(pair.y,floorplan.height,scale)}
+					x2={this.xcoord(this.state.route[i+1].x,floorplan.width,scale)}
+					y2={this.ycoord(this.state.route[i+1].y,floorplan.height,scale)}
 					strokeWidth="1.5"
 					stroke={this.props.stairs?'blue':'green'}
 				/>
@@ -143,7 +146,7 @@ export default class Navigation extends React.Component {
 			fill="none"
 		/>;
 
-		return(
+		return (
 			<View style={{flex:1}} >
 				<View style={{
 					flex:0.1,
@@ -219,13 +222,12 @@ const floorplans = {
 
 const routes = {
 	'1026': [
-		{floor:2,x:4,y:26},
+		{floor:1,x:4,y:26},
 		{floor:1,x:7,y:26},
 		{floor:1,x:7,y:20},
 		{floor:1,x:7,y:16},
 		{floor:1,x:7,y:13},
-		{floor:1,x:11,y:13},
-		{floor:2,x:14,y:13}
+		{floor:1,x:11,y:13}
 	],
 	'1000': [
 		{floor:1,x:4,y:26},
@@ -252,5 +254,15 @@ const routes = {
 		{floor:1,x:21,y:11},
 		{floor:1,x:25,y:11},
 		{floor:1,x:25,y:10}
+	],
+	'2043': [
+		{floor:1,x:5,y:26},
+		{floor:1,x:7,y:26},
+		{floor:1,x:7,y:12},
+		{floor:2,x:6,y:10},
+		{floor:2,x:6,y:11},
+		{floor:2,x:21,y:11},
+		{floor:2,x:21,y:9},
+		{floor:2,x:25,y:9},
 	]
 }
