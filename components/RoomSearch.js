@@ -27,7 +27,8 @@ export default class RoomSearch extends React.Component {
 					<TouchableOpacity
 						onPress={()=>{
 							this.setState({
-								choice: match.roomNum
+								choice: match.roomNum,
+								matches: [] // make list disappear
 							},()=>{
 								console.log('set choice to '+match.roomNum);
 							});
@@ -77,7 +78,8 @@ export default class RoomSearch extends React.Component {
 		let dummyRooms = [
 			{roomNum:'2037',popular:'false'},
 			{roomNum:'2053',popular:'true'},
-			{roomNum:'1026',popular:'true'}
+			{roomNum:'1026',popular:'true'},
+			{roomNum:'1026B',popular:'true'}
 		];
 		console.log('entered: '+text);
 		this.setState({
