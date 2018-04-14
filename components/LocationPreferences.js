@@ -27,17 +27,18 @@ export default class LocationPreferences extends React.Component {
     render() {
         return (
 			<View style={styles.container} >
-				<View style={{flex:.25, flexDirection:'column'}}>
+				<View style={{flex:0.5, zIndex:1, flexDirection:'column'}}>
+					<Text>Enter a room number:</Text>
 					<RoomSearch
 						getChoice={this.getRoomChoice}
 					/>
 				</View>
-				<View style={{flex: .25, flexDirection:'column'}}>
+				<View style={{flex:0.2, zIndex:0, flexDirection:'column'}}>
 					<ImportantLocations
 						getChoice={this.getRoomChoice}
 					/>
 				</View>
-				<View style={{position: 'absolute', bottom: 50, width: '100%', flexDirection: 'column'}}>
+				<View style={{flex:0.2}}>
 					<Text style = {{color: '#000000'}}>Elevator or Stairs?</Text>
 					<Accessibility
 						getStairsOrElevator={this.getStairsOrElevator}
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
 	},
 	fullWidthButton: {
 		width: '100%',
-		flex: .03,
+		flex: .1,
 		// height: '12%',
 		// // align button at bottom of screen
 		position: 'absolute',

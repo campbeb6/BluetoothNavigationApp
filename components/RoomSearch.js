@@ -62,20 +62,6 @@ export default class RoomSearch extends React.Component {
 
 	// get room numbers matching the user's input
 	getMatches = (text) => {
-		// USE DUMMY DATA FOR NOW
-		if(1===1) {
-			this.setState({
-				matches: [
-					{roomNum: text+'1'},
-					{roomNum: text+'2'},
-					{roomNum: text+'3'}
-				]
-			},()=>{
-				console.log('set dummy matches to '+JSON.stringify(this.state.matches))
-			});
-			return;
-		}
-
 		// add in some dummy data for new routes
 		let dummyRooms = [
 			{roomNum:'2037',popular:'false'},
