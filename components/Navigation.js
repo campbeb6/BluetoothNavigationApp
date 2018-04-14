@@ -16,7 +16,6 @@ export default class Navigation extends React.Component {
 			route: [],
 			floor: 1
 		}
-
 	}
 	componentDidMount() {
 		console.log('dest: '+String(this.props.destination));
@@ -96,10 +95,8 @@ export default class Navigation extends React.Component {
 			/>;
 		}
 		// red circle with black circle inside that marks end of route
-		if(
-			this.state.route.length>0 &&
-			this.state.route[this.state.route.length-1].floor===this.state.floor
-		) {
+		if(	this.state.route.length>0 &&
+			this.state.route[this.state.route.length-1].floor===this.state.floor) {
 			endOuterBubble = <Circle
 				cx={this.xcoord(this.state.route[this.state.route.length-1].x,floorplan.width,scale)}
 				cy={this.ycoord(this.state.route[this.state.route.length-1].y,floorplan.height,scale)}
@@ -108,10 +105,8 @@ export default class Navigation extends React.Component {
 			/>;
 		}
 		// black circle inside of red circle marking end of route
-		if(
-			this.state.route.length>0 &&
-			this.state.route[this.state.route.length-1].floor===this.state.floor
-		) {
+		if(	this.state.route.length>0 &&
+			this.state.route[this.state.route.length-1].floor===this.state.floor) {
 			endInnerBubble = <Circle
 				cx={this.xcoord(this.state.route[this.state.route.length-1].x,floorplan.width,scale)}
 				cy={this.ycoord(this.state.route[this.state.route.length-1].y,floorplan.height,scale)}
@@ -124,8 +119,7 @@ export default class Navigation extends React.Component {
 		// coordinates' floor -- only load if it matches (otherwise first and second
 		// floor portions of route will show on top of each other)
 		let loadRoute = this.state.route.map((pair,i)=>{
-			if(
-				i<this.state.route.length-1 &&
+			if(	i<this.state.route.length-1 &&
 				this.state.floor===pair.floor &&
 				pair.floor===this.state.route[i+1].floor // don't connect between floors
 			) return (
@@ -223,6 +217,7 @@ const floorplans = {
 	'floor2': require('../img/fsb_floor2_trimmed.png')
 }
 
+// hard-coded example routes
 const routes = {
 	'1026': [
 		{floor:1,x:4,y:26},
