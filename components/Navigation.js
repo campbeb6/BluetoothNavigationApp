@@ -30,6 +30,50 @@ export default class Navigation extends React.Component {
 				}
 			});
 		}
+
+		// get the route from the server
+		console.log('TESTING /route');
+		this.getRoute();
+	}
+
+	// get the route from the server
+	getRoute = () => {
+		let url = 'http://10.36.0.144:3000/route';
+		let request = new Request(url,{
+			method: 'POST',
+			headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json',
+		  },
+		  // per API documentation: https://docs.google.com/document/d/1MNGOfIhePx12GOXEsAanPD59TBxbys2WZfliT9gk-Aw/edit
+		  body: JSON.stringify({
+			  sensors: [
+				  {name:'s1',signalStrength:'10'},
+				  {name:'s2',signalStrength:'20'},
+				  {name:'s3',signalStrength:'30'}
+			  ],
+			  rooms: [
+				  '1036',
+				  this.props.destination
+			  ],
+			  stairs: this.props.stairs
+		  })
+		});
+		fetch(request)
+		.then(res => {
+			return res.json();
+		})
+		.then(resj => {
+			console.log('nav: server response:');
+			console.log(JSON.stringify(resj));
+			// !!! un-comment this once the API returns valid stub route !!!
+			// this.setState({
+			// 	route: resj
+			// },()=>{
+			// 	console.log('set route: '+JSON.stringify(this.state.route));
+			// });
+		})
+		.catch(err => console.log('error:  '+err));
 	}
 
 	/* x: the x coordinate of a cell returned by /route call
