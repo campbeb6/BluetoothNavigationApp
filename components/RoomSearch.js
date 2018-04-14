@@ -32,8 +32,16 @@ export default class RoomSearch extends React.Component {
 								console.log('set choice to '+match.roomNum);
 							});
 						}}
+						style={{
+							flex:1,
+							width:'100%'
+						}}
 					>
-						<Text>{match.roomNum}</Text>
+						<Text style={{
+							fontSize: 20,
+							marginBottom: 5,
+							marginLeft: 4
+						}}>{match.roomNum}</Text>
 					</TouchableOpacity>
 				</View>
 			);
