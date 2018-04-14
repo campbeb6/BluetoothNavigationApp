@@ -25,6 +25,9 @@ export default class Navigation extends React.Component {
 				route: routes[String(this.props.destination)]
 			},()=>{
 				console.log('nav: set route for '+this.props.destination);
+				if(this.state.route.length>1) {
+					this.setState({floor:this.state.route[0].floor});
+				}
 			});
 		}
 	}
@@ -264,5 +267,15 @@ const routes = {
 		{floor:2,x:21,y:11},
 		{floor:2,x:21,y:9},
 		{floor:2,x:25,y:9},
-	]
+	],
+	'1036': [
+		{floor:2,x:25,y:9},
+		{floor:2,x:21,y:9},
+		{floor:2,x:21,y:11},
+		{floor:2,x:6,y:11},
+		{floor:2,x:6,y:10},
+		{floor:1,x:7,y:12},
+		{floor:1,x:7,y:26},
+		{floor:1,x:5,y:26},
+	],
 }
