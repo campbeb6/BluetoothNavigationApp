@@ -4,8 +4,8 @@ import PinchZoomView from 'react-native-pinch-zoom-view';
 import Svg, {Rect,Line,Circle} from 'react-native-svg';
 
 // png dimensions (floor 1)
-const FLOOR_1_WIDTH = 609;
-const FLOOR_1_HEIGHT = 539;
+const FLOOR_1_WIDTH = 613;
+const FLOOR_1_HEIGHT = 541;
 const FLOOR_2_WIDTH = 0;
 const FLOOR_2_HEIGHT = 0;
 
@@ -25,27 +25,18 @@ export default class Navigation extends React.Component {
 		}
 	}
 
+	/* x: the x coordinate of a cell returned by /route call
+	 * scaleFactor: the amount by which the floorplan image was resized to fit phone screen
+	 */
 	xcoord = (x,scaleFactor) => {
-		let xConversion = 0.51262626;
-		let cellWidth = 21 * xConversion;
-		let cellMiddle = cellWidth/2.0;
-		let xOffset = 10.0 * xConversion;
-
-		// convert grid x to floorplan pixel x
-		let xpx = Math.floor(scaleFactor*(cellWidth*x + cellMiddle - xOffset)); //subtract 1 for line width
-		console.log('x: '+x+', xpx: '+xpx);
-		return String(xpx+1);
+		// add 0.5 to x to get the center of the cell (cell indices start at 0)
+		// multiply by 1/57 because the grid is 57 cells wide
+		return String(Math.round(scaleFactor*(x+0.5)*(1/57)*FLOOR_1_WIDTH));
 	}
 	ycoord = (y,scaleFactor) => {
-		// adjust for 21px width of cell, 3px y-offset, and 10.5 for center
-		let yConversion = 0.50849057;
-		let cellHeight = 21 * yConversion;
-		let cellMiddle = cellHeight/2.0;
-		let yOffset = 3.0 * yConversion;
-
-		let ypx = Math.floor(scaleFactor*(cellHeight*y +cellMiddle - yOffset));
-		console.log('y: '+y+', ypx: '+ypx);
-		return String(ypx);
+		// add 0.5 to y to get the center of the cell (cell indices start at 0)
+		// multiply by 1/51 because the grid is 57 cells wide
+		return String(Math.round(scaleFactor*(y+0.5)*(1/51)*FLOOR_1_HEIGHT));
 	}
 
 	render() {
@@ -211,7 +202,7 @@ export default class Navigation extends React.Component {
 	}
 }
 const floorplans = {
-	floor1: require('../img/fsb_floor1.png'),
+	floor1: require('../img/fsb_floor1_trimmed.png'),
 	floor2: require('../img/fsb_floor2_trimmed.png')
 }
 
