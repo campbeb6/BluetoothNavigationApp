@@ -19,9 +19,10 @@ export default class Navigation extends React.Component {
 	}
 	componentDidMount() {
 		console.log('dest: '+String(this.props.destination));
-		if(routes[String(this.props.destination)]) {
+		let dest = String(this.props.stairs?this.props.destination:this.props.destination+'_elevator');
+		if(routes[dest]) {
 			this.setState({
-				route: routes[String(this.props.destination)]
+				route: routes[dest]
 			},()=>{
 				console.log('nav: set route for '+this.props.destination);
 				if(this.state.route.length>1) {
@@ -253,6 +254,8 @@ const routes = {
 		{floor:1,x:25,y:11},
 		{floor:1,x:25,y:10}
 	],
+
+	// routes that go between floors and have stairs or elevator options
 	'2043': [
 		{floor:1,x:5,y:26},
 		{floor:1,x:7,y:26},
@@ -262,6 +265,23 @@ const routes = {
 		{floor:2,x:21,y:11},
 		{floor:2,x:21,y:9},
 		{floor:2,x:25,y:9},
+	],
+	'2043_elevator': [
+		{floor:1,x:5,y:26},
+		{floor:1,x:7,y:26},
+		{floor:1,x:7,y:13},
+		{floor:1,x:21,y:13},
+		{floor:1,x:21,y:15},
+		{floor:1,x:30,y:15},
+		{floor:1,x:30,y:13},
+		{floor:1,x:33,y:13},
+		{floor:1,x:33,y:14},
+		{floor:2,x:32,y:12},
+		{floor:2,x:33,y:12},
+		{floor:2,x:33,y:11},
+		{floor:2,x:30,y:11},
+		{floor:2,x:30,y:8},
+		{floor:2,x:25,y:8}
 	],
 	'1036': [
 		{floor:2,x:25,y:9},
@@ -273,4 +293,21 @@ const routes = {
 		{floor:1,x:7,y:26},
 		{floor:1,x:5,y:26},
 	],
+	'1036_elevator': [
+		{floor:2,x:25,y:8},
+		{floor:2,x:30,y:8},
+		{floor:2,x:30,y:11},
+		{floor:2,x:33,y:11},
+		{floor:2,x:33,y:12},
+		{floor:2,x:32,y:12},
+		{floor:1,x:33,y:14},
+		{floor:1,x:33,y:13},
+		{floor:1,x:30,y:13},
+		{floor:1,x:30,y:15},
+		{floor:1,x:21,y:15},
+		{floor:1,x:21,y:13},
+		{floor:1,x:7,y:13},
+		{floor:1,x:7,y:26},
+		{floor:1,x:5,y:26}
+	]
 }
