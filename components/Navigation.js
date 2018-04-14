@@ -18,21 +18,21 @@ export default class Navigation extends React.Component {
 		}
 	}
 	componentDidMount() {
-		console.log('dest: '+String(this.props.destination));
-		let dest = String(this.props.stairs?this.props.destination:this.props.destination+'_elevator');
-		if(routes[dest]) {
-			this.setState({
-				route: routes[dest]
-			},()=>{
-				console.log('nav: set route for '+this.props.destination);
-				if(this.state.route.length>1) {
-					this.setState({floor:this.state.route[0].floor});
-				}
-			});
-		}
+		// use hard-coded sample routes
+		// console.log('dest: '+String(this.props.destination));
+		// let dest = String(this.props.stairs?this.props.destination:this.props.destination+'_elevator');
+		// if(routes[dest]) {
+		// 	this.setState({
+		// 		route: routes[dest]
+		// 	},()=>{
+		// 		console.log('nav: set route for '+this.props.destination);
+		// 		if(this.state.route.length>1) {
+		// 			this.setState({floor:this.state.route[0].floor});
+		// 		}
+		// 	});
+		// }
 
 		// get the route from the server
-		console.log('TESTING /route');
 		this.getRoute();
 	}
 
@@ -56,7 +56,8 @@ export default class Navigation extends React.Component {
 				  '1036',
 				  this.props.destination
 			  ],
-			  stairs: this.props.stairs
+			  stairs: this.props.stairs,
+			  method:this.props.stairs?null:'room to room'
 		  })
 		});
 		fetch(request)
@@ -66,12 +67,11 @@ export default class Navigation extends React.Component {
 		.then(resj => {
 			console.log('nav: server response:');
 			console.log(JSON.stringify(resj));
-			// !!! un-comment this once the API returns valid stub route !!!
-			// this.setState({
-			// 	route: resj
-			// },()=>{
-			// 	console.log('set route: '+JSON.stringify(this.state.route));
-			// });
+			this.setState({
+				route: resj
+			},()=>{
+				console.log('set route: '+JSON.stringify(this.state.route));
+			});
 		})
 		.catch(err => console.log('error:  '+err));
 	}
