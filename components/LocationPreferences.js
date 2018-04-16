@@ -27,7 +27,7 @@ export default class LocationPreferences extends React.Component {
     render() {
         return (
 			<View style={styles.container} >
-				<View style={{flex:0.5, zIndex:1, flexDirection:'column'}}>
+				<View style={{padding: 50,flex:0.5, zIndex:1, flexDirection:'column'}}>	
 					<Text>Enter a room number:</Text>
 					<RoomSearch
 						getChoice={this.getRoomChoice}
