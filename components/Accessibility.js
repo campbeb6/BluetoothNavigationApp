@@ -9,7 +9,6 @@ export default class Accessibility extends Component {
 	this.state={
 		selectedOption: 'Stairs'
 	}
-	console.log('Accessibility constructor');
   }
 
   render() {
@@ -24,10 +23,10 @@ export default class Accessibility extends Component {
       <SegmentedControls
         options={ options }
         tint = {"#C3142D"}
-        onSelection={ (itemValue) => { 
+        onSelection={ (itemValue) => {
           this.props.getStairsOrElevator(itemValue);
-          this.setState({selectedOption:itemValue}); 
-        } 
+          this.setState({selectedOption:itemValue});
+        }
       }
         selectedOption={ this.state.selectedOption }
       />

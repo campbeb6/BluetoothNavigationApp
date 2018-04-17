@@ -65,12 +65,10 @@ export default class Navigation extends React.Component {
 			return res.json();
 		})
 		.then(resj => {
-			console.log('nav: server response:');
-			console.log(JSON.stringify(resj));
 			this.setState({
 				route: resj
 			},()=>{
-				console.log('set route: '+JSON.stringify(this.state.route));
+				console.log('nav: set route: '+JSON.stringify(this.state.route));
 			});
 		})
 		.catch(err => console.log('error:  '+err));
@@ -187,7 +185,6 @@ export default class Navigation extends React.Component {
 			strokeWidth="2"
 			fill="none"
 		/>;
-
 		return (
 			<View style={{flex:1}} >
 				<View style={{

@@ -11,7 +11,6 @@ export default class RoomSearch extends React.Component {
     // contructor, contains state variables
     constructor() {
         super();
-		console.log('RoomSearch constructor');
         this.state = {
             matches: [], // array of rooms that match entry
             choice: '' // the room for which the user wants directions
@@ -30,7 +29,7 @@ export default class RoomSearch extends React.Component {
 								choice: match.roomNum,
 								matches: [] // make list disappear
 							},()=>{
-								console.log('set choice to '+match.roomNum);
+								console.log('RoomSearch: set choice to '+match.roomNum);
 							});
 						}}
 						style={{
@@ -59,8 +58,9 @@ export default class RoomSearch extends React.Component {
 							this.setState({
 								choice: text
 							},() => {
-								console.log('set choice to '+this.state.choice);
-								this.getMatches(this.state.choice)
+								console.log('RoomSearch: set choice to '+this.state.choice);
+								this.getMatches(this.state.choice);
+								this.props.getChoice(this.state.choice);
 							});
 						}}
 					/>
@@ -77,15 +77,15 @@ export default class RoomSearch extends React.Component {
 		// add in some dummy data for new routes
 		let dummyRooms = [
 			{roomNum:'2037',popular:'false'},
+			{roomNum:'2043',popular:'false'},
 			{roomNum:'2053',popular:'true'},
 			{roomNum:'1026',popular:'true'},
 			{roomNum:'1026B',popular:'true'}
 		];
-		console.log('entered: '+text);
 		this.setState({
 			entry: text
 		},()=>{
-			console.log('getting matches for '+this.state.entry);
+			console.log('RoomSearch: getting matches for '+this.state.entry);
 			let url = 'http://10.36.0.144:3000/rooms';
 			let request = new Request(url,{
 				method: 'GET',
@@ -96,14 +96,13 @@ export default class RoomSearch extends React.Component {
 			});
 			fetch(request)
 			.then(res => {
-				console.log(res);
 				return res.json();
 			})
 			.then(resj => {
 				this.setState({
 					matches: resj.concat(dummyRooms).filter(match => match.roomNum.startsWith(this.state.entry))
 				},function(){
-					console.log('set state.matches to:');
+					console.log('RoomSearch: set state.matches to:');
 					console.log(this.state.matches);
 				});
 				return resj;
