@@ -10,30 +10,31 @@ const FLOOR_2_WIDTH = 617;
 const FLOOR_2_HEIGHT = 528;
 
 export default class Navigation extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			route: [],
 			floor: 1
 		}
+
 	}
 	componentDidMount() {
 		// use hard-coded sample routes
-		// console.log('dest: '+String(this.props.destination));
-		// let dest = String(this.props.stairs?this.props.destination:this.props.destination+'_elevator');
-		// if(routes[dest]) {
-		// 	this.setState({
-		// 		route: routes[dest]
-		// 	},()=>{
-		// 		console.log('nav: set route for '+this.props.destination);
-		// 		if(this.state.route.length>1) {
-		// 			this.setState({floor:this.state.route[0].floor});
-		// 		}
-		// 	});
-		// }
-
-		// get the route from the server
-		this.getRoute();
+		console.log('dest: '+String(this.props.destination));
+		let dest = String(this.props.stairs?this.props.destination:this.props.destination+'_elevator');
+		if(routes[dest]) {
+			this.setState({
+				route: routes[dest]
+			},()=>{
+				console.log('nav: set route for '+this.props.destination);
+				if(this.state.route.length>1) {
+					this.setState({floor:this.state.route[0].floor});
+				}
+			});
+		} else {
+			// get the route from the server
+			this.getRoute();
+		}
 	}
 
 	// get the route from the server
@@ -299,33 +300,6 @@ const routes = {
 	],
 
 	// routes that go between floors and have stairs or elevator options
-	'2043': [
-		{floor:1,x:5,y:26},
-		{floor:1,x:7,y:26},
-		{floor:1,x:7,y:12},
-		{floor:2,x:6,y:10},
-		{floor:2,x:6,y:11},
-		{floor:2,x:21,y:11},
-		{floor:2,x:21,y:9},
-		{floor:2,x:25,y:9}
-	],
-	'2043_elevator': [
-		{floor:1,x:5,y:26},
-		{floor:1,x:7,y:26},
-		{floor:1,x:7,y:13},
-		{floor:1,x:21,y:13},
-		{floor:1,x:21,y:15},
-		{floor:1,x:30,y:15},
-		{floor:1,x:30,y:13},
-		{floor:1,x:33,y:13},
-		{floor:1,x:33,y:14},
-		{floor:2,x:32,y:12},
-		{floor:2,x:33,y:12},
-		{floor:2,x:33,y:11},
-		{floor:2,x:30,y:11},
-		{floor:2,x:30,y:8},
-		{floor:2,x:25,y:8}
-	],
 	'1036': [
 		{floor:2,x:25,y:9},
 		{floor:2,x:21,y:9},
