@@ -30,6 +30,7 @@ export default class RoomSearch extends React.Component {
 								matches: [] // make list disappear
 							},()=>{
 								console.log('RoomSearch: set choice to '+match.roomNum);
+								this.props.getChoice(this.state.choice);
 							});
 						}}
 						style={{
