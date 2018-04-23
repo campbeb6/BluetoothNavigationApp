@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
-public class NativeTest
-	extends ReactContextBaseJavaModule implements ReactPackage {
+// https://medium.com/mindorks/how-to-use-native-modules-in-react-native-android-hybrid-apps-62b67a2cc7ca
+// https://facebook.github.io/react-native/docs/native-modules-android.html
 
+public class NativeTest extends ReactContextBaseJavaModule {
 	// constructor
 	public NativeTest(ReactApplicationContext rctAppContext) {
 		super(rctAppContext);
@@ -28,21 +29,5 @@ public class NativeTest
 	@ReactMethod
 	public void test(Callback fn) {
 		fn.invoke("testing native module");
-	}
-
-	@Override
-	public List<ViewManager> createViewManagers(
-		ReactApplicationContext reactContext
-	) {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<NativeModule> createNativeModules(
-		ReactApplicationContext reactContext
-	) {
-		List<NativeModule> modules = new ArrayList<>();
-		modules.add(new NativeTest(reactContext));
-		return modules;
 	}
 }
