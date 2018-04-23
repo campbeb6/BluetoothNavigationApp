@@ -1,7 +1,10 @@
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.uimanager.ViewManager;
+import com.facebook.react.bridge.ReactMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +42,7 @@ public class NativeTest
 		ReactApplicationContext reactContext
 	) {
 		List<NativeModule> modules = new ArrayList<>();
-		modules.add(new ToastModule(reactContext));
+		modules.add(new NativeTest(reactContext));
 		return modules;
 	}
 }
