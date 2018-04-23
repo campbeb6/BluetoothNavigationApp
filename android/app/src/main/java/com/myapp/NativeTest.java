@@ -1,3 +1,5 @@
+package com.myapp.nativepackage;
+
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.ReactPackage;

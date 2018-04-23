@@ -12,6 +12,8 @@ import com.horcrux.svg.SvgPackage;
 import java.util.Arrays;
 import java.util.List;
 
+import com.myapp.nativepackage.*;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
