@@ -189,15 +189,16 @@ input: {
 
 buttonContainer: {
     backgroundColor: '#C3142D',
-    paddingVertical: 10,
-    width: 100,
-    marginLeft: 140
+    paddingVertical: 16,
+    width: 150,
+    marginLeft: 115
 },
 
 buttonText: {
     textAlign: 'center',
-    color: '#000000',
-    fontWeight: '700'
+    color: '#FFFFFF',
+    fontWeight: '700',
+    fontSize: 20
 },
 
 guestButton: {
