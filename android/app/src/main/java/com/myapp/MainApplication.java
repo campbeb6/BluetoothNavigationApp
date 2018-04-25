@@ -14,7 +14,7 @@ import java.util.List;
 
 import com.myapp.nativepackage.*;
 
-import com.estimote.proximity_sdk.proximity.*;
+// import com.estimote.proximity_sdk.proximity.*;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -29,7 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
 		  new SvgPackage(),
-		  new NativeTestPackager()
+		  new NativePackager()
       );
     }
 
@@ -48,10 +48,5 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-	EstimoteCloudCredentials cloudCredentials =
-        new EstimoteCloudCredentials(
-			"isa406-fsb-nav-i48", // app id
-			"9d5cb164fdea698577ef4565a7c86be7" // app token
-		);
   }
 }
