@@ -138,8 +138,8 @@ android {
 
 dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
-	implementation 'com.estimote:proximity-sdk:0.4.1'
     compile "com.android.support:appcompat-v7:23.0.1"
+	compile 'com.estimote:sdk:1.4.1'
     compile "com.facebook.react:react-native:+"  // From node_modules
 	compile project(':react-native-svg')
 }
