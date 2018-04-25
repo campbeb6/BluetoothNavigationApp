@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
-public class NativeTestPackager implements ReactPackage {
+public class NativePackager implements ReactPackage {
 	@Override
 	public List<ViewManager> createViewManagers(
 		ReactApplicationContext reactContext
@@ -25,7 +25,7 @@ public class NativeTestPackager implements ReactPackage {
 		ReactApplicationContext reactContext
 	) {
 		List<NativeModule> modules = new ArrayList<>();
-		modules.add(new NativeTest(reactContext));
+		modules.add(new AndroidBeacon(reactContext));
 		return modules;
 	}
 }

@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import LocationPreferences from './components/LocationPreferences';
 import Navigation from './components/Navigation';
-import NativeTest from './components/NativeTest';
+import AndroidBeacon from './components/Beacon';
 
 export default class App extends React.Component {
 	constructor() {
@@ -23,7 +23,7 @@ export default class App extends React.Component {
 			activePage: this.state.defaultLocationPreferences
 		});
 		// call Android native module, response will be "testing native module"
-		NativeTest.test((response)=>{
+		AndroidBeacon.test((response)=>{
 			console.log(response);
 		});
 	}
