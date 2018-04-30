@@ -17,6 +17,10 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
+// integrating with react native references:
+// https://facebook.github.io/react-native/docs/integration-with-existing-apps.html
+// https://stackoverflow.com/questions/42253397/call-android-activity-from-react-native-code
+
 public class AndroidBeaconActivity extends Activity implements BeaconConsumer {
     protected static final String TAG = "AndroidBeaconActivity";
     private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
