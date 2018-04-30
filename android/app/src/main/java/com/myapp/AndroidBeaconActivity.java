@@ -17,15 +17,13 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
-public class AndroidBeaconMethods extends Activity implements BeaconConsumer {
-    protected static final String TAG = "AndroidBeaconMethods";
+public class AndroidBeaconActivity extends Activity implements BeaconConsumer {
+    protected static final String TAG = "AndroidBeaconActivity";
     private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_ranging);
-
         beaconManager.bind(this);
     }
 
@@ -53,7 +51,6 @@ public class AndroidBeaconMethods extends Activity implements BeaconConsumer {
            @Override
            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
               if (beacons.size() > 0) {
-                 //EditText editText = (EditText)AndroidBeaconMethods.this.findViewById(R.id.rangingText);
                  Beacon firstBeacon = beacons.iterator().next();
                  String logMsg = "The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.";
               }
@@ -65,13 +62,4 @@ public class AndroidBeaconMethods extends Activity implements BeaconConsumer {
             beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
         } catch (RemoteException e) {   }
     }
-
-    // private void logToDisplay(final String line) {
-    //     runOnUiThread(new Runnable() {
-    //         public void run() {
-    //             EditText editText = (EditText)AndroidBeaconMethods.this.findViewById(R.id.rangingText);
-    //             editText.append(line+"\n");
-    //         }
-    //     });
-    // }
 }
