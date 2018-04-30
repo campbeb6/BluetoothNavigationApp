@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,Image,Dimensions } from 'react-native';
 import PinchZoomView from 'react-native-pinch-zoom-view';
 import Svg, {Rect,Line,Circle} from 'react-native-svg';
+import AndroidBeacon from './Beacon';
 
 // png dimensions (floor 1)
 const FLOOR_1_WIDTH = 613;
@@ -19,6 +20,9 @@ export default class Navigation extends React.Component {
 
 	}
 	componentDidMount() {
+		// call Android native module
+		AndroidBeacon.startAndroidBeaconActivity();
+
 		// use hard-coded sample routes
 		console.log('dest: '+String(this.props.destination));
 		let dest = String(this.props.stairs?this.props.destination:this.props.destination+'_elevator');
