@@ -44,7 +44,8 @@ public class AndroidBeaconActivity extends Activity implements BeaconConsumer {
 			// example code used setJSMainModuleName() instead, did not compile
 			.setJSMainModulePath("index.android")
 			.addPackage(new MainReactPackage())
-			// .setUseDeveloperSupport(BuildConfig.DEBUG)
+			// hard-code to true for now
+			.setUseDeveloperSupport(true)
 			.setInitialLifecycleState(LifecycleState.RESUMED)
 			.build();
 		mReactRootView.startReactApplication(mReactInstanceManager, "HelloWorld", null);
