@@ -3,7 +3,6 @@ package com.myapp.nativepackage;
 import java.util.Collection;
 
 import android.app.Activity;
-
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
@@ -17,17 +16,41 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
+// import path: BluetoothNavigationApp\node_modules\react-native\ReactAndroid\src\main\java\com\facebook\react
+import com.facebook.react.ReactRootView;
+import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.ReactInstanceManagerBuilder;
+import com.facebook.react.common.LifecycleState;
+import com.facebook.react.shell.MainReactPackage;
+
 // integrating with react native references:
 // https://facebook.github.io/react-native/docs/integration-with-existing-apps.html
 // https://stackoverflow.com/questions/42253397/call-android-activity-from-react-native-code
+// https://facebook.github.io/react-native/docs/communication-android.html
 
 public class AndroidBeaconActivity extends Activity implements BeaconConsumer {
     protected static final String TAG = "AndroidBeaconActivity";
     private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
+	private ReactRootView mReactRootView;
+	private ReactInstanceManager mReactInstanceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		mReactRootView = new ReactRootView(this);
+		mReactInstanceManager = ReactInstanceManager.builder()
+			.setApplication(getApplication())
+			.setBundleAssetName("index.android.bundle")
+			// example code used setJSMainModuleName() instead, did not compile
+			.setJSMainModulePath("index.android")
+			.addPackage(new MainReactPackage())
+			// .setUseDeveloperSupport(BuildConfig.DEBUG)
+			.setInitialLifecycleState(LifecycleState.RESUMED)
+			.build();
+		mReactRootView.startReactApplication(mReactInstanceManager, "HelloWorld", null);
+		setContentView(mReactRootView);
+
+		// bind to beacon manager
         beaconManager.bind(this);
     }
 
