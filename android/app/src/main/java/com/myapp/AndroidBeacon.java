@@ -28,7 +28,7 @@ import android.os.RemoteException;
 // https://medium.com/mindorks/how-to-use-native-modules-in-react-native-android-hybrid-apps-62b67a2cc7ca
 // https://facebook.github.io/react-native/docs/native-modules-android.html
 
-public abstract class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconConsumer {
+public class AndroidBeacon extends ReactContextBaseJavaModule {
 	// constructor
 	private ReactApplicationContext rac;
 	private BeaconManager beaconManager;
@@ -38,7 +38,7 @@ public abstract class AndroidBeacon extends ReactContextBaseJavaModule implement
 		this.rac = rctAppContext;
 		//https://altbeacon.github.io/android-beacon-library/javadoc/org/altbeacon/beacon/BeaconManager.html#getInstanceForApplication-android.content.Context-
 		this.beaconManager = BeaconManager.getInstanceForApplication(this.rac);
-		this.beaconManager.bind(this);
+		// this.beaconManager.bind(this);
 	}
 
 	// mandatory getName() in order to access at React.NativeModules.NAME
@@ -56,7 +56,7 @@ public abstract class AndroidBeacon extends ReactContextBaseJavaModule implement
 	}
 
 	// BeaconConsumer interface method
-	@Override
+	// @Override
     public void onBeaconServiceConnect() {
         beaconManager.setRangeNotifier(new RangeNotifier() {
            @Override
