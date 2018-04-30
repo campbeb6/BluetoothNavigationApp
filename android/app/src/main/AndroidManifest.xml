@@ -22,7 +22,7 @@
         </intent-filter>
       </activity>
 	  <activity
-		  android:name=".AndroidBeaconActivity">
+		  android:name="com.myapp.nativepackage.AndroidBeaconActivity">
 	  </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
     </application>

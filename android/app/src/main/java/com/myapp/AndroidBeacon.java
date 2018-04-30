@@ -33,8 +33,12 @@ public class AndroidBeacon extends ReactContextBaseJavaModule {
 	@ReactMethod
 	public void startAndroidBeaconActivity() {
 		ReactApplicationContext context = getReactApplicationContext();
-        Intent intent = new Intent(context, AndroidBeaconActivity.class);
-        context.startActivity(intent);
+		// get class name from AndroidBeaconActivity.class: does not run
+		Intent intent = new Intent(context, AndroidBeaconActivity.class);
+
+		// set this flag as a workaround to avoid runtime error, not recommended
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
 	}
 
 	// must prefix with @ReactMethod, can only communicate with callback or event

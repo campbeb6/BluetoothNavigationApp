@@ -23,9 +23,7 @@ export default class App extends React.Component {
 			activePage: this.state.defaultLocationPreferences
 		});
 		// call Android native module, response will be "testing native module"
-		AndroidBeacon.test((response)=>{
-			console.log(response);
-		});
+		AndroidBeacon.startAndroidBeaconActivity();
 	}
 
 	render() {
