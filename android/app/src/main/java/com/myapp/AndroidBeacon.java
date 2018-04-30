@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.RemoteException;
 
 // https://medium.com/mindorks/how-to-use-native-modules-in-react-native-android-hybrid-apps-62b67a2cc7ca
@@ -38,7 +39,7 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 		this.rac = rctAppContext;
 		//https://altbeacon.github.io/android-beacon-library/javadoc/org/altbeacon/beacon/BeaconManager.html#getInstanceForApplication-android.content.Context-
 		this.beaconManager = BeaconManager.getInstanceForApplication(this.rac);
-		// this.beaconManager.bind(this);
+		this.beaconManager.bind(this);
 	}
 
 	// mandatory getName() in order to access at React.NativeModules.NAME
@@ -72,4 +73,23 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
             beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
         } catch (RemoteException e) {   }
     }
+
+	// NOT RECOMMENDED: override the unbind and bindService methods
+	@Override
+	public boolean bindService(
+		Intent intent,
+        ServiceConnection connection,
+        int mode) {
+		// STUB
+		return true;
+	}
+	@Override
+	public void unbindService(ServiceConnection connection) {
+		// STUB
+		return;
+	}
+	@Override
+	public Context getApplicationContext() {
+		return rac;
+	}
 }
