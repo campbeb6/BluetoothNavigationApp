@@ -52,7 +52,7 @@ public class AndroidBeaconActivity extends Activity implements BeaconConsumer {
 		setContentView(mReactRootView);
 
 		// bind to beacon manager
-        beaconManager.bind(this);
+		// beaconManager.bind(this);
     }
 
     @Override

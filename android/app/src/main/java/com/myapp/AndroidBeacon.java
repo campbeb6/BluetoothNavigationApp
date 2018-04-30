@@ -8,19 +8,37 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.ReactMethod;
 
+import org.altbeacon.beacon.AltBeacon;
+import org.altbeacon.beacon.Beacon;
+import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.RangeNotifier;
+import org.altbeacon.beacon.Region;
+
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collection;
 import java.util.Collections;
 
 import android.content.Intent;
+import android.os.RemoteException;
 
 // https://medium.com/mindorks/how-to-use-native-modules-in-react-native-android-hybrid-apps-62b67a2cc7ca
 // https://facebook.github.io/react-native/docs/native-modules-android.html
 
-public class AndroidBeacon extends ReactContextBaseJavaModule {
+public abstract class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconConsumer {
 	// constructor
+	private ReactApplicationContext rac;
+	private BeaconManager beaconManager;
+
 	public AndroidBeacon(ReactApplicationContext rctAppContext) {
 		super(rctAppContext);
+		this.rac = rctAppContext;
+		//https://altbeacon.github.io/android-beacon-library/javadoc/org/altbeacon/beacon/BeaconManager.html#getInstanceForApplication-android.content.Context-
+		this.beaconManager = BeaconManager.getInstanceForApplication(this.rac);
+		this.beaconManager.bind(this);
 	}
 
 	// mandatory getName() in order to access at React.NativeModules.NAME
@@ -30,21 +48,28 @@ public class AndroidBeacon extends ReactContextBaseJavaModule {
 		return "AndroidBeacon";
 	}
 
-	@ReactMethod
-	public void startAndroidBeaconActivity() {
-		ReactApplicationContext context = getReactApplicationContext();
-		// get class name from AndroidBeaconActivity.class: does not run
-		Intent intent = new Intent(context, AndroidBeaconActivity.class);
-
-		// set this flag as a workaround to avoid runtime error, not recommended
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		context.startActivity(intent);
-	}
-
 	// must prefix with @ReactMethod, can only communicate with callback or event
 	@ReactMethod
 	public void test(Callback fn) {
 		// remember, cannot return directly to ReactNative: must use callback
-		fn.invoke("testing native module");
+		fn.invoke("starting beacon manager...");
 	}
+
+	// BeaconConsumer interface method
+	@Override
+    public void onBeaconServiceConnect() {
+        beaconManager.setRangeNotifier(new RangeNotifier() {
+           @Override
+           public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+              if (beacons.size() > 0) {
+                 Beacon firstBeacon = beacons.iterator().next();
+                 String logMsg = "The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.";
+              }
+           }
+        });
+
+        try {
+            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+        } catch (RemoteException e) {   }
+    }
 }
