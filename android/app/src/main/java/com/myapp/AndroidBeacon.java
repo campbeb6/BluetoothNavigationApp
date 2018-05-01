@@ -53,7 +53,7 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements Lifecyc
 		Log.d(TAG,"onHostPause()");
 	}
 	@Override
-	void onHostDestroy() {
+	public void onHostDestroy() {
 		Log.d(TAG,"onHostDestroy()");
 	}
 }
