@@ -7,7 +7,9 @@ export default class GetLocation extends React.Component {
 		super();
 		console.log('GetLocation constructor');
 		// call Android native module
-		AndroidBeacon.startAndroidBeaconActivity();
+		AndroidBeacon.test(function(res){
+			console.log('GetLocation: '+res);
+		});
 	}
 	render() {
 		return(
