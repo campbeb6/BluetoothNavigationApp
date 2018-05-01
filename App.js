@@ -8,21 +8,21 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import LocationPreferences from './components/LocationPreferences';
 import Navigation from './components/Navigation';
-import AndroidBeacon from './components/Beacon';
+import GetLocation from './components/GetLocation';
 
 export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
 			defaultLocationPreferences: <LocationPreferences startNavigation={this.startNavigation} />,
-			activePage: null
+			activePage: <GetLocation />
 		}
 	}
-	componentDidMount() {
-		this.setState({
-			activePage: this.state.defaultLocationPreferences
-		});
-	}
+	// componentDidMount() {
+	// 	this.setState({
+	// 		activePage: this.state.defaultLocationPreferences
+	// 	});
+	// }
 
 	render() {
 		return(
