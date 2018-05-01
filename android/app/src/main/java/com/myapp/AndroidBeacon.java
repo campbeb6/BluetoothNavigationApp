@@ -13,14 +13,19 @@ import java.util.List;
 import java.util.Collections;
 
 import android.content.Intent;
+import android.util.Log;
 
 // https://medium.com/mindorks/how-to-use-native-modules-in-react-native-android-hybrid-apps-62b67a2cc7ca
 // https://facebook.github.io/react-native/docs/native-modules-android.html
 
 public class AndroidBeacon extends ReactContextBaseJavaModule {
+	private final String TAG = "AndroidBeacon";
+	private ReactApplicationContext rctAppContext;
 	// constructor
 	public AndroidBeacon(ReactApplicationContext rctAppContext) {
 		super(rctAppContext);
+		this.rctAppContext = rctAppContext;
+		Log.d(TAG,"ctor");
 	}
 
 	// mandatory getName() in order to access at React.NativeModules.NAME
@@ -32,7 +37,8 @@ public class AndroidBeacon extends ReactContextBaseJavaModule {
 
 	@ReactMethod
 	public void startAndroidBeaconActivity() {
-		ReactApplicationContext context = getReactApplicationContext();
+		Log.d(TAG,"startAndroidBeaconActivity()");
+		ReactApplicationContext context = this.rctAppContext; //getReactApplicationContext();
 		// get class name from AndroidBeaconActivity.class: does not run
 		Intent intent = new Intent(context, AndroidBeaconActivity.class);
 

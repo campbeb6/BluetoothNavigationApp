@@ -37,6 +37,7 @@ public class AndroidBeaconActivity extends Activity implements BeaconConsumer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		Log.d(TAG,"ctor");
 		mReactRootView = new ReactRootView(this);
 		mReactInstanceManager = ReactInstanceManager.builder()
 			.setApplication(getApplication())
