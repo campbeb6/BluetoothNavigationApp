@@ -20,9 +20,6 @@ export default class Navigation extends React.Component {
 
 	}
 	componentDidMount() {
-		// call Android native module
-		AndroidBeacon.startAndroidBeaconActivity();
-
 		// use hard-coded sample routes
 		console.log('dest: '+String(this.props.destination));
 		let dest = String(this.props.stairs?this.props.destination:this.props.destination+'_elevator');
@@ -43,6 +40,8 @@ export default class Navigation extends React.Component {
 
 	// get the route from the server
 	getRoute = () => {
+		// try out this address:
+		// beacon2.fsb.miamioh.edu
 		let url = 'http://10.36.0.144:3000/route';
 		let request = new Request(url,{
 			method: 'POST',

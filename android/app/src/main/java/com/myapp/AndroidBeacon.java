@@ -35,6 +35,7 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 	private final String TAG = "AndroidBeacon";
 	private ReactApplicationContext rctAppContext;
 	private BeaconManager beaconMgr;
+	private final String REGION_UUID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D";
 
 	// constructor
 	public AndroidBeacon(ReactApplicationContext rctAppContext) {
@@ -63,12 +64,14 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 			// 	}
 			// }
 		// });
-		// try {
-		// 	beaconMgr.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
-		// } catch (Exception e) {
-		// 	// RemoteException
-		// 	e.printStackTrace();
-		// }
+		try {
+			Log.d(TAG,"starting ranging...");
+			beaconMgr.startRangingBeaconsInRegion(new Region(REGION_UUID, null, null, null));
+		} catch (Exception e) {
+			Log.d(TAG,"ranging failed");
+			// RemoteException
+			e.printStackTrace();
+		}
 	}
 
 	// must prefix with @ReactMethod, can only communicate with callback or event
