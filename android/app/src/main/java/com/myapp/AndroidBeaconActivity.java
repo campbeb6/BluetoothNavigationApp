@@ -20,6 +20,7 @@ import org.altbeacon.beacon.Region;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactInstanceManagerBuilder;
+import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.common.LifecycleState;
 import com.facebook.react.shell.MainReactPackage;
 
@@ -28,7 +29,7 @@ import com.facebook.react.shell.MainReactPackage;
 // https://stackoverflow.com/questions/42253397/call-android-activity-from-react-native-code
 // https://facebook.github.io/react-native/docs/communication-android.html
 
-public class AndroidBeaconActivity extends Activity implements BeaconConsumer {
+public class AndroidBeaconActivity extends Activity implements BeaconConsumer, LifecycleEventListener {
     protected static final String TAG = "AndroidBeaconActivity";
     private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 	private ReactRootView mReactRootView;
@@ -84,11 +85,16 @@ public class AndroidBeaconActivity extends Activity implements BeaconConsumer {
                  String logMsg = "The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.";
               }
            }
-
         });
-
         try {
             beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
         } catch (RemoteException e) {   }
     }
+	// LifecycleEventListener interface methods
+	@Override
+	public void onHostResume() {}
+	@Override
+	public void onHostPause() {}
+	@Override
+	public void onHostDestroy() {}
 }

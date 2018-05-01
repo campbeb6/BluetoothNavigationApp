@@ -19,7 +19,7 @@ import android.util.Log;
 // https://facebook.github.io/react-native/docs/native-modules-android.html
 // https://brightinventions.pl/blog/write-native-in-react-native/
 
-public class AndroidBeacon extends ReactContextBaseJavaModule implements LifecycleEventListener {
+public class AndroidBeacon extends ReactContextBaseJavaModule {
 	private final String TAG = "AndroidBeacon";
 	private ReactApplicationContext rctAppContext;
 	// constructor
@@ -55,12 +55,4 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements Lifecyc
 		// remember, cannot return directly to ReactNative: must use callback
 		fn.invoke("testing native module");
 	}
-
-	// LifecycleEventListener interface methods
-	@Override
-    public void onHostResume() {}
-    @Override
-    public void onHostPause() {}
-    @Override
-	public void onHostDestroy() {}
 }
