@@ -20,7 +20,7 @@ import org.altbeacon.beacon.Region;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
-import java.util.Collections;
+import java.util.Collection;
 // import java.rmi.RemoteException;
 
 import android.content.Context;
@@ -30,6 +30,9 @@ import android.util.Log;
 
 // following instructions from here:
 // https://brightinventions.pl/blog/write-native-in-react-native/
+
+// another example:
+// https://github.com/mmazzarolo/react-native-beacons-android/blob/master/android/src/main/java/com/mmazzarolo/beaconsandroid/BeaconsAndroidModule.java
 
 public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconConsumer, LifecycleEventListener {
 	private final String TAG = "AndroidBeacon";
@@ -57,21 +60,21 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 	public void onBeaconServiceConnect() {
 		Log.d(TAG,"onBeaconServiceConnect()");
 		// beaconMgr.setRangeNotifier(new RangeNotifier() {
-			// @Override
-			// public void didRangeBeaconsInRegion(Collection beacons, Region region) {
-			// 	if (beacons.size() > 0) {
-			// 		Log.i(TAG, "The first beacon I see is about "+beacons.iterator().next().getDistance()+" meters away.");
-			// 	}
-			// }
+		// 	@Override
+		// 	public void didRangeBeaconsInRegion(Collection beacons, Region region) {
+		// 		if (beacons.size() > 0) {
+		// 			Log.d(TAG, ""+beacons.iterator().next());
+		// 		}
+		// 	}
 		// });
-		try {
-			Log.d(TAG,"starting ranging...");
-			beaconMgr.startRangingBeaconsInRegion(new Region(REGION_UUID, null, null, null));
-		} catch (Exception e) {
-			Log.d(TAG,"ranging failed");
-			// RemoteException
-			e.printStackTrace();
-		}
+		// try {
+		// 	Log.d(TAG,"starting ranging...");
+		// 	beaconMgr.startRangingBeaconsInRegion(new Region(REGION_UUID, null, null, null));
+		// } catch (Exception e) {
+		// 	Log.d(TAG,"ranging failed");
+		// 	// RemoteException
+		// 	e.printStackTrace();
+		// }
 	}
 
 	// must prefix with @ReactMethod, can only communicate with callback or event
@@ -87,7 +90,7 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 		Intent intent, ServiceConnection connection, int mode
 	){
 		Log.d(TAG,"bindService()");
-		return true;
+		return this.rctAppContext.bindService(intent, connection, mode);
 	}
 	@Override
 	public Context getApplicationContext() {
@@ -97,7 +100,7 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 	@Override
 	public void unbindService(ServiceConnection connection) {
 		Log.d(TAG,"unbindService()");
-		return;
+		this.rctAppContext.unbindService(connection);
 	}
 
 	// LifecycleEventListener interface methods
