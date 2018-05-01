@@ -60,17 +60,23 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 	@Override
 	public boolean bindService(
 		Intent intent, ServiceConnection connection, int mode
-	){return true;}
+	){
+		Log.d(TAG,"bindService()");
+		return true;
+	}
 	@Override
 	public Context getApplicationContext() {
+		Log.d(TAG,"getApplicationContext()");
 		return this.rctAppContext;
 	}
 	@Override
 	public void onBeaconServiceConnect() {
+		Log.d(TAG,"onBeaconServiceConnect()");
 		return;
 	}
 	@Override
 	public void unbindService(ServiceConnection connection) {
+		Log.d(TAG,"unbindService()");
 		return;
 	}
 
