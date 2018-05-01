@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.ServiceConnection;
 import android.os.RemoteException;
+import android.util.Log;
 
 // https://medium.com/mindorks/how-to-use-native-modules-in-react-native-android-hybrid-apps-62b67a2cc7ca
 // https://facebook.github.io/react-native/docs/native-modules-android.html
@@ -36,6 +37,7 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 	// constructor
 	private ReactApplicationContext rac;
 	private BeaconManager beaconManager;
+	private static final String TAG = "AndroidBeacon";
 
 	public AndroidBeacon(ReactApplicationContext rctAppContext) {
 		super(rctAppContext);
@@ -57,6 +59,7 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 	public void test(Callback fn) {
 		// remember, cannot return directly to ReactNative: must use callback
 		fn.invoke("starting beacon manager...");
+		Log.d(TAG,"(android) starting beacon manager...");
 	}
 
 	// BeaconConsumer interface method
@@ -68,7 +71,8 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
               if (beacons.size() > 0) {
                  Beacon firstBeacon = beacons.iterator().next();
                  String logMsg = "The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.";
-              }
+				 Log.d(TAG,logMsg);
+			  }
            }
         });
 
@@ -86,6 +90,7 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 		// STUB
 		return true;
 	}
+	// NOT RECOMMENDED: override the unbind and bindService methods
 	@Override
 	public void unbindService(ServiceConnection connection) {
 		// STUB
