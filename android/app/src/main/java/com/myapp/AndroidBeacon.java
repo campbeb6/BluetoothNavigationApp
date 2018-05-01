@@ -9,6 +9,14 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.uimanager.ViewManager;
 
+import org.altbeacon.beacon.AltBeacon;
+import org.altbeacon.beacon.Beacon;
+import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.RangeNotifier;
+import org.altbeacon.beacon.Region;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
@@ -19,13 +27,16 @@ import android.util.Log;
 // following instructions from here:
 // https://brightinventions.pl/blog/write-native-in-react-native/
 
-public class AndroidBeacon extends ReactContextBaseJavaModule implements LifecycleEventListener {
+public class AndroidBeacon extends ReactContextBaseJavaModule implements /*BeaconConsumer,*/ LifecycleEventListener {
 	private final String TAG = "AndroidBeacon";
 	private ReactApplicationContext rctAppContext;
+	private BeaconManager beaconMgr;
+
 	// constructor
 	public AndroidBeacon(ReactApplicationContext rctAppContext) {
 		super(rctAppContext);
 		this.rctAppContext = rctAppContext;
+		beaconMgr = BeaconManager.getInstanceForApplication(rctAppContext);
 		Log.d(TAG, "ctor");
 	}
 
@@ -42,6 +53,9 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements Lifecyc
 		// remember, cannot return directly to ReactNative: must use callback
 		fn.invoke("testing native module");
 	}
+
+	// BeaconConsumer interface methods
+
 
 	// LifecycleEventListener interface methods
 	@Override
