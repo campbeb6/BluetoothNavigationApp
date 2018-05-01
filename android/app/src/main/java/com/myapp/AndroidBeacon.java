@@ -26,7 +26,6 @@ public class AndroidBeacon extends ReactContextBaseJavaModule {
 	public AndroidBeacon(ReactApplicationContext rctAppContext) {
 		super(rctAppContext);
 		this.rctAppContext = rctAppContext;
-		rctAppContext.addLifecycleEventListener(this);
 		Log.d(TAG,"ctor");
 	}
 

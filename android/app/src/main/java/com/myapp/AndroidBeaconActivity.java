@@ -21,6 +21,7 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactInstanceManagerBuilder;
 import com.facebook.react.bridge.LifecycleEventListener;
+import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.common.LifecycleState;
 import com.facebook.react.shell.MainReactPackage;
 
@@ -35,10 +36,14 @@ public class AndroidBeaconActivity extends Activity implements BeaconConsumer, L
 	private ReactRootView mReactRootView;
 	private ReactInstanceManager mReactInstanceManager;
 
+	public AndroidBeaconActivity(ReactApplicationContext rctAppContext) {
+		rctAppContext.addLifecycleEventListener(this);
+		Log.d(TAG,"ctor");
+	}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		Log.d(TAG,"ctor");
 		mReactRootView = new ReactRootView(this);
 		mReactInstanceManager = ReactInstanceManager.builder()
 			.setApplication(getApplication())
