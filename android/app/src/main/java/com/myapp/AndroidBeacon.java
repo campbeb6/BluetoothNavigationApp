@@ -1,5 +1,7 @@
 package com.myapp.nativepackage;
 
+// import path: BluetoothNavigationApp\node_modules\react-native\ReactAndroid\src\main\java\com\facebook\react
+
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.ReactPackage;
@@ -23,6 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import android.content.Intent;
+import android.content.Context;
 import android.content.ServiceConnection;
 import android.os.RemoteException;
 
