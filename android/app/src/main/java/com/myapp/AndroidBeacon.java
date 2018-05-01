@@ -20,6 +20,8 @@ import org.altbeacon.beacon.Region;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.util.Collections;
+// import java.rmi.RemoteException;
 
 import android.content.Context;
 import android.content.Intent;
@@ -38,7 +40,8 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 	public AndroidBeacon(ReactApplicationContext rctAppContext) {
 		super(rctAppContext);
 		this.rctAppContext = rctAppContext;
-		beaconMgr = BeaconManager.getInstanceForApplication(rctAppContext);
+		this.beaconMgr = BeaconManager.getInstanceForApplication(this.rctAppContext);
+		beaconMgr.bind(this);
 		Log.d(TAG, "ctor");
 	}
 
@@ -47,6 +50,25 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 	@Override
 	public String getName() {
 		return "AndroidBeacon";
+	}
+
+	@Override
+	public void onBeaconServiceConnect() {
+		Log.d(TAG,"onBeaconServiceConnect()");
+		// beaconMgr.setRangeNotifier(new RangeNotifier() {
+			// @Override
+			// public void didRangeBeaconsInRegion(Collection beacons, Region region) {
+			// 	if (beacons.size() > 0) {
+			// 		Log.i(TAG, "The first beacon I see is about "+beacons.iterator().next().getDistance()+" meters away.");
+			// 	}
+			// }
+		// });
+		// try {
+		// 	beaconMgr.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+		// } catch (Exception e) {
+		// 	// RemoteException
+		// 	e.printStackTrace();
+		// }
 	}
 
 	// must prefix with @ReactMethod, can only communicate with callback or event
@@ -68,11 +90,6 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 	public Context getApplicationContext() {
 		Log.d(TAG,"getApplicationContext()");
 		return this.rctAppContext;
-	}
-	@Override
-	public void onBeaconServiceConnect() {
-		Log.d(TAG,"onBeaconServiceConnect()");
-		return;
 	}
 	@Override
 	public void unbindService(ServiceConnection connection) {
