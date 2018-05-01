@@ -21,13 +21,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.util.Log;
 
 // following instructions from here:
 // https://brightinventions.pl/blog/write-native-in-react-native/
 
-public class AndroidBeacon extends ReactContextBaseJavaModule implements /*BeaconConsumer,*/ LifecycleEventListener {
+public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconConsumer, LifecycleEventListener {
 	private final String TAG = "AndroidBeacon";
 	private ReactApplicationContext rctAppContext;
 	private BeaconManager beaconMgr;
@@ -55,7 +57,22 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements /*Beaco
 	}
 
 	// BeaconConsumer interface methods
-
+	@Override
+	public boolean bindService(
+		Intent intent, ServiceConnection connection, int mode
+	){return true;}
+	@Override
+	public Context getApplicationContext() {
+		return this.rctAppContext;
+	}
+	@Override
+	public void onBeaconServiceConnect() {
+		return;
+	}
+	@Override
+	public void unbindService(ServiceConnection connection) {
+		return;
+	}
 
 	// LifecycleEventListener interface methods
 	@Override
