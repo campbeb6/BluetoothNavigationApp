@@ -17,14 +17,16 @@ import android.util.Log;
 
 // https://medium.com/mindorks/how-to-use-native-modules-in-react-native-android-hybrid-apps-62b67a2cc7ca
 // https://facebook.github.io/react-native/docs/native-modules-android.html
+// https://brightinventions.pl/blog/write-native-in-react-native/
 
-public class AndroidBeacon extends ReactContextBaseJavaModule {
+public class AndroidBeacon extends ReactContextBaseJavaModule implements LifecycleEventListener {
 	private final String TAG = "AndroidBeacon";
 	private ReactApplicationContext rctAppContext;
 	// constructor
 	public AndroidBeacon(ReactApplicationContext rctAppContext) {
 		super(rctAppContext);
 		this.rctAppContext = rctAppContext;
+		rctAppContext.addLifecycleEventListener(this);
 		Log.d(TAG,"ctor");
 	}
 
@@ -53,4 +55,12 @@ public class AndroidBeacon extends ReactContextBaseJavaModule {
 		// remember, cannot return directly to ReactNative: must use callback
 		fn.invoke("testing native module");
 	}
+
+	// LifecycleEventListener interface methods
+	@Override
+    public void onHostResume() {}
+    @Override
+    public void onHostPause() {}
+    @Override
+	public void onHostDestroy() {}
 }
