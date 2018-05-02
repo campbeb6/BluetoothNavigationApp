@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, KeyboardAvoidingView, TextInput, TouchableOpacity  } from 'react-native';
+import { StyleSheet, View, Image, Text, KeyboardAvoidingView, TextInput, TouchableOpacity, Dimensions  } from 'react-native';
 
 export default class Login extends Component {
     constructor() {
@@ -43,11 +43,13 @@ export default class Login extends Component {
                         style={styles2.input}
                         ref={(input) => this.passwordInput = input} 
                         onChangeText = {(pass) => this.state.password = pass} />
-
+                    </View>
+                    <View>
                         <TouchableOpacity style={styles2.buttonContainer} onPress={this.getTermId}>
                             <Text style={styles2.buttonText}> Login </Text>
                         </TouchableOpacity>
-
+                    </View>
+                    <View style = {styles2.container}>
                         <TouchableOpacity onPress = {this.guestLogin}>
                             <Text style={styles2.guestButton}> Continue as Guest  </Text>
                         </TouchableOpacity>
@@ -176,7 +178,7 @@ title: {
 
 const styles2 = StyleSheet.create ({
     container: { 
-        padding: 20
+        padding: 20,
 },
 
 input: {
@@ -191,7 +193,7 @@ buttonContainer: {
     backgroundColor: '#C3142D',
     paddingVertical: 16,
     width: 150,
-    marginLeft: 115
+    marginLeft: Dimensions.get('window').width/2 - 75 //75 is half of the width (150) on line above
 },
 
 buttonText: {
