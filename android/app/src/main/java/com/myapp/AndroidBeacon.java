@@ -65,6 +65,7 @@ public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconC
 	// BeaconConsumer interface method
 	@Override
     public void onBeaconServiceConnect() {
+		Log.d(TAG,"onBeaconServiceConnect() beginning...");
         beaconManager.setRangeNotifier(new RangeNotifier() {
            @Override
            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
