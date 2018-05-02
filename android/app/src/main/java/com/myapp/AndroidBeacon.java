@@ -33,6 +33,8 @@ import android.util.Log;
 // https://medium.com/mindorks/how-to-use-native-modules-in-react-native-android-hybrid-apps-62b67a2cc7ca
 // https://facebook.github.io/react-native/docs/native-modules-android.html
 
+// potential solution:
+// https://stackoverflow.com/questions/32815275/onbeaconserviceconnect-not-called
 public class AndroidBeacon extends ReactContextBaseJavaModule implements BeaconConsumer {
 	// constructor
 	private ReactApplicationContext rac;

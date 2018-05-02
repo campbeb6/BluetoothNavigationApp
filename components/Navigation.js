@@ -24,7 +24,6 @@ export default class Navigation extends React.Component {
 		AndroidBeacon.test(function(msg){
 			console.log(msg);
 		});
-		AndroidBeacon.onBeaconServiceConnect();
 
 		// use hard-coded sample routes
 		console.log('dest: '+String(this.props.destination));
