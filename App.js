@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import LocationPreferences from './components/LocationPreferences';
 import Navigation from './components/Navigation';
+import RCTBeaconManager from './components/RCTBeaconManager';
 
 export default class App extends React.Component {
 	constructor() {
@@ -19,7 +20,7 @@ export default class App extends React.Component {
 	}
 	componentDidMount() {
 		this.setState({
-			activePage: this.state.defaultLocationPreferences
+			activePage: <RCTBeaconManager /> //this.state.defaultLocationPreferences
 		});
 	}
 
