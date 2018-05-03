@@ -9,8 +9,19 @@ export default class RCTBeaconManager extends React.Component {
 		super(props);
 		this.state = {
 			regionUUID: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-			regionID: 'id'
+			regionID: 'id',
+			beaconsDidRangeEvent: null,
+			dataBeacons: null
 		}
+	}
+	componentWillMount() {
+		Beacons.detectIBeacons();
+		Beacons.startRangingBeaconsInRegion(this.state.regionID,this.state.regionUUID) // or like  < v1.0.7: .startRangingBeaconsInRegion(identifier, uuid)
+			.then(() => console.log('Beacons ranging started succesfully'))
+			.catch(error => console.log(`Beacons ranging not started, error: ${error}`));
+	}
+	componentDidMount() {
+		// Beacons.BeaconsEventEmitter.addListener('beaconsDidRange',()=>{console.log('did range');});
 	}
 	render() {
 		return (
