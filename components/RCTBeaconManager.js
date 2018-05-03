@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, DeviceEventEmitter } from 'react-native';
 import Beacons from 'react-native-beacons-manager';
 
 // https://github.com/MacKentoch/react-native-beacons-manager/tree/master/examples/samples#detailed-documentation--sample-code
@@ -22,6 +22,10 @@ export default class RCTBeaconManager extends React.Component {
 	}
 	componentDidMount() {
 		// Beacons.BeaconsEventEmitter.addListener('beaconsDidRange',()=>{console.log('did range');});
+		// Print a log of the detected iBeacons (1 per second)
+		DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
+			console.log('beacon scan:', data.beacons)
+		});
 	}
 	render() {
 		return (
