@@ -11,7 +11,7 @@ export default class RCTBeaconManager extends React.Component {
 			regionUUID: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
 			regionID: 'id',
 			beaconsDidRangeEvent: null,
-			dataBeacons: null
+			beaconsInRange: []
 		}
 	}
 	componentWillMount() {
@@ -21,10 +21,13 @@ export default class RCTBeaconManager extends React.Component {
 			.catch(error => console.log(`Beacons ranging not started, error: ${error}`));
 	}
 	componentDidMount() {
-		// Beacons.BeaconsEventEmitter.addListener('beaconsDidRange',()=>{console.log('did range');});
-		// Print a log of the detected iBeacons (1 per second)
 		DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
-			console.log('beacon scan:', data.beacons)
+			this.setState({
+				beaconsInRange: data.beacons.length>0
+					? data.beacons : this.state.beaconsInRange
+			},()=>{
+				console.log(this.state.beaconsInRange);
+			});
 		});
 	}
 	render() {
