@@ -15,6 +15,9 @@ export default class RCTBeaconManager extends React.Component {
 		}
 	}
 	componentWillMount() {
+		if(Platform.OS === 'ios') {
+			Beacons.requestWhenInUseAuthorization();
+		}
 		Beacons.detectIBeacons();
 		Beacons.startRangingBeaconsInRegion(this.state.regionID,this.state.regionUUID) // or like  < v1.0.7: .startRangingBeaconsInRegion(identifier, uuid)
 			.then(() => console.log('Beacons ranging started succesfully'))
@@ -34,6 +37,7 @@ export default class RCTBeaconManager extends React.Component {
 		return (
 			<View>
 				<Text>rct native beacons mgr</Text>
+				<Text>{JSON.stringify(this.state.beaconsInRange)}</Text>
 			</View>
 		);
 	}
