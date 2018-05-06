@@ -18,11 +18,21 @@ export default class RCTBeaconManager extends React.Component {
 	componentWillMount() {
 		if(Platform.OS === 'ios') {
 			Beacons.requestWhenInUseAuthorization();
+			Beacons.startRangingBeaconsInRegion({
+				identifier: this.state.regionID,
+				uuid: this.state.regionUUID
+			}) // or like  < v1.0.7: .startRangingBeaconsInRegion(identifier, uuid)
+				.then(() => console.log('Beacons ranging started succesfully'))
+				.catch(error => console.log(`Beacons ranging not started, error: ${error}`));
 		}
-		Beacons.detectIBeacons();
-		Beacons.startRangingBeaconsInRegion(this.state.regionID,this.state.regionUUID) // or like  < v1.0.7: .startRangingBeaconsInRegion(identifier, uuid)
-			.then(() => console.log('Beacons ranging started succesfully'))
-			.catch(error => console.log(`Beacons ranging not started, error: ${error}`));
+
+		if(Platform.OS === 'android') {
+			Beacons.detectIBeacons();
+			Beacons.startRangingBeaconsInRegion(this.state.regionID,this.state.regionUUID) // or like  < v1.0.7: .startRangingBeaconsInRegion(identifier, uuid)
+				.then(() => console.log('Beacons ranging started succesfully'))
+				.catch(error => console.log(`Beacons ranging not started, error: ${error}`));
+		}
+
 	}
 	componentDidMount() {
 		DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
