@@ -39,6 +39,7 @@ export default class Navigation extends React.Component {
 
 	// get the route from the server
 	getRoute = () => {
+		console.log('nav: getRoute()');
 		let url = 'http://10.36.0.144:3000/route';
 		let request = new Request(url,{
 			method: 'POST',
@@ -48,21 +49,18 @@ export default class Navigation extends React.Component {
 		  },
 		  // per API documentation: https://docs.google.com/document/d/1MNGOfIhePx12GOXEsAanPD59TBxbys2WZfliT9gk-Aw/edit
 		  body: JSON.stringify({
-			  sensors: [
-				  {name:'s1',signalStrength:'10'},
-				  {name:'s2',signalStrength:'20'},
-				  {name:'s3',signalStrength:'30'}
-			  ],
-			  rooms: [
-				  '1036',
-				  this.props.destination
-			  ],
-			  stairs: this.props.stairs,
-			  method:this.props.stairs?null:'room to room'
+			  method: 'bluetooth',
+			  sensors: [{
+				  minor: '1035'
+			  }],
+			  destination: this.props.destination,
+			  stairs: this.props.stairs
 		  })
 		});
 		fetch(request)
 		.then(res => {
+			console.log('nav: fetch response');
+			console.log(JSON.stringify(res));
 			return res.json();
 		})
 		.then(resj => {
@@ -86,7 +84,7 @@ export default class Navigation extends React.Component {
 	}
 	ycoord = (y,height,scaleFactor) => {
 		// add 0.5 to y to get the center of the cell (cell indices start at 0)
-		// multiply by 1/51 because the grid is 57 cells wide
+		// multiply by 1/51 because the grid is 51 cells wide
 		// both floorplan grids are 57x51, so it is safe to use this for both floors
 		return String(Math.round(scaleFactor*(y+0.5)*(1/51)*height));
 	}
@@ -272,20 +270,20 @@ const routes = {
 		{floor:1,x:7,y:13},
 		{floor:1,x:11,y:13}
 	],
-	'1000': [
-		{floor:1,x:4,y:26},
-		{floor:1,x:7,y:26},
-		{floor:1,x:7,y:20},
-		{floor:1,x:7,y:16},
-		{floor:1,x:7,y:13},
-		{floor:1,x:11,y:13},
-		{floor:1,x:21,y:13},
-		{floor:1,x:21,y:15},
-		{floor:1,x:30,y:15},
-		{floor:1,x:30,y:13},
-		{floor:1,x:44,y:13},
-		{floor:1,x:44,y:41}
-	],
+	// '1000': [
+	// 	{floor:1,x:4,y:26},
+	// 	{floor:1,x:7,y:26},
+	// 	{floor:1,x:7,y:20},
+	// 	{floor:1,x:7,y:16},
+	// 	{floor:1,x:7,y:13},
+	// 	{floor:1,x:11,y:13},
+	// 	{floor:1,x:21,y:13},
+	// 	{floor:1,x:21,y:15},
+	// 	{floor:1,x:30,y:15},
+	// 	{floor:1,x:30,y:13},
+	// 	{floor:1,x:44,y:13},
+	// 	{floor:1,x:44,y:41}
+	// ],
 	'1022': [
 		{floor:1,x:4,y:26},
 		{floor:1,x:7,y:26},
