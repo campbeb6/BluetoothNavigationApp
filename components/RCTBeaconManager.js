@@ -30,7 +30,7 @@ export default class RCTBeaconManager extends React.Component {
 				beaconsInRange: data.beacons.length>0
 					? data.beacons : this.state.beaconsInRange
 			},()=>{
-				console.log(JSON.stringify(this.state.beaconsInRange));
+				// console.log(JSON.stringify(this.state.beaconsInRange));
 				this.getNearestBeaconMinorID();
 				this.props.nearestBeacon(this.state.nearestBeaconMinorID);
 			});
@@ -71,5 +71,9 @@ const sampleBeacons = [{
 		minor: 2000,
 		major: 1,
 		uuid: 'b9407f30-f5f8-466e-aff9-25556b57fe6d'
+	},
+	{ /* dummy beacon, not actual data */
+		rssi: -30,
+		minor: 1035
 	}
 ];

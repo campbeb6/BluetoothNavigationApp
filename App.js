@@ -46,6 +46,7 @@ export default class App extends React.Component {
 		this.setState({
 			activePage: <Navigation
 				startingLocation = {'1036'}
+				nearestBeaconMinorID = {prefs.nearestBeaconMinorID}
 				destination = {prefs.destination}
 				stairs = {prefs.stairs}
 				goBack = {()=>{

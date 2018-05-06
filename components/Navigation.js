@@ -16,6 +16,7 @@ export default class Navigation extends React.Component {
 			route: [],
 			floor: 1
 		}
+		console.log('nav b-id:  '+this.props.nearestBeaconMinorID);
 	}
 	componentDidMount() {
 		// use hard-coded sample routes
@@ -50,7 +51,7 @@ export default class Navigation extends React.Component {
 		  body: JSON.stringify({
 			  method: 'bluetooth',
 			  sensors: [{
-				  minor: String(this.props.nearestBeaconMinorID)
+				  minor: this.props.nearestBeaconMinorID
 			  }],
 			  destination: String(this.props.destination),
 			  stairs: String(this.props.stairs)
