@@ -50,7 +50,7 @@ export default class Navigation extends React.Component {
 		  body: JSON.stringify({
 			  method: 'bluetooth',
 			  sensors: [{
-				  minor: '1035'
+				  minor: String(this.props.nearestBeaconMinorID)
 			  }],
 			  destination: String(this.props.destination),
 			  stairs: String(this.props.stairs)
