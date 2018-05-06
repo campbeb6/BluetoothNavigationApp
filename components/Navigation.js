@@ -53,7 +53,7 @@ export default class Navigation extends React.Component {
 			  sensors: [{
 				  minor: '1035'
 			  }],
-			  destination: "1000",
+			  destination: String(this.props.destination),
 			  stairs: String(this.props.stairs)
 		  })
 		});
