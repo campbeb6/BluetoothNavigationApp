@@ -26,10 +26,10 @@ export default class RoomSearch extends React.Component {
 					<TouchableOpacity
 						onPress={()=>{
 							this.setState({
-								choice: match.roomNum,
+								choice: match.roomName,
 								matches: [] // make list disappear
 							},()=>{
-								console.log('RoomSearch: set choice to '+match.roomNum);
+								console.log('RoomSearch: set choice to '+match.roomName);
 								this.props.getChoice(this.state.choice);
 							});
 						}}
@@ -42,7 +42,7 @@ export default class RoomSearch extends React.Component {
 							fontSize: 20,
 							marginBottom: 5,
 							marginLeft: 4
-						}}>{match.roomNum}</Text>
+						}}>{match.roomName}</Text>
 					</TouchableOpacity>
 				</View>
 			);
@@ -76,18 +76,18 @@ export default class RoomSearch extends React.Component {
 	// get room numbers matching the user's input
 	getMatches = (text) => {
 		// add in some dummy data for new routes
-		let dummyRooms = [
-			{roomNum:'2037',popular:'false'},
-			{roomNum:'2043',popular:'false'},
-			{roomNum:'2053',popular:'true'},
-			{roomNum:'1026',popular:'true'},
-			{roomNum:'1026B',popular:'true'}
-		];
+		// let dummyRooms = [
+		// 	{roomNum:'2037',popular:'false'},
+		// 	{roomNum:'2043',popular:'false'},
+		// 	{roomNum:'2053',popular:'true'},
+		// 	{roomNum:'1026',popular:'true'},
+		// 	{roomNum:'1026B',popular:'true'}
+		// ];
 		this.setState({
 			entry: text
 		},()=>{
 			console.log('RoomSearch: getting matches for '+this.state.entry);
-			let url = 'http://10.36.0.144:3000/rooms';
+			let url = 'http://10.36.0.144:3000/rooms/'+this.state.entry;
 			let request = new Request(url,{
 				method: 'GET',
 				headers: {
@@ -101,7 +101,7 @@ export default class RoomSearch extends React.Component {
 			})
 			.then(resj => {
 				this.setState({
-					matches: resj.concat(dummyRooms).filter(match => match.roomNum.startsWith(this.state.entry))
+					matches: resj
 				},function(){
 					console.log('RoomSearch: set state.matches to:');
 					console.log(this.state.matches);
