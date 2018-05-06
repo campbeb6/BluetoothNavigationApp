@@ -11,7 +11,8 @@ export default class RCTBeaconManager extends React.Component {
 			regionUUID: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
 			regionID: 'id',
 			beaconsDidRangeEvent: null,
-			beaconsInRange: []
+			beaconsInRange: sampleBeacons,
+			nearestBeaconMinorID: ''
 		}
 	}
 	componentWillMount() {
@@ -29,16 +30,50 @@ export default class RCTBeaconManager extends React.Component {
 				beaconsInRange: data.beacons.length>0
 					? data.beacons : this.state.beaconsInRange
 			},()=>{
-				console.log(this.state.beaconsInRange);
+				// console.log(JSON.stringify(this.state.beaconsInRange));
+				this.getNearestBeaconMinorID();
+				this.props.nearestBeacon(this.state.nearestBeaconMinorID);
 			});
 		});
 	}
+	getNearestBeaconMinorID() {
+		let maxRSSI = Number.MIN_SAFE_INTEGER; // starts as a very low number
+		// closest beacon will have highest RSSI value (least negative)
+		for(let i=0;i<this.state.beaconsInRange.length;i++) {
+			let b = this.state.beaconsInRange[i];
+			if(b.rssi > maxRSSI) {
+				this.setState({
+					nearestBeaconMinorID: String(b.minor)
+				},()=>{
+					maxRSSI = b.rssi;
+				});
+			}
+		}
+	}
+	// mandatory render(), this component does not display anything
 	render() {
-		return (
-			<View>
-				<Text>rct native beacons mgr</Text>
-				<Text>{JSON.stringify(this.state.beaconsInRange)}</Text>
-			</View>
-		);
+		return (null);
 	}
 }
+
+// actual output from android test
+const sampleBeacons = [{
+		proximity: 'immediate',
+		distance: 0.24225736553310676,
+		rssi: -59,
+		minor: 1000,
+		major: 1,
+		uuid: 'b9407f30-f5f8-466e-aff9-25556b57fe6d'
+	},{
+		proximity: 'immediate',
+		distance: 0.5879588872684474,
+		rssi: -52,
+		minor: 2000,
+		major: 1,
+		uuid: 'b9407f30-f5f8-466e-aff9-25556b57fe6d'
+	},
+	{ /* dummy beacon, not actual data */
+		rssi: -30,
+		minor: 1035
+	}
+];

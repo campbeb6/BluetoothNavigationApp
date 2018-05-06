@@ -16,29 +16,17 @@ export default class Navigation extends React.Component {
 			route: [],
 			floor: 1
 		}
-
+		console.log('nav b-id:  '+this.props.nearestBeaconMinorID);
 	}
 	componentDidMount() {
 		// use hard-coded sample routes
 		console.log('dest: '+String(this.props.destination));
-		let dest = String(this.props.stairs?this.props.destination:this.props.destination+'_elevator');
-		if(routes[dest]) {
-			this.setState({
-				route: routes[dest]
-			},()=>{
-				console.log('nav: set route for '+this.props.destination);
-				if(this.state.route.length>1) {
-					this.setState({floor:this.state.route[0].floor});
-				}
-			});
-		} else {
-			// get the route from the server
-			this.getRoute();
-		}
+		this.getRoute();
 	}
 
 	// get the route from the server
 	getRoute = () => {
+		console.log('nav: getRoute()');
 		let url = 'http://10.36.0.144:3000/route';
 		let request = new Request(url,{
 			method: 'POST',
@@ -48,21 +36,18 @@ export default class Navigation extends React.Component {
 		  },
 		  // per API documentation: https://docs.google.com/document/d/1MNGOfIhePx12GOXEsAanPD59TBxbys2WZfliT9gk-Aw/edit
 		  body: JSON.stringify({
-			  sensors: [
-				  {name:'s1',signalStrength:'10'},
-				  {name:'s2',signalStrength:'20'},
-				  {name:'s3',signalStrength:'30'}
-			  ],
-			  rooms: [
-				  '1036',
-				  this.props.destination
-			  ],
-			  stairs: this.props.stairs,
-			  method:this.props.stairs?null:'room to room'
+			  method: 'bluetooth',
+			  sensors: [{
+				  minor: this.props.nearestBeaconMinorID
+			  }],
+			  destination: String(this.props.destination),
+			  stairs: String(this.props.stairs)
 		  })
 		});
 		fetch(request)
 		.then(res => {
+			console.log('nav: fetch response');
+			console.log(JSON.stringify(res));
 			return res.json();
 		})
 		.then(resj => {
@@ -86,7 +71,7 @@ export default class Navigation extends React.Component {
 	}
 	ycoord = (y,height,scaleFactor) => {
 		// add 0.5 to y to get the center of the cell (cell indices start at 0)
-		// multiply by 1/51 because the grid is 57 cells wide
+		// multiply by 1/51 because the grid is 51 cells wide
 		// both floorplan grids are 57x51, so it is safe to use this for both floors
 		return String(Math.round(scaleFactor*(y+0.5)*(1/51)*height));
 	}
@@ -121,7 +106,7 @@ export default class Navigation extends React.Component {
 		let endOuterBubble=null, endInnerBubble=null;
 
 		// dark blue outer circle marking starting location
-		if(this.state.route.length>0 && this.state.route[0].floor===this.state.floor)  {
+		if(this.state.route.length>0 && this.state.route[0].floorID===this.state.floor)  {
 			startOuterBubble = <Circle
 				cx={this.xcoord(this.state.route[0].x,floorplan.width,scale)}
 				cy={this.ycoord(this.state.route[0].y,floorplan.height,scale)}
@@ -130,7 +115,7 @@ export default class Navigation extends React.Component {
 			/>;
 		}
 		// light blue inner circle marking starting location
-		if(this.state.route.length>0 && this.state.route[0].floor===this.state.floor) {
+		if(this.state.route.length>0 && this.state.route[0].floorID===this.state.floor) {
 			startInnerBubble = <Circle
 				cx={this.xcoord(this.state.route[0].x,floorplan.width,scale)}
 				cy={this.ycoord(this.state.route[0].y,floorplan.height,scale)}
@@ -140,7 +125,7 @@ export default class Navigation extends React.Component {
 		}
 		// red circle with black circle inside that marks end of route
 		if(	this.state.route.length>0 &&
-			this.state.route[this.state.route.length-1].floor===this.state.floor) {
+			this.state.route[this.state.route.length-1].floorID===this.state.floor) {
 			endOuterBubble = <Circle
 				cx={this.xcoord(this.state.route[this.state.route.length-1].x,floorplan.width,scale)}
 				cy={this.ycoord(this.state.route[this.state.route.length-1].y,floorplan.height,scale)}
@@ -150,7 +135,7 @@ export default class Navigation extends React.Component {
 		}
 		// black circle inside of red circle marking end of route
 		if(	this.state.route.length>0 &&
-			this.state.route[this.state.route.length-1].floor===this.state.floor) {
+			this.state.route[this.state.route.length-1].floorID===this.state.floor) {
 			endInnerBubble = <Circle
 				cx={this.xcoord(this.state.route[this.state.route.length-1].x,floorplan.width,scale)}
 				cy={this.ycoord(this.state.route[this.state.route.length-1].y,floorplan.height,scale)}
@@ -164,8 +149,8 @@ export default class Navigation extends React.Component {
 		// floor portions of route will show on top of each other)
 		let loadRoute = this.state.route.map((pair,i)=>{
 			if(	i<this.state.route.length-1 &&
-				this.state.floor===pair.floor &&
-				pair.floor===this.state.route[i+1].floor // don't connect between floors
+				this.state.floor===pair.floorID &&
+				pair.floorID===this.state.route[i+1].floorID // don't connect between floors
 			) return (
 				<Line
 					x1={this.xcoord(pair.x,floorplan.width,scale)}
@@ -195,7 +180,7 @@ export default class Navigation extends React.Component {
 					<Text style={{
 						fontSize: 18,
 						fontWeight: 'bold'
-					}}>{'Navigating to room '+this.props.destination+'...'}</Text>
+					}}>{'Navigating to '+this.props.destination+'...'}</Text>
 				</View>
 				<PinchZoomView style={{
 					flex:0.7
@@ -211,7 +196,6 @@ export default class Navigation extends React.Component {
 	                	height={Dimensions.get('window').height*0.8}
 						style={overlap}
 	            	>
-						{svgOutline}
 						{loadRoute}
 						{startOuterBubble}
 						{startInnerBubble}
@@ -258,8 +242,8 @@ export default class Navigation extends React.Component {
 	}
 }
 const floorplans = {
-	'floor1': require('../img/fsb_floor1_trimmed.png'),
-	'floor2': require('../img/fsb_floor2_trimmed.png')
+	'floor1': require('../img/floor1.png'),
+	'floor2': require('../img/floor2.png')
 }
 
 // hard-coded example routes
@@ -272,7 +256,7 @@ const routes = {
 		{floor:1,x:7,y:13},
 		{floor:1,x:11,y:13}
 	],
-	'1000': [
+	'Taylor Auditorium': [
 		{floor:1,x:4,y:26},
 		{floor:1,x:7,y:26},
 		{floor:1,x:7,y:20},
