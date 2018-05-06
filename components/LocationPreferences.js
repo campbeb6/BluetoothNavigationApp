@@ -16,6 +16,7 @@ import Accessibility from './Accessibility';
 import RoomSearch from './RoomSearch';
 import ImportantLocations from './ImportantLocations';
 import Enrollments from './Enrollments';
+import RCTBeaconManager from './RCTBeaconManager';
 
 export default class LocationPreferences extends React.Component {
 	constructor() {
@@ -28,6 +29,7 @@ export default class LocationPreferences extends React.Component {
     render() {
         return (
 			<View style={styles.container} >
+				<RCTBeaconManager />
 				<View style={{flex:0.5, zIndex:1, flexDirection:'column'}}>
 					<Text>Enter a room number:</Text>
 					<RoomSearch
@@ -66,7 +68,7 @@ export default class LocationPreferences extends React.Component {
 		///STUB start navigation
 		console.log('got user destination and stairs/elevator prefs');
 		console.log('the room choice is', this.state.roomChoice);
-		this.props.startNavigation({	
+		this.props.startNavigation({
 			destination: this.state.roomChoice,
 			stairs: this.state.stairsElevator==='Stairs'
 		});

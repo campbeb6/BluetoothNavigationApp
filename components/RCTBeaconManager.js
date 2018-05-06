@@ -48,13 +48,9 @@ export default class RCTBeaconManager extends React.Component {
 			}
 		}
 	}
+	// mandatory render(), this component does not display anything
 	render() {
-		return (
-			<View>
-				<Text>rct native beacons mgr</Text>
-				<Text>{JSON.stringify(this.state.beaconsInRange)}</Text>
-			</View>
-		);
+		return (null);
 	}
 }
 
