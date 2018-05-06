@@ -17,9 +17,9 @@ export default class Login extends Component {
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <View style={styles.logoContainer}>
-                    <Image 
+                    <Image
                         style={styles.logo}
-                        source={require('../img/Miami.jpeg')} 
+                        source={require('../img/Miami.jpeg')}
                     />
                     <Text style={styles.title}> Farmer School of Business Directions </Text>
                 </View>
@@ -33,7 +33,7 @@ export default class Login extends Component {
                         onSubmitEditing={() => this.passwordInput.focus() }
                         autoCapitalize="none"
                         autoCorrect={false}
-                        style={styles2.input} 
+                        style={styles2.input}
                         onChangeText = {(username) => this.state.username = username} />
 
                         <TextInput placeholder="Password"
@@ -41,7 +41,7 @@ export default class Login extends Component {
                         returnKeyType="go"
                         secureTextEntry
                         style={styles2.input}
-                        ref={(input) => this.passwordInput = input} 
+                        ref={(input) => this.passwordInput = input}
                         onChangeText = {(pass) => this.state.password = pass} />
                     </View>
                     <View>
@@ -55,7 +55,7 @@ export default class Login extends Component {
                         </TouchableOpacity>
                     </View>
 
-                </View>    
+                </View>
 
             </KeyboardAvoidingView>
         );
@@ -131,7 +131,7 @@ export default class Login extends Component {
                                 })
                                 .then(() => {
                                     if(this.state.roomNums.length  > 0) {
-                                        
+
                                         //NOTE: this for loop is only used to remove entries that do not contain FSB
                                         for(i = 0; i < this.state.roomNums.length; i++){
                                             if(!this.state.roomNums[i].startsWith("Farmer School of Business")){
@@ -153,7 +153,7 @@ export default class Login extends Component {
 }
 
 const styles = StyleSheet.create ({
-    container: { 
+    container: {
         flex: 1,
         backgroundColor: '#FFFFFF'
 },
@@ -177,7 +177,7 @@ title: {
 });
 
 const styles2 = StyleSheet.create ({
-    container: { 
+    container: {
         padding: 20,
 },
 
