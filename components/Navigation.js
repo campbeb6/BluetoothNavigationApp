@@ -256,8 +256,8 @@ export default class Navigation extends React.Component {
 	}
 }
 const floorplans = {
-	'floor1': require('../img/fsb_floor1_trimmed.png'),
-	'floor2': require('../img/fsb_floor2_trimmed.png')
+	'floor1': require('../img/floor1.png'),
+	'floor2': require('../img/floor2.png')
 }
 
 // hard-coded example routes
