@@ -16,7 +16,6 @@ export default class Navigation extends React.Component {
 			route: [],
 			floor: 1
 		}
-
 	}
 	componentDidMount() {
 		// use hard-coded sample routes

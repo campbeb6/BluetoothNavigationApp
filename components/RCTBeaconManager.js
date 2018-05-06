@@ -11,7 +11,8 @@ export default class RCTBeaconManager extends React.Component {
 			regionUUID: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
 			regionID: 'id',
 			beaconsDidRangeEvent: null,
-			beaconsInRange: []
+			beaconsInRange: [],
+			nearestBeaconMinorID: ''
 		}
 	}
 	componentWillMount() {
@@ -32,6 +33,20 @@ export default class RCTBeaconManager extends React.Component {
 				console.log(this.state.beaconsInRange);
 			});
 		});
+	}
+	getNearestBeaconMinorID() {
+		let maxRSSI = Number.MIN_SAFE_INTEGER; // starts as a very low number
+		// closest beacon will have highest RSSI value (least negative)
+		for(let i=0;i<this.state.beaconsInRange.length;i++) {
+			let b = this.state.beaconsInRange[i];
+			if(b.rssi > maxRSSI) {
+				this.setState({
+					nearestBeaconMinorID: b.minor
+				},()=>{
+					maxRSSI = b.rssi;
+				});				
+			}
+		}
 	}
 	render() {
 		return (
