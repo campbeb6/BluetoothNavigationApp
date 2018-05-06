@@ -13,7 +13,8 @@ export default class RoomSearch extends React.Component {
         super();
         this.state = {
             matches: [], // array of rooms that match entry
-            choice: '' // the room for which the user wants directions
+            choice: '', // the room for which the user wants directions
+			inputText: ''
         };
     }
     /* mandatory render() for displaying, return statement defines what will
@@ -26,10 +27,11 @@ export default class RoomSearch extends React.Component {
 					<TouchableOpacity
 						onPress={()=>{
 							this.setState({
-								choice: match.roomName,
+								choice: match.roomNumber,
+								inputText: match.roomName,
 								matches: [] // make list disappear
 							},()=>{
-								console.log('RoomSearch: set choice to '+match.roomName);
+								console.log('RoomSearch: set choice to '+match.roomNumber);
 								this.props.getChoice(this.state.choice);
 							});
 						}}
@@ -54,10 +56,11 @@ export default class RoomSearch extends React.Component {
 						style={{
 							fontSize: 20
 						}}
-						value={this.state.choice}
+						value={this.state.inputText}
 						onChangeText={(text)=>{
 							this.setState({
-								choice: text
+								choice: text,
+								inputText: text
 							},() => {
 								console.log('RoomSearch: set choice to '+this.state.choice);
 								this.getMatches(this.state.choice);
@@ -75,14 +78,6 @@ export default class RoomSearch extends React.Component {
 
 	// get room numbers matching the user's input
 	getMatches = (text) => {
-		// add in some dummy data for new routes
-		// let dummyRooms = [
-		// 	{roomNum:'2037',popular:'false'},
-		// 	{roomNum:'2043',popular:'false'},
-		// 	{roomNum:'2053',popular:'true'},
-		// 	{roomNum:'1026',popular:'true'},
-		// 	{roomNum:'1026B',popular:'true'}
-		// ];
 		this.setState({
 			entry: text
 		},()=>{

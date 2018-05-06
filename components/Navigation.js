@@ -21,20 +21,7 @@ export default class Navigation extends React.Component {
 	componentDidMount() {
 		// use hard-coded sample routes
 		console.log('dest: '+String(this.props.destination));
-		let dest = String(this.props.stairs?this.props.destination:this.props.destination+'_elevator');
-		if(routes[dest]) {
-			this.setState({
-				route: routes[dest]
-			},()=>{
-				console.log('nav: set route for '+this.props.destination);
-				if(this.state.route.length>1) {
-					this.setState({floor:this.state.route[0].floorID});
-				}
-			});
-		} else {
-			// get the route from the server
-			this.getRoute();
-		}
+		this.getRoute();
 	}
 
 	// get the route from the server

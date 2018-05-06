@@ -79,7 +79,7 @@ export default class LocationPreferences extends React.Component {
 		console.log('got user destination and stairs/elevator prefs');
 		console.log('the room choice is', this.state.roomChoice);
 		this.props.startNavigation({
-			destination: '1000',
+			destination: this.state.roomChoice,
 			stairs: this.state.stairsElevator==='Stairs',
 			nearestBeaconMinorID: this.state.nearestBeaconMinorID
 		});
