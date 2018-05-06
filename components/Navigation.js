@@ -47,14 +47,13 @@ export default class Navigation extends React.Component {
 		fetch(request)
 		.then(res => {
 			console.log('nav: fetch response');
-			console.log(JSON.stringify(res));
 			return res.json();
 		})
 		.then(resj => {
 			this.setState({
 				route: resj
 			},()=>{
-				console.log('nav: set route: '+JSON.stringify(this.state.route));
+				console.log('nav: set route');
 			});
 		})
 		.catch(err => console.log('error:  '+err));

@@ -35,8 +35,7 @@ export default class ImportantLocations extends React.Component {
 			this.setState({
 				rooms: arr
 			},function(){
-				console.log('ImportantLocations: rooms');
-				console.log(this.state.rooms);
+				console.log('ImportantLocations: loaded rooms');
 			});
 			return resj;
 		})
