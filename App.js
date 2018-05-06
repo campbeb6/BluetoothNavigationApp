@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import LocationPreferences from './components/LocationPreferences';
 import Navigation from './components/Navigation';
+import RCTBeaconManager from './components/RCTBeaconManager';
 import Login from './components/Login';
 
 export default class App extends React.Component {
