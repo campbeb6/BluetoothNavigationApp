@@ -23,13 +23,16 @@ export default class LocationPreferences extends React.Component {
 		super();
 		this.state = {
 			roomChoice: '',
-			stairsElevator: 'Stairs'
+			stairsElevator: 'Stairs',
+			nearestBeaconMinorID: ''
 		};
 	}
     render() {
         return (
 			<View style={styles.container} >
-				<RCTBeaconManager />
+				<RCTBeaconManager
+					nearestBeacon = {this.getNearestBeaconMinorID}
+				/>
 				<View style={{flex:0.5, zIndex:1, flexDirection:'column'}}>
 					<Text>Enter a room number:</Text>
 					<RoomSearch
@@ -64,6 +67,13 @@ export default class LocationPreferences extends React.Component {
 			</View>
         );
     }
+	getNearestBeaconMinorID = (id) => {
+		this.setState({
+			nearestBeaconMinorID: id
+		},()=>{
+			console.log('LocPrefs: nearest beacon:  '+this.state.nearestBeaconMinorID);
+		})
+	}
 	go = () => {
 		///STUB start navigation
 		console.log('got user destination and stairs/elevator prefs');

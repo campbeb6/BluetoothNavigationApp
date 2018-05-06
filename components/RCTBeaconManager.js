@@ -30,7 +30,9 @@ export default class RCTBeaconManager extends React.Component {
 				beaconsInRange: data.beacons.length>0
 					? data.beacons : this.state.beaconsInRange
 			},()=>{
-				console.log(this.state.beaconsInRange);
+				console.log(JSON.stringify(this.state.beaconsInRange));
+				this.getNearestBeaconMinorID();
+				this.props.nearestBeacon(this.state.nearestBeaconMinorID);
 			});
 		});
 	}
@@ -41,7 +43,7 @@ export default class RCTBeaconManager extends React.Component {
 			let b = this.state.beaconsInRange[i];
 			if(b.rssi > maxRSSI) {
 				this.setState({
-					nearestBeaconMinorID: b.minor
+					nearestBeaconMinorID: String(b.minor)
 				},()=>{
 					maxRSSI = b.rssi;
 				});
