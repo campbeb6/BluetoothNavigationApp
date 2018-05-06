@@ -196,7 +196,6 @@ export default class Navigation extends React.Component {
 	                	height={Dimensions.get('window').height*0.8}
 						style={overlap}
 	            	>
-						{svgOutline}
 						{loadRoute}
 						{startOuterBubble}
 						{startInnerBubble}
