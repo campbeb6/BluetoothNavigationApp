@@ -7,11 +7,48 @@ export default class ImportantLocations extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			rooms: [],
 			choice: ''
 		}
 	}
+	componentDidMount() {
+		this.getRooms();
+	}
+	getRooms = () => {
+		let url = 'http://10.36.0.144:3000/rooms';
+		let request = new Request(url,{
+			method: 'GET',
+			headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json',
+			}
+		});
+		fetch(request)
+		.then(res => {
+			return res.json();
+		})
+		.then(resj => {
+			let arr = resj.filter(room => room.isPopular===1);
+			arr.sort((a,b)=>{
+				return a.roomName>b.roomName ? 1:a.roomName<b.roomName ? -1:0
+			});
+			this.setState({
+				rooms: arr
+			},function(){
+				console.log('ImportantLocations: rooms');
+				console.log(this.state.rooms);
+			});
+			return resj;
+		})
+		.catch(err => console.log('error:  '+err));
+	}
 
 	render() {
+		let roomList = this.state.rooms.map(room=>{
+			return (
+				<Picker.Item label={room.roomName} value={room.roomNumber} />
+			);
+		});
 		return (
 			<View style={styles.container}>
 				<View style={{flex: .8}}>
@@ -29,9 +66,7 @@ export default class ImportantLocations extends React.Component {
 							});
 						}}>
 							<Picker.Item label="" value="" />
-							<Picker.Item label="Taylor Auditorium" value="1000" />
-							<Picker.Item label="Advising Offices" value="1022" />
-							<Picker.Item label="Dividends" value="1026" />
+							{roomList}
 					</Picker>
 				</View>
 			</View>
