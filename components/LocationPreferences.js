@@ -15,6 +15,7 @@ import {
 import Accessibility from './Accessibility';
 import RoomSearch from './RoomSearch';
 import ImportantLocations from './ImportantLocations';
+import Enrollments from './Enrollments';
 
 export default class LocationPreferences extends React.Component {
 	constructor() {
@@ -38,6 +39,12 @@ export default class LocationPreferences extends React.Component {
 						getChoice={this.getRoomChoice}
 					/>
 				</View>
+				<View style={{flex:.2}}>
+					<Enrollments
+						getChoice = {this.getRoomChoice}
+						classes = {this.props.classes}
+					/>
+				</View>
 				<View style={{flex:0.2}}>
 					<Text style = {{color: '#000000'}}>Elevator or Stairs?</Text>
 					<Accessibility
@@ -58,7 +65,8 @@ export default class LocationPreferences extends React.Component {
 	go = () => {
 		///STUB start navigation
 		console.log('got user destination and stairs/elevator prefs');
-		this.props.startNavigation({
+		console.log('the room choice is', this.state.roomChoice);
+		this.props.startNavigation({	
 			destination: this.state.roomChoice,
 			stairs: this.state.stairsElevator==='Stairs'
 		});
