@@ -11,7 +11,7 @@ export default class RCTBeaconManager extends React.Component {
 			regionUUID: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
 			regionID: 'id',
 			beaconsDidRangeEvent: null,
-			beaconsInRange: [],
+			beaconsInRange: sampleBeacons,
 			nearestBeaconMinorID: ''
 		}
 	}
@@ -44,7 +44,7 @@ export default class RCTBeaconManager extends React.Component {
 					nearestBeaconMinorID: b.minor
 				},()=>{
 					maxRSSI = b.rssi;
-				});				
+				});
 			}
 		}
 	}
@@ -57,3 +57,21 @@ export default class RCTBeaconManager extends React.Component {
 		);
 	}
 }
+
+// actual output from android test
+const sampleBeacons = [{
+		proximity: 'immediate',
+		distance: 0.24225736553310676,
+		rssi: -59,
+		minor: 1000,
+		major: 1,
+		uuid: 'b9407f30-f5f8-466e-aff9-25556b57fe6d'
+	},{
+		proximity: 'immediate',
+		distance: 0.5879588872684474,
+		rssi: -52,
+		minor: 2000,
+		major: 1,
+		uuid: 'b9407f30-f5f8-466e-aff9-25556b57fe6d'
+	}
+];
