@@ -28,7 +28,7 @@ export default class Navigation extends React.Component {
 			},()=>{
 				console.log('nav: set route for '+this.props.destination);
 				if(this.state.route.length>1) {
-					this.setState({floor:this.state.route[0].floor});
+					this.setState({floor:this.state.route[0].floorID});
 				}
 			});
 		} else {
@@ -53,8 +53,8 @@ export default class Navigation extends React.Component {
 			  sensors: [{
 				  minor: '1035'
 			  }],
-			  destination: this.props.destination,
-			  stairs: this.props.stairs
+			  destination: "1000",
+			  stairs: String(this.props.stairs)
 		  })
 		});
 		fetch(request)
@@ -119,7 +119,7 @@ export default class Navigation extends React.Component {
 		let endOuterBubble=null, endInnerBubble=null;
 
 		// dark blue outer circle marking starting location
-		if(this.state.route.length>0 && this.state.route[0].floor===this.state.floor)  {
+		if(this.state.route.length>0 && this.state.route[0].floorID===this.state.floor)  {
 			startOuterBubble = <Circle
 				cx={this.xcoord(this.state.route[0].x,floorplan.width,scale)}
 				cy={this.ycoord(this.state.route[0].y,floorplan.height,scale)}
@@ -128,7 +128,7 @@ export default class Navigation extends React.Component {
 			/>;
 		}
 		// light blue inner circle marking starting location
-		if(this.state.route.length>0 && this.state.route[0].floor===this.state.floor) {
+		if(this.state.route.length>0 && this.state.route[0].floorID===this.state.floor) {
 			startInnerBubble = <Circle
 				cx={this.xcoord(this.state.route[0].x,floorplan.width,scale)}
 				cy={this.ycoord(this.state.route[0].y,floorplan.height,scale)}
@@ -138,7 +138,7 @@ export default class Navigation extends React.Component {
 		}
 		// red circle with black circle inside that marks end of route
 		if(	this.state.route.length>0 &&
-			this.state.route[this.state.route.length-1].floor===this.state.floor) {
+			this.state.route[this.state.route.length-1].floorID===this.state.floor) {
 			endOuterBubble = <Circle
 				cx={this.xcoord(this.state.route[this.state.route.length-1].x,floorplan.width,scale)}
 				cy={this.ycoord(this.state.route[this.state.route.length-1].y,floorplan.height,scale)}
@@ -148,7 +148,7 @@ export default class Navigation extends React.Component {
 		}
 		// black circle inside of red circle marking end of route
 		if(	this.state.route.length>0 &&
-			this.state.route[this.state.route.length-1].floor===this.state.floor) {
+			this.state.route[this.state.route.length-1].floorID===this.state.floor) {
 			endInnerBubble = <Circle
 				cx={this.xcoord(this.state.route[this.state.route.length-1].x,floorplan.width,scale)}
 				cy={this.ycoord(this.state.route[this.state.route.length-1].y,floorplan.height,scale)}
@@ -162,8 +162,8 @@ export default class Navigation extends React.Component {
 		// floor portions of route will show on top of each other)
 		let loadRoute = this.state.route.map((pair,i)=>{
 			if(	i<this.state.route.length-1 &&
-				this.state.floor===pair.floor &&
-				pair.floor===this.state.route[i+1].floor // don't connect between floors
+				this.state.floor===pair.floorID &&
+				pair.floorID===this.state.route[i+1].floorID // don't connect between floors
 			) return (
 				<Line
 					x1={this.xcoord(pair.x,floorplan.width,scale)}
@@ -193,7 +193,7 @@ export default class Navigation extends React.Component {
 					<Text style={{
 						fontSize: 18,
 						fontWeight: 'bold'
-					}}>{'Navigating to room '+this.props.destination+'...'}</Text>
+					}}>{'Navigating to '+this.props.destination+'...'}</Text>
 				</View>
 				<PinchZoomView style={{
 					flex:0.7
@@ -270,20 +270,20 @@ const routes = {
 		{floor:1,x:7,y:13},
 		{floor:1,x:11,y:13}
 	],
-	// '1000': [
-	// 	{floor:1,x:4,y:26},
-	// 	{floor:1,x:7,y:26},
-	// 	{floor:1,x:7,y:20},
-	// 	{floor:1,x:7,y:16},
-	// 	{floor:1,x:7,y:13},
-	// 	{floor:1,x:11,y:13},
-	// 	{floor:1,x:21,y:13},
-	// 	{floor:1,x:21,y:15},
-	// 	{floor:1,x:30,y:15},
-	// 	{floor:1,x:30,y:13},
-	// 	{floor:1,x:44,y:13},
-	// 	{floor:1,x:44,y:41}
-	// ],
+	'Taylor Auditorium': [
+		{floor:1,x:4,y:26},
+		{floor:1,x:7,y:26},
+		{floor:1,x:7,y:20},
+		{floor:1,x:7,y:16},
+		{floor:1,x:7,y:13},
+		{floor:1,x:11,y:13},
+		{floor:1,x:21,y:13},
+		{floor:1,x:21,y:15},
+		{floor:1,x:30,y:15},
+		{floor:1,x:30,y:13},
+		{floor:1,x:44,y:13},
+		{floor:1,x:44,y:41}
+	],
 	'1022': [
 		{floor:1,x:4,y:26},
 		{floor:1,x:7,y:26},
