@@ -173,6 +173,7 @@ export default class Navigation extends React.Component {
 		return (
 			<View style={{flex:1}}>
 				<View style={{
+                    padding:20,
 					flex:0.1,
 					alignItems:'center'
 				}}>
