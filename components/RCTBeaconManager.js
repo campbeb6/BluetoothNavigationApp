@@ -51,9 +51,11 @@ export default class RCTBeaconManager extends React.Component {
 		// closest beacon will have highest RSSI value (least negative)
 		for(let i=0;i<this.state.beaconsInRange.length;i++) {
 			let b = this.state.beaconsInRange[i];
-			// ignore beacon 1000 and 2000 since they are not mounted
-			if(b.rssi > maxRSSI && b.minor!==2000) {
-				let beaconID = b.minor===1000?1035:b.minor;
+			// route 1000 and 2000 to 1035 and 8000 respectively
+			if(b.rssi > maxRSSI) {
+				let beaconID = b.minor;
+				if(beaconID===1000) beaconID=1035;
+				if(beaconID===2000) beaconID=8000;
 				this.setState({
 					nearestBeaconMinorID: String(beaconID)
 				},()=>{
