@@ -33,7 +33,7 @@ export default class LocationPreferences extends React.Component {
 				<RCTBeaconManager
 					nearestBeacon = {this.getNearestBeaconMinorID}
 				/>
-				<View style={{padding:50,flex:0.5, zIndex:1, flexDirection:'column'}}>
+				<View style={{flex:0.5, zIndex:1, flexDirection:'column'}}>
 					<Text style={{color:'#000000'}}>Enter a room number:</Text>
 					<RoomSearch
 						getChoice={this.getRoomChoice}
