@@ -65,7 +65,7 @@ export default class Login extends Component {
 		var params = 'type=usernamePassword&application=FSBMobileAppDownload&username='+encodeURIComponent(this.state.username)+'&password='+encodeURIComponent(this.state.password);
 		this.state.courses = [];
 		//this.state.roomNums = [];
-		fetch('http://ws.miamioh.edu/academicTerms/current?applicationname=FSBProject')
+		fetch('https://ws.miamioh.edu/academicTerms/current?applicationname=FSBProject')
 			.then(response => response.text())
 			.then((response) => {
 				var DOMParser = require('xmldom').DOMParser;
@@ -86,7 +86,7 @@ export default class Login extends Component {
 					var DOMParser = require('xmldom').DOMParser;
 					var doc = new DOMParser().parseFromString(response, 'text/xml');
 					this.state.token = doc.getElementsByTagName('token')[0].childNodes[0].nodeValue;
-					console.log('success', this.state.token);
+					console.log(this.state.token);
                 })
                 .catch(err => {
                     alert("invalid login credentials");

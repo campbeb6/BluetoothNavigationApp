@@ -171,7 +171,10 @@ export default class Navigation extends React.Component {
 			fill="none"
 		/>;
 		return (
-			<View style={{flex:1}}>
+			<View style={{
+				flex:1,
+				marginTop: 25
+			}} >
 				<View style={{
 					flex:0.1,
 					alignItems:'center'
@@ -241,6 +244,6 @@ export default class Navigation extends React.Component {
 	}
 }
 const floorplans = {
-	'floor1': require('../img/floor1.png'),
-	'floor2': require('../img/floor2.png')
+	'floor1': require('../img/FarmerFirstFloorFINAL.png'),
+	'floor2': require('../img/Farmer2nd.png')
 }

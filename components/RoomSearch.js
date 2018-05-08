@@ -54,7 +54,11 @@ export default class RoomSearch extends React.Component {
 				<View>
 					<TextInput
 						style={{
-							fontSize: 20
+							fontSize: 20,
+							borderWidth: 1,
+							borderColor: 'black',
+							margin: 5
+							//width: '50%'
 						}}
 						value={this.state.inputText}
 						onChangeText={(text)=>{

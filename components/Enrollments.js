@@ -12,13 +12,11 @@ export default class Enrollments extends React.Component {
     render() {
         if(this.props.classes.length == 0){
             return null;
-        }
+       }
 		return(
-            <View>
-                <View>
-                    <Text style = {{color: '#000000'}}>OR choose a room for a course you are taking</Text>
-                </View>
-                <View style={{alignItems: 'flex-end'}}>
+            <View style={styles.container}>
+               
+                <View style={{flex:1,alignItems: 'flex-end'}}>
                     <Picker
                         style={{width: '100%'}}
                         selectedValue = {this.state.choice}
@@ -29,6 +27,7 @@ export default class Enrollments extends React.Component {
                                 this.props.getChoice(choice)
                             });
                         }}>
+                       
                         <Item label="" value=""/>
                         {this.props.classes.map((value, index) => {
                             return(<Item label = {value} value = {value.replace( /^\D+/g, '')} key = {index}/>)
@@ -39,3 +38,13 @@ export default class Enrollments extends React.Component {
 		);
     }
 }
+const styles = StyleSheet.create({
+	container: {
+		flex: .1,
+		alignItems: 'center',
+		flexDirection: 'row',
+		// paddingTop: Constants.statusBarHeight,
+		backgroundColor: '#ffffff'
+	},
+	
+});

@@ -33,25 +33,27 @@ export default class LocationPreferences extends React.Component {
 				<RCTBeaconManager
 					nearestBeacon = {this.getNearestBeaconMinorID}
 				/>
-				<View style={{flex:0.5, zIndex:1, flexDirection:'column'}}>
-					<Text style={{color:'#000000'}}>Enter a room number:</Text>
+				<View style={{flex:0.3, zIndex:1, flexDirection:'row'}}>
+					<Text style={{color:'#000000', marginLeft: 5}}>Enter a room number:</Text>
 					<RoomSearch
 						getChoice={this.getRoomChoice}
 					/>
 				</View>
-				<View style={{flex:0.2, zIndex:0, flexDirection:'column'}}>
+				<View style={{flex:0.3, zIndex:0, flexDirection:'column'}}>
+				<Text style = {{color: '#000000', marginLeft: 5}}>OR choose a popular location</Text>
 					<ImportantLocations
 						getChoice={this.getRoomChoice}
 					/>
 				</View>
-				<View style={{flex:.2}}>
+				<View style={{flex:.25, flexDirection: 'column'}}>
+					<Text style = {{color: '#000000', marginLeft:5}}>OR choose a room for a course you are taking</Text>
 					<Enrollments
 						getChoice = {this.getRoomChoice}
 						classes = {this.props.classes}
 					/>
 				</View>
-				<View style={{flex:0.2}}>
-					<Text style = {{color: '#000000'}}>Elevator or Stairs?</Text>
+				<View style={{flex:0.15}}>
+					<Text style = {{color: '#000000', marginLeft:5}}>Elevator or Stairs?</Text>
 					<Accessibility
 						getStairsOrElevator={this.getStairsOrElevator}
 					/>
@@ -104,6 +106,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex : 1,
 		backgroundColor: '#FFFFFF',
+		marginTop: 25
 		// alignItems: 'flex-end',
 		// justifyContent: 'flex-end',
 	},

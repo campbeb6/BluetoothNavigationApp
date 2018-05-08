@@ -50,9 +50,7 @@ export default class ImportantLocations extends React.Component {
 		});
 		return (
 			<View style={styles.container}>
-				<View style={{flex: .8}}>
-					<Text style = {{color: '#000000'}}>OR choose a popular location</Text>
-				</View>
+				
 				<View style={{flex: 1, alignItems: 'flex-end'}}>
 					<Picker
 						style={{width: '100%'}}
@@ -75,7 +73,7 @@ export default class ImportantLocations extends React.Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: .4,
+		flex: .3,
 		alignItems: 'center',
 		flexDirection: 'row',
 		// paddingTop: Constants.statusBarHeight,
